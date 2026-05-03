@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>消费 - Serene Habits</title>
+    <link href="css/common.css" rel="stylesheet"/>
+    <link href="css/spending.css" rel="stylesheet"/>
+</head>
+<body>
+    <div class="page-container">
+        <!-- Top Navigation Bar -->
+        <nav class="top-nav">
+            <div class="avatar-mini">
+                <img src="icon/user.svg" class="avatar-img" />
+            </div>
+            <div class="search-bar">
+                <img src="icon/search.svg" class="search-icon" />
+                <input type="text" placeholder="搜索消费..." class="search-input" />
+            </div>
+            <a href="#" class="message-btn">
+                <img src="icon/mail.svg" class="message-icon" />
+                <span class="notification-dot"></span>
+            </a>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Quick Input Module -->
+            <section class="input-card">
+                <div class="input-row">
+                    <input type="text" placeholder="消费名称" class="input-item" />
+                    <input type="text" placeholder="金额" class="input-item" />
+                </div>
+                <div class="input-row">
+                    <button class="select-btn" id="datePickerBtn">
+                        <img src="icon/calendar.svg" class="select-icon" />
+                        <span class="select-value">今天</span>
+                        <img src="icon/arrow-down.svg" class="select-arrow" />
+                    </button>
+                    <button class="select-btn" id="categoryPickerBtn">
+                        <img src="icon/food.svg" class="select-icon" />
+                        <span class="select-value">餐饮美食</span>
+                        <img src="icon/arrow-down.svg" class="select-arrow" />
+                    </button>
+                </div>
+                <button class="add-btn">
+                    添加记录
+                </button>
+            </section>
+
+            <!-- Trends Card -->
+            <section class="trends-card">
+                <div class="card-header">
+                    <h2 class="card-title">支出趋势</h2>
+                    <div class="chart-tabs">
+                        <button class="tab active">日</button>
+                        <button class="tab">周</button>
+                        <button class="tab">月</button>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="bar-wrapper">
+                        <div class="bar" style="height: 60%">
+                            <span class="bar-value">60</span>
+                        </div>
+                        <span class="bar-label">周一</span>
+                    </div>
+                    <div class="bar-wrapper">
+                        <div class="bar" style="height: 80%">
+                            <span class="bar-value">80</span>
+                        </div>
+                        <span class="bar-label">周二</span>
+                    </div>
+                    <div class="bar-wrapper">
+                        <div class="bar" style="height: 45%">
+                            <span class="bar-value">45</span>
+                        </div>
+                        <span class="bar-label">周三</span>
+                    </div>
+                    <div class="bar-wrapper">
+                        <div class="bar" style="height: 90%">
+                            <span class="bar-value">90</span>
+                        </div>
+                        <span class="bar-label">周四</span>
+                    </div>
+                    <div class="bar-wrapper">
+                        <div class="bar" style="height: 70%">
+                            <span class="bar-value">70</span>
+                        </div>
+                        <span class="bar-label">周五</span>
+                    </div>
+                    <div class="bar-wrapper">
+                        <div class="bar" style="height: 85%">
+                            <span class="bar-value">85</span>
+                        </div>
+                        <span class="bar-label">周六</span>
+                    </div>
+                    <div class="bar-wrapper">
+                        <div class="bar" style="height: 55%">
+                            <span class="bar-value">55</span>
+                        </div>
+                        <span class="bar-label">周日</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Breakdown Card -->
+            <section class="breakdown-card">
+                <div class="card-header">
+                    <h2 class="card-title">支出构成</h2>
+                </div>
+                <div class="breakdown-content">
+                    <div class="donut-chart">
+                        <svg viewBox="0 0 100 100" class="donut-svg">
+                            <circle cx="50" cy="50" r="40" fill="none" stroke="#EFF6FF" stroke-width="12"/>
+                            <circle cx="50" cy="50" r="40" fill="none" stroke="#0058BE" stroke-width="12" stroke-dasharray="201 251" stroke-dashoffset="0"/>
+                            <circle cx="50" cy="50" r="40" fill="none" stroke="#3B82F6" stroke-width="12" stroke-dasharray="126 251" stroke-dashoffset="-201"/>
+                            <circle cx="50" cy="50" r="40" fill="none" stroke="#BFDBFE" stroke-width="12" stroke-dasharray="24 251" stroke-dashoffset="-327"/>
+                        </svg>
+                        <div class="donut-center">
+                            <span class="donut-total">100%</span>
+                            <span class="donut-label">总计</span>
+                        </div>
+                    </div>
+                    <div class="breakdown-list">
+                        <div class="breakdown-item">
+                            <span class="category-color" style="background-color: #0058BE"></span>
+                            <span class="category-name">餐饮美食</span>
+                            <span class="category-percent">40%</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span class="category-color" style="background-color: #3B82F6"></span>
+                            <span class="category-name">购物消费</span>
+                            <span class="category-percent">30%</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span class="category-color" style="background-color: #BFDBFE"></span>
+                            <span class="category-name">交通出行</span>
+                            <span class="category-percent">30%</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Today's List Card -->
+            <section class="list-card">
+                <div class="card-header">
+                    <h2 class="card-title">今日消费明细</h2>
+                </div>
+                <div class="list-content">
+                    <div class="list-item">
+                        <div class="category-icon food">
+                            <img src="icon/utensils.svg" class="icon-img" />
+                        </div>
+                        <div class="item-info">
+                            <span class="item-name">午餐</span>
+                            <span class="item-time">12:30</span>
+                        </div>
+                        <span class="item-amount">-¥35</span>
+                    </div>
+                    <div class="list-item">
+                        <div class="category-icon shopping">
+                            <img src="icon/tag.svg" class="icon-img" />
+                        </div>
+                        <div class="item-info">
+                            <span class="item-name">日用品</span>
+                            <span class="item-time">14:20</span>
+                        </div>
+                        <span class="item-amount">-¥58</span>
+                    </div>
+                    <div class="list-item">
+                        <div class="category-icon transport">
+                            <img src="icon/car.svg" class="icon-img" />
+                        </div>
+                        <div class="item-info">
+                            <span class="item-name">打车</span>
+                            <span class="item-time">18:45</span>
+                        </div>
+                        <span class="item-amount">-¥22</span>
+                    </div>
+                    <div class="list-item">
+                        <div class="category-icon food">
+                            <img src="icon/coffee.svg" class="icon-img" />
+                        </div>
+                        <div class="item-info">
+                            <span class="item-name">咖啡</span>
+                            <span class="item-time">10:15</span>
+                        </div>
+                        <span class="item-amount">-¥28</span>
+                    </div>
+                </div>
+                <div class="list-summary">
+                    <span class="summary-item">
+                        <span class="summary-label">总笔数</span>
+                        <span class="summary-value">4 笔</span>
+                    </span>
+                    <span class="summary-item">
+                        <span class="summary-label">总金额</span>
+                        <span class="summary-value">-¥143</span>
+                    </span>
+                </div>
+            </section>
+        </main>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <a href="index.html" class="nav-item">
+                <img src="icon/home.svg" class="nav-icon-bottom" />
+                <span class="nav-text">首页</span>
+            </a>
+            <a href="smoking.html" class="nav-item">
+                <img src="icon/smoking.svg" class="nav-icon-bottom" />
+                <span class="nav-text">戒烟</span>
+            </a>
+            <a href="daily.html" class="nav-item">
+                <img src="icon/calendar.svg" class="nav-icon-bottom" />
+                <span class="nav-text">日常</span>
+            </a>
+            <a href="spending.html" class="nav-item active">
+                <img src="icon/wallet.svg" class="nav-icon-bottom" />
+                <span class="nav-text">消费</span>
+            </a>
+            <a href="profile.html" class="nav-item">
+                <img src="icon/user.svg" class="nav-icon-bottom" />
+                <span class="nav-text">我的</span>
+            </a>
+        </nav>
+
+                <!-- Category Picker Overlay -->
+                <div class="category-picker-overlay" id="categoryPickerOverlay" style="display: none;">
+                    <div class="category-picker-modal">
+                        <div class="modal-header">
+                            <span class="modal-title">选择分类</span>
+                            <button class="modal-close" id="categoryModalClose">
+                                <img src="icon/x.svg" class="close-icon" />
+                            </button>
+                        </div>
+                        <div class="modal-content">
+                            <div class="category-grid">
+                                <button class="category-item active" data-value="餐饮美食">
+                                    <img src="icon/food.svg" class="category-icon-img" />
+                                    <span class="category-name">餐饮美食</span>
+                                </button>
+                                <button class="category-item" data-value="购物消费">
+                                    <img src="icon/shopping.svg" class="category-icon-img" />
+                                    <span class="category-name">购物消费</span>
+                                </button>
+                                <button class="category-item" data-value="交通出行">
+                                    <img src="icon/car.svg" class="category-icon-img" />
+                                    <span class="category-name">交通出行</span>
+                                </button>
+                                <button class="category-item" data-value="娱乐休闲">
+                                    <img src="icon/game.svg" class="category-icon-img" />
+                                    <span class="category-name">娱乐休闲</span>
+                                </button>
+                                <button class="category-item" data-value="医疗健康">
+                                    <img src="icon/heart.svg" class="category-icon-img" />
+                                    <span class="category-name">医疗健康</span>
+                                </button>
+                                <button class="category-item" data-value="教育学习">
+                                    <img src="icon/book.svg" class="category-icon-img" />
+                                    <span class="category-name">教育学习</span>
+                                </button>
+                                <button class="category-item" data-value="居家生活">
+                                    <img src="icon/home.svg" class="category-icon-img" />
+                                    <span class="category-name">居家生活</span>
+                                </button>
+                                <button class="category-item" data-value="其他">
+                                    <img src="icon/more.svg" class="category-icon-img" />
+                                    <span class="category-name">其他</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Date Picker Overlay -->
+                <div class="date-picker-overlay" id="datePickerOverlay" style="display: none;">
+                    <div class="date-picker-modal">
+                        <div class="modal-header">
+                            <span class="modal-title">选择日期</span>
+                            <button class="modal-now" id="modalNow">今天</button>
+                        </div>
+                        <div class="modal-content">
+                            <div class="picker-row">
+                                <div class="picker-column">
+                                    <span class="picker-label">年</span>
+                                    <div class="picker-scroll" id="yearScroll">
+                                        <span class="picker-item">2024</span>
+                                        <span class="picker-item active">2025</span>
+                                        <span class="picker-item">2026</span>
+                                    </div>
+                                </div>
+                                <div class="picker-column">
+                                    <span class="picker-label">月</span>
+                                    <div class="picker-scroll" id="monthScroll">
+                                        <span class="picker-item">1</span>
+                                        <span class="picker-item">2</span>
+                                        <span class="picker-item">3</span>
+                                        <span class="picker-item">4</span>
+                                        <span class="picker-item">5</span>
+                                        <span class="picker-item active">6</span>
+                                        <span class="picker-item">7</span>
+                                        <span class="picker-item">8</span>
+                                        <span class="picker-item">9</span>
+                                        <span class="picker-item">10</span>
+                                        <span class="picker-item">11</span>
+                                        <span class="picker-item">12</span>
+                                    </div>
+                                </div>
+                                <div class="picker-column">
+                                    <span class="picker-label">日</span>
+                                    <div class="picker-scroll" id="dayScroll">
+                                        <span class="picker-item">1</span>
+                                        <span class="picker-item">2</span>
+                                        <span class="picker-item">3</span>
+                                        <span class="picker-item">4</span>
+                                        <span class="picker-item">5</span>
+                                        <span class="picker-item">6</span>
+                                        <span class="picker-item active">7</span>
+                                        <span class="picker-item">8</span>
+                                        <span class="picker-item">9</span>
+                                        <span class="picker-item">10</span>
+                                        <span class="picker-item">11</span>
+                                        <span class="picker-item">12</span>
+                                        <span class="picker-item">13</span>
+                                        <span class="picker-item">14</span>
+                                        <span class="picker-item">15</span>
+                                        <span class="picker-item">16</span>
+                                        <span class="picker-item">17</span>
+                                        <span class="picker-item">18</span>
+                                        <span class="picker-item">19</span>
+                                        <span class="picker-item">20</span>
+                                        <span class="picker-item">21</span>
+                                        <span class="picker-item">22</span>
+                                        <span class="picker-item">23</span>
+                                        <span class="picker-item">24</span>
+                                        <span class="picker-item">25</span>
+                                        <span class="picker-item">26</span>
+                                        <span class="picker-item">27</span>
+                                        <span class="picker-item">28</span>
+                                        <span class="picker-item">29</span>
+                                        <span class="picker-item">30</span>
+                                        <span class="picker-item">31</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="modal-confirm" id="modalConfirm">确定</button>
+                        </div>
+                    </div>
+                </div>
+
+                <script>
+                    // Category Picker Functions
+                    const categoryPickerBtn = document.getElementById('categoryPickerBtn');
+                    const categoryPickerOverlay = document.getElementById('categoryPickerOverlay');
+                    const categoryModalClose = document.getElementById('categoryModalClose');
+                    const categoryItems = document.querySelectorAll('.category-item');
+
+                    categoryPickerBtn.addEventListener('click', function() {
+                        categoryPickerOverlay.style.display = 'block';
+                        document.body.style.overflow = 'hidden';
+                    });
+
+                    categoryModalClose.addEventListener('click', function() {
+                        categoryPickerOverlay.style.display = 'none';
+                        document.body.style.overflow = '';
+                    });
+
+                    categoryPickerOverlay.addEventListener('click', function(e) {
+                        if (e.target === categoryPickerOverlay) {
+                            categoryPickerOverlay.style.display = 'none';
+                            document.body.style.overflow = '';
+                        }
+                    });
+
+                    categoryItems.forEach(item => {
+                        item.addEventListener('click', function() {
+                            categoryItems.forEach(i => i.classList.remove('active'));
+                            this.classList.add('active');
+                            
+                            const value = this.dataset.value;
+                            const categoryBtn = document.querySelector('#categoryPickerBtn .select-value');
+                            categoryBtn.textContent = value;
+                            
+                            categoryPickerOverlay.style.display = 'none';
+                            document.body.style.overflow = '';
+                        });
+                    });
+
+                    // Date Picker Functions
+                    const datePickerBtn = document.getElementById('datePickerBtn');
+                    const datePickerOverlay = document.getElementById('datePickerOverlay');
+                    const modalNow = document.getElementById('modalNow');
+                    const modalConfirm = document.getElementById('modalConfirm');
+                    const dateSelectValue = datePickerBtn.querySelector('.select-value');
+
+                    datePickerBtn.addEventListener('click', function() {
+                        datePickerOverlay.style.display = 'block';
+                        document.body.style.overflow = 'hidden';
+                    });
+
+                    modalNow.addEventListener('click', function() {
+                        const now = new Date();
+                        const year = now.getFullYear();
+                        const month = now.getMonth() + 1;
+                        const day = now.getDate();
+                        
+                        document.querySelector('#yearScroll .picker-item.active')?.classList.remove('active');
+                        document.querySelector('#yearScroll .picker-item:nth-child(' + (year - 2023) + ')')?.classList.add('active');
+                        
+                        document.querySelector('#monthScroll .picker-item.active')?.classList.remove('active');
+                        document.querySelector('#monthScroll .picker-item:nth-child(' + month + ')')?.classList.add('active');
+                        
+                        document.querySelector('#dayScroll .picker-item.active')?.classList.remove('active');
+                        document.querySelector('#dayScroll .picker-item:nth-child(' + day + ')')?.classList.add('active');
+                        
+                        dateSelectValue.textContent = '今天';
+                        datePickerOverlay.style.display = 'none';
+                        document.body.style.overflow = '';
+                    });
+
+                    modalConfirm.addEventListener('click', function() {
+                        const activeItems = document.querySelectorAll('.picker-item.active');
+                        const year = activeItems[0].textContent;
+                        const month = String(Number(activeItems[1].textContent)).padStart(2, '0');
+                        const day = String(Number(activeItems[2].textContent)).padStart(2, '0');
+                        
+                        dateSelectValue.textContent = year + '-' + month + '-' + day;
+                        datePickerOverlay.style.display = 'none';
+                        document.body.style.overflow = '';
+                    });
+
+                    datePickerOverlay.addEventListener('click', function(e) {
+                        if (e.target === datePickerOverlay) {
+                            datePickerOverlay.style.display = 'none';
+                            document.body.style.overflow = '';
+                        }
+                    });
+
+                    document.querySelectorAll('.picker-item').forEach(item => {
+                        item.addEventListener('click', function() {
+                            const parentScroll = this.parentElement;
+                            parentScroll.querySelectorAll('.picker-item').forEach(i => i.classList.remove('active'));
+                            this.classList.add('active');
+                        });
+                    });
+                </script>
+            </div>
+        </body>
+        </html>

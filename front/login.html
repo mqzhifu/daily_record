@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>登录 - Serene Habits</title>
+    <link href="css/styles.css" rel="stylesheet"/>
+</head>
+<body>
+    <div class="decor-bg"></div>
+    <div class="decor-bg-bottom"></div>
+    
+    <div class="container">
+        <div class="card">
+            <div class="header">
+                <h1 class="title">登录</h1>
+                <p class="subtitle">欢迎回来，请登录您的账号</p>
+            </div>
+
+            <form class="form">
+                <div class="form-group">
+                    <label>邮箱</label>
+                    <div class="input-wrapper">
+                        <img src="icon/mail.svg" class="input-icon-left" />
+                        <input type="email" placeholder="请输入邮箱地址" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>密码</label>
+                    <div class="input-wrapper">
+                        <img src="icon/lock.svg" class="input-icon-left" />
+                        <input type="password" placeholder="请输入密码" />
+                        <img src="icon/visibility.svg" class="input-icon-right" />
+                    </div>
+                </div>
+
+                <a href="forgot_password.html" class="link" style="text-align: right;">忘记密码？</a>
+
+                <button type="submit" class="btn-primary">
+                    <span>登录</span>
+                    <img src="icon/arrow_right.svg" class="btn-icon" />
+                </button>
+            </form>
+
+            <div class="divider">
+                <div class="divider-line"></div>
+                <span class="divider-text">或者</span>
+                <div class="divider-line"></div>
+            </div>
+
+            <div class="social-login">
+                <button class="btn-secondary">
+                    <img src="icon/message.svg" class="social-icon" />
+                    <span>微信</span>
+                </button>
+                <button class="btn-secondary">
+                    <img src="icon/video_library.svg" class="social-icon" />
+                    <span>抖音</span>
+                </button>
+            </div>
+
+            <p class="link-text-center">
+                还没有账号？ <a href="register.html" class="link">立即注册</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>

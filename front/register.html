@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>注册 - Serene Habits</title>
+    <link href="css/styles.css" rel="stylesheet"/>
+</head>
+<body>
+    <div class="decor-bg"></div>
+    <div class="decor-bg-bottom"></div>
+    
+    <div class="container">
+        <div class="card">
+            <div class="header">
+                <h1 class="title">注册</h1>
+                <p class="subtitle">创建新账号，开启您的习惯养成之旅</p>
+            </div>
+
+            <form class="form">
+                <div class="form-group">
+                    <label>用户名</label>
+                    <div class="input-wrapper">
+                        <img src="icon/person.svg" class="input-icon-left" />
+                        <input type="text" placeholder="请输入用户名" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>邮箱</label>
+                    <div class="input-wrapper">
+                        <img src="icon/mail.svg" class="input-icon-left" />
+                        <input type="email" placeholder="请输入邮箱地址" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>密码</label>
+                    <div class="input-wrapper">
+                        <img src="icon/lock.svg" class="input-icon-left" />
+                        <input type="password" placeholder="请输入密码" />
+                        <img src="icon/visibility.svg" class="input-icon-right" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>确认密码</label>
+                    <div class="input-wrapper">
+                        <img src="icon/lock.svg" class="input-icon-left" />
+                        <input type="password" placeholder="请再次输入密码" />
+                        <img src="icon/visibility.svg" class="input-icon-right" />
+                    </div>
+                </div>
+
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="agree" />
+                    <label for="agree">
+                        我已阅读并同意 <a href="#" class="link">服务条款</a> 和 <a href="#" class="link">隐私政策</a>
+                    </label>
+                </div>
+
+                <button type="submit" class="btn-primary">
+                    <span>注册</span>
+                    <img src="icon/check.svg" class="btn-icon" />
+                </button>
+            </form>
+
+            <p class="link-text-center">
+                已有账号？ <a href="login.html" class="link">立即登录</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>

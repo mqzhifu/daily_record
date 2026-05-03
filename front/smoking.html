@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>戒烟 - Serene Habits</title>
+    <link href="css/common.css" rel="stylesheet"/>
+    <link href="css/smoking.css" rel="stylesheet"/>
+</head>
+<body>
+    <div class="page-container">
+        <!-- Top Navigation Bar -->
+        <nav class="top-nav">
+            <div class="avatar-mini">
+                <img src="icon/user.svg" class="avatar-img" />
+            </div>
+            <div class="search-bar">
+                <img src="icon/search.svg" class="search-icon" />
+                <input type="text" placeholder="搜索记录..." class="search-input" />
+            </div>
+            <a href="#" class="message-btn">
+                <img src="icon/mail.svg" class="message-icon" />
+                <span class="notification-dot"></span>
+            </a>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Quick Action Module -->
+            <section class="quick-action">
+                <div class="action-content">
+                    <div class="action-info">
+                        <h2 class="action-title">快速记录</h2>
+                        <p class="action-hint">记录每一次抽烟时刻</p>
+                    </div>
+                    <button class="smoke-btn">
+                        <img src="icon/cigarette.svg" class="btn-icon" />
+                        <span>抽一根</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Today Overview -->
+            <section class="overview-card">
+                <div class="card-header">
+                    <h2 class="card-title">今日抽烟</h2>
+                    <span class="smoke-count">4 根</span>
+                </div>
+                <div class="timeline-scroll">
+                    <div class="timeline-list">
+                        <div class="timeline-item">
+                            <span class="time">08:30</span>
+                            <span class="tag">早餐后</span>
+                        </div>
+                        <div class="timeline-item">
+                            <span class="time">10:00</span>
+                            <span class="tag">工作中</span>
+                        </div>
+                        <div class="timeline-item">
+                            <span class="time">12:30</span>
+                            <span class="tag">午饭后</span>
+                        </div>
+                        <div class="timeline-item">
+                            <span class="time">15:00</span>
+                            <span class="tag">休息时</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Stats Cards -->
+            <section class="stats-grid">
+                <div class="stat-card blue compact">
+                    <div class="stat-content">
+                        <p class="stat-label">上周日均</p>
+                        <p class="stat-value">5 根</p>
+                    </div>
+                </div>
+                <div class="stat-card green compact">
+                    <div class="stat-content">
+                        <p class="stat-label">单日最低</p>
+                        <p class="stat-value">2 根</p>
+                    </div>
+                </div>
+                <div class="stat-card orange compact">
+                    <div class="stat-content">
+                        <p class="stat-label">昨天</p>
+                        <p class="stat-value">8 根</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Frequency Chart -->
+            <section class="chart-card">
+                <div class="card-header">
+                    <h2 class="card-title">抽烟次数</h2>
+                    <div class="chart-tabs">
+                        <button class="tab active">日</button>
+                        <button class="tab">周</button>
+                        <button class="tab">月</button>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="bar-wrapper">
+                        <div class="bar" style="height: 60%">
+                            <span class="bar-value">3</span>
+                        </div>
+                        <span class="bar-label">周一</span>
+                    </div>
+                    <div class="bar-wrapper">
+                        <div class="bar" style="height: 80%">
+                            <span class="bar-value">4</span>
+                        </div>
+                        <span class="bar-label">周二</span>
+                    </div>
+                    <div class="bar-wrapper">
+                        <div class="bar" style="height: 40%">
+                            <span class="bar-value">2</span>
+                        </div>
+                        <span class="bar-label">周三</span>
+                    </div>
+                    <div class="bar-wrapper">
+                        <div class="bar" style="height: 100%">
+                            <span class="bar-value">5</span>
+                        </div>
+                        <span class="bar-label">周四</span>
+                    </div>
+                    <div class="bar-wrapper">
+                        <div class="bar" style="height: 70%">
+                            <span class="bar-value">4</span>
+                        </div>
+                        <span class="bar-label">周五</span>
+                    </div>
+                    <div class="bar-wrapper">
+                        <div class="bar" style="height: 50%">
+                            <span class="bar-value">3</span>
+                        </div>
+                        <span class="bar-label">周六</span>
+                    </div>
+                    <div class="bar-wrapper">
+                        <div class="bar" style="height: 30%">
+                            <span class="bar-value">2</span>
+                        </div>
+                        <span class="bar-label">周日</span>
+                    </div>
+                </div>
+                <div class="chart-summary">
+                    <span class="summary-label">总抽烟根数</span>
+                    <span class="summary-value">23 根</span>
+                </div>
+                <a href="smoking-records.html" class="view-detail">查看详情</a>
+            </section>
+
+            <!-- Purchase List -->
+            <section class="purchase-card">
+                <div class="card-header">
+                    <h2 class="card-title">购烟明细</h2>
+                    <a href="purchase-history.html" class="view-detail simple">更多</a>
+                </div>
+                <div class="purchase-form">
+                    <input type="text" placeholder="品牌" class="purchase-input" />
+                    <input type="text" placeholder="金额" class="purchase-input" />
+                    <button class="add-purchase-btn">
+                        <img src="icon/plus.svg" class="add-icon" />
+                    </button>
+                </div>
+                <div class="purchase-list">
+                    <div class="purchase-item">
+                        <div class="purchase-icon">
+                            <img src="icon/cigarette.svg" class="item-icon" />
+                        </div>
+                        <div class="purchase-info">
+                            <span class="purchase-brand">中华</span>
+                            <span class="purchase-time">2024-01-15</span>
+                        </div>
+                        <span class="purchase-amount">¥65</span>
+                    </div>
+                    <div class="purchase-item">
+                        <div class="purchase-icon">
+                            <img src="icon/cigarette.svg" class="item-icon" />
+                        </div>
+                        <div class="purchase-info">
+                            <span class="purchase-brand">黄鹤楼</span>
+                            <span class="purchase-time">2024-01-12</span>
+                        </div>
+                        <span class="purchase-amount">¥45</span>
+                    </div>
+                    <div class="purchase-item">
+                        <div class="purchase-icon">
+                            <img src="icon/cigarette.svg" class="item-icon" />
+                        </div>
+                        <div class="purchase-info">
+                            <span class="purchase-brand">红塔山</span>
+                            <span class="purchase-time">2024-01-10</span>
+                        </div>
+                        <span class="purchase-amount">¥20</span>
+                    </div>
+                </div>
+                <div class="purchase-summary">
+                    <span class="summary-label">总花费</span>
+                    <span class="summary-value">¥130</span>
+                </div>
+            </section>
+        </main>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <a href="index.html" class="nav-item">
+                <img src="icon/home.svg" class="nav-icon-bottom" />
+                <span class="nav-text">首页</span>
+            </a>
+            <a href="smoking.html" class="nav-item active">
+                <img src="icon/smoking.svg" class="nav-icon-bottom" />
+                <span class="nav-text">戒烟</span>
+            </a>
+            <a href="daily.html" class="nav-item">
+                <img src="icon/calendar.svg" class="nav-icon-bottom" />
+                <span class="nav-text">日常</span>
+            </a>
+            <a href="spending.html" class="nav-item">
+                <img src="icon/wallet.svg" class="nav-icon-bottom" />
+                <span class="nav-text">消费</span>
+            </a>
+            <a href="profile.html" class="nav-item">
+                <img src="icon/user.svg" class="nav-icon-bottom" />
+                <span class="nav-text">我的</span>
+            </a>
+        </nav>
+    </div>
+</body>
+</html>

@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>日常 - Serene Habits</title>
+    <link href="css/common.css" rel="stylesheet"/>
+    <link href="css/daily.css" rel="stylesheet"/>
+</head>
+<body>
+    <div class="page-container">
+        <!-- Top Navigation Bar -->
+        <nav class="top-nav">
+            <div class="avatar-mini">
+                <img src="icon/user.svg" class="avatar-img" />
+            </div>
+            <div class="search-bar">
+                <img src="icon/search.svg" class="search-icon" />
+                <input type="text" placeholder="搜索记录..." class="search-input" />
+            </div>
+            <a href="#" class="message-btn">
+    <img src="icon/mail.svg" class="message-icon" />
+    <span class="notification-dot"></span>
+</a>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Record Input Card -->
+            <section class="input-card">
+                <div class="input-group">
+                    <input type="text" placeholder="记录你的日常..." class="daily-input" />
+                    <button class="add-btn">
+                        <img src="icon/plus.svg" class="add-icon" />
+                    </button>
+                </div>
+                <div class="input-row">
+                    <div class="time-select" id="timePickerBtn">
+                        <img src="icon/clock.svg" class="select-icon" />
+                        <span class="select-value">09:00</span>
+                        <img src="icon/chevron-down.svg" class="select-arrow" />
+                    </div>
+                    <div class="category-select">
+                        <img src="icon/tag.svg" class="select-icon" />
+                        <select class="select-input">
+                            <option>打游戏</option>
+                            <option>玩手机</option>
+                            <option>睡觉</option>
+                            <option>面试</option>
+                            <option>学习</option>
+                            <option>逛街</option>
+                            <option>工作</option>
+                            <option>文档</option>
+                            <option>吃饭</option>
+                            <option>陪孩子</option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Timeline Card -->
+            <section class="timeline-card">
+                <div class="card-header">
+                    <h2 class="card-title">日行程</h2>
+                    <button class="date-btn">选择日</button>
+                </div>
+                <div class="timeline-list">
+                    <div class="timeline-item">
+                        <div class="timeline-dot work"></div>
+                        <div class="timeline-line"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-icon work">
+                                <img src="icon/book-open.svg" class="icon-img" />
+                            </div>
+                            <div class="timeline-info">
+                                <span class="timeline-time">09:00</span>
+                                <span class="timeline-text">完成项目文档</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot break"></div>
+                        <div class="timeline-line"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-icon break">
+                                <img src="icon/coffee.svg" class="icon-img" />
+                            </div>
+                            <div class="timeline-info">
+                                <span class="timeline-time">10:30</span>
+                                <span class="timeline-text">休息时间</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot work"></div>
+                        <div class="timeline-line"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-icon work">
+                                <img src="icon/book-open.svg" class="icon-img" />
+                            </div>
+                            <div class="timeline-info">
+                                <span class="timeline-time">11:00</span>
+                                <span class="timeline-text">团队会议</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-item last">
+                        <div class="timeline-dot entertainment"></div>
+                        <div class="timeline-line"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-icon entertainment">
+                                <img src="icon/gamepad-2.svg" class="icon-img" />
+                            </div>
+                            <div class="timeline-info">
+                                <span class="timeline-time">14:00</span>
+                                <span class="timeline-text">休闲娱乐</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a href="daily-record.html" class="view-history-btn">查看历史记录</a>
+            </section>
+
+            <!-- Analytics Card -->
+            <section class="analytics-card">
+                <h2 class="card-title">分类统计</h2>
+                <div class="chart-container">
+                    <div class="donut-chart">
+                        <svg viewBox="0 0 100 100" class="donut-svg">
+                            <circle cx="50" cy="50" r="40" fill="none" stroke="#EFF6FF" stroke-width="12"/>
+                            <circle cx="50" cy="50" r="40" fill="none" stroke="#0058BE" stroke-width="12" stroke-dasharray="188.5 251.3" stroke-dashoffset="0"/>
+                            <circle cx="50" cy="50" r="40" fill="none" stroke="#10B981" stroke-width="12" stroke-dasharray="62.8 251.3" stroke-dashoffset="-188.5"/>
+                            <circle cx="50" cy="50" r="40" fill="none" stroke="#BFDBFE" stroke-width="12" stroke-dasharray="31.4 251.3" stroke-dashoffset="-251.3"/>
+                        </svg>
+                        <div class="chart-center">
+                            <span class="chart-value">75%</span>
+                            <span class="chart-label">生产力</span>
+                        </div>
+                    </div>
+                    <div class="stats-list">
+                        <div class="stat-row">
+                            <span class="stat-name">学习/工作</span>
+                            <span class="stat-value">6小时</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-name">休息/娱乐</span>
+                            <span class="stat-value">2小时</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-name">饮食</span>
+                            <span class="stat-value">1小时</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-name">其它</span>
+                            <span class="stat-value">1小时</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <a href="index.html" class="nav-item">
+                <img src="icon/home.svg" class="nav-icon-bottom" />
+                <span class="nav-text">首页</span>
+            </a>
+            <a href="smoking.html" class="nav-item">
+                <img src="icon/smoking.svg" class="nav-icon-bottom" />
+                <span class="nav-text">戒烟</span>
+            </a>
+            <a href="daily.html" class="nav-item active">
+                <img src="icon/calendar.svg" class="nav-icon-bottom" />
+                <span class="nav-text">日常</span>
+            </a>
+            <a href="spending.html" class="nav-item">
+                <img src="icon/wallet.svg" class="nav-icon-bottom" />
+                <span class="nav-text">消费</span>
+            </a>
+            <a href="profile.html" class="nav-item">
+                <img src="icon/user.svg" class="nav-icon-bottom" />
+                <span class="nav-text">我的</span>
+            </a>
+        </nav>
+        </div>
+
+        <!-- Time Picker Overlay -->
+        <div class="time-picker-overlay" id="timePickerOverlay" style="display: none;">
+            <div class="time-picker-modal">
+                <div class="modal-header">
+                    <span class="modal-title">选择时间</span>
+                    <button class="modal-now" id="modalNow">现在</button>
+                </div>
+                <div class="modal-content">
+                    <div class="picker-row">
+                        <div class="picker-column">
+                            <span class="picker-label">年</span>
+                            <div class="picker-scroll" id="yearScroll">
+                                <span class="picker-item">2024</span>
+                                <span class="picker-item active">2025</span>
+                                <span class="picker-item">2026</span>
+                            </div>
+                        </div>
+                        <div class="picker-column">
+                            <span class="picker-label">月</span>
+                            <div class="picker-scroll" id="monthScroll">
+                                <span class="picker-item">1</span>
+                                <span class="picker-item">2</span>
+                                <span class="picker-item">3</span>
+                                <span class="picker-item">4</span>
+                                <span class="picker-item">5</span>
+                                <span class="picker-item active">6</span>
+                                <span class="picker-item">7</span>
+                                <span class="picker-item">8</span>
+                                <span class="picker-item">9</span>
+                                <span class="picker-item">10</span>
+                                <span class="picker-item">11</span>
+                                <span class="picker-item">12</span>
+                            </div>
+                        </div>
+                        <div class="picker-column">
+                            <span class="picker-label">日</span>
+                            <div class="picker-scroll" id="dayScroll">
+                                <span class="picker-item">1</span>
+                                <span class="picker-item">2</span>
+                                <span class="picker-item">3</span>
+                                <span class="picker-item">4</span>
+                                <span class="picker-item">5</span>
+                                <span class="picker-item">6</span>
+                                <span class="picker-item active">7</span>
+                                <span class="picker-item">8</span>
+                                <span class="picker-item">9</span>
+                                <span class="picker-item">10</span>
+                                <span class="picker-item">11</span>
+                                <span class="picker-item">12</span>
+                                <span class="picker-item">13</span>
+                                <span class="picker-item">14</span>
+                                <span class="picker-item">15</span>
+                                <span class="picker-item">16</span>
+                                <span class="picker-item">17</span>
+                                <span class="picker-item">18</span>
+                                <span class="picker-item">19</span>
+                                <span class="picker-item">20</span>
+                                <span class="picker-item">21</span>
+                                <span class="picker-item">22</span>
+                                <span class="picker-item">23</span>
+                                <span class="picker-item">24</span>
+                                <span class="picker-item">25</span>
+                                <span class="picker-item">26</span>
+                                <span class="picker-item">27</span>
+                                <span class="picker-item">28</span>
+                                <span class="picker-item">29</span>
+                                <span class="picker-item">30</span>
+                                <span class="picker-item">31</span>
+                            </div>
+                        </div>
+                        <div class="picker-column">
+                            <span class="picker-label">时</span>
+                            <div class="picker-scroll" id="hourScroll">
+                                <span class="picker-item">0</span>
+                                <span class="picker-item">1</span>
+                                <span class="picker-item">2</span>
+                                <span class="picker-item">3</span>
+                                <span class="picker-item">4</span>
+                                <span class="picker-item">5</span>
+                                <span class="picker-item">6</span>
+                                <span class="picker-item">7</span>
+                                <span class="picker-item">8</span>
+                                <span class="picker-item active">9</span>
+                                <span class="picker-item">10</span>
+                                <span class="picker-item">11</span>
+                                <span class="picker-item">12</span>
+                                <span class="picker-item">13</span>
+                                <span class="picker-item">14</span>
+                                <span class="picker-item">15</span>
+                                <span class="picker-item">16</span>
+                                <span class="picker-item">17</span>
+                                <span class="picker-item">18</span>
+                                <span class="picker-item">19</span>
+                                <span class="picker-item">20</span>
+                                <span class="picker-item">21</span>
+                                <span class="picker-item">22</span>
+                                <span class="picker-item">23</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="modal-confirm" id="modalConfirm">确定</button>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            // Time Picker Functions
+            const timePickerBtn = document.getElementById('timePickerBtn');
+            const timePickerOverlay = document.getElementById('timePickerOverlay');
+            const modalNow = document.getElementById('modalNow');
+            const modalConfirm = document.getElementById('modalConfirm');
+            const selectValue = document.querySelector('.select-value');
+
+            timePickerBtn.addEventListener('click', function() {
+                timePickerOverlay.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            });
+
+            modalNow.addEventListener('click', function() {
+                const now = new Date();
+                const year = now.getFullYear();
+                const month = now.getMonth() + 1;
+                const day = now.getDate();
+                const hour = now.getHours();
+                
+                document.querySelector('#yearScroll .picker-item.active').classList.remove('active');
+                document.querySelector('#yearScroll .picker-item:nth-child(' + (year - 2023) + ')')?.classList.add('active');
+                
+                document.querySelector('#monthScroll .picker-item.active').classList.remove('active');
+                document.querySelector('#monthScroll .picker-item:nth-child(' + month + ')')?.classList.add('active');
+                
+                document.querySelector('#dayScroll .picker-item.active').classList.remove('active');
+                document.querySelector('#dayScroll .picker-item:nth-child(' + day + ')')?.classList.add('active');
+                
+                document.querySelector('#hourScroll .picker-item.active').classList.remove('active');
+                document.querySelector('#hourScroll .picker-item:nth-child(' + (hour + 1) + ')')?.classList.add('active');
+                
+                selectValue.textContent = String(hour).padStart(2, '0') + ':00';
+                timePickerOverlay.style.display = 'none';
+                document.body.style.overflow = '';
+            });
+
+            modalConfirm.addEventListener('click', function() {
+                const activeItems = document.querySelectorAll('.picker-item.active');
+                const year = activeItems[0].textContent;
+                const month = String(Number(activeItems[1].textContent)).padStart(2, '0');
+                const day = String(Number(activeItems[2].textContent)).padStart(2, '0');
+                const hour = String(Number(activeItems[3].textContent)).padStart(2, '0');
+                
+                selectValue.textContent = hour + ':00';
+                timePickerOverlay.style.display = 'none';
+                document.body.style.overflow = '';
+            });
+
+            timePickerOverlay.addEventListener('click', function(e) {
+                if (e.target === timePickerOverlay) {
+                    timePickerOverlay.style.display = 'none';
+                    document.body.style.overflow = '';
+                }
+            });
+
+            // Add click handlers for picker items
+            document.querySelectorAll('.picker-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    const parentScroll = this.parentElement;
+                    parentScroll.querySelectorAll('.picker-item').forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        </script>
+    </div>
+</body>
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>首页 - Serene Habits</title>
+    <link href="css/common.css" rel="stylesheet"/>
+    <link href="css/index.css" rel="stylesheet"/>
+</head>
+<body>
+    <div class="page-container">
+        <!-- Top Navigation Bar -->
+        <nav class="top-nav">
+            <div class="avatar-mini">
+                <img src="icon/user.svg" class="avatar-img" />
+            </div>
+            <div class="search-bar">
+                <div class="search-icon-wrapper">
+                    <img src="icon/search.svg" class="search-icon" />
+                </div>
+                <input type="text" placeholder="搜索记录..." class="search-input" />
+            </div>
+            <div class="nav-actions">
+                <a href="#" class="action-btn">
+                    <img src="icon/mail.svg" class="action-icon" />
+                </a>
+                <a href="#" class="action-btn primary">
+                    <img src="icon/plus.svg" class="action-icon" />
+                </a>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Welcome Card -->
+            <section class="welcome-card">
+                <h1 class="welcome-title">早上好，Alex</h1>
+                <p class="welcome-desc">今天也要保持良好习惯哦！</p>
+                <div class="quick-stats">
+                    <div class="quick-stat">
+                        <span class="stat-num">15</span>
+                        <span class="stat-label">连续天数</span>
+                    </div>
+                    <div class="quick-stat">
+                        <span class="stat-num">85%</span>
+                        <span class="stat-label">完成率</span>
+                    </div>
+                    <div class="quick-stat">
+                        <span class="stat-num">3</span>
+                        <span class="stat-label">今日任务</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recent Activity -->
+            <section class="activity-section">
+                <div class="section-header">
+                    <h2 class="section-title">最近活动</h2>
+                    <a href="#" class="view-all">查看全部</a>
+                </div>
+                <div class="activity-list">
+                    <div class="activity-card">
+                        <div class="activity-icon water">
+                            <img src="icon/water.svg" class="icon-img" />
+                        </div>
+                        <div class="activity-content">
+                            <h3 class="activity-title">补充水分</h3>
+                            <p class="activity-desc">已喝 6/8 杯</p>
+                        </div>
+                        <img src="icon/chevron-right.svg" class="arrow-icon" />
+                    </div>
+                    <div class="activity-card">
+                        <div class="activity-icon breathe">
+                            <img src="icon/wind.svg" class="icon-img" />
+                        </div>
+                        <div class="activity-content">
+                            <h3 class="activity-title">深呼吸练习</h3>
+                            <p class="activity-desc">今日未完成</p>
+                        </div>
+                        <img src="icon/chevron-right.svg" class="arrow-icon" />
+                    </div>
+                    <div class="activity-card">
+                        <div class="activity-icon checkin">
+                            <img src="icon/check-circle.svg" class="icon-img" />
+                        </div>
+                        <div class="activity-content">
+                            <h3 class="activity-title">打卡记录</h3>
+                            <p class="activity-desc">今日已完成</p>
+                        </div>
+                        <img src="icon/chevron-right.svg" class="arrow-icon" />
+                    </div>
+                </div>
+            </section>
+
+            <!-- Habit Progress -->
+            <section class="progress-section">
+                <div class="section-header">
+                    <h2 class="section-title">习惯进度</h2>
+                </div>
+                <div class="progress-grid">
+                    <div class="progress-card">
+                        <div class="progress-ring">
+                            <svg viewBox="0 0 100 100" class="ring-svg">
+                                <circle cx="50" cy="50" r="40" fill="none" stroke="#EFF6FF" stroke-width="8"/>
+                                <circle cx="50" cy="50" r="40" fill="none" stroke="#0058BE" stroke-width="8" stroke-dasharray="188 251" stroke-dashoffset="0"/>
+                            </svg>
+                            <div class="ring-center">
+                                <span class="ring-value">75%</span>
+                            </div>
+                        </div>
+                        <h3 class="progress-title">戒烟挑战</h3>
+                        <p class="progress-desc">已坚持 15 天</p>
+                    </div>
+                    <div class="progress-card">
+                        <div class="progress-ring">
+                            <svg viewBox="0 0 100 100" class="ring-svg">
+                                <circle cx="50" cy="50" r="40" fill="none" stroke="#DCFCE7" stroke-width="8"/>
+                                <circle cx="50" cy="50" r="40" fill="none" stroke="#10B981" stroke-width="8" stroke-dasharray="201 251" stroke-dashoffset="0"/>
+                            </svg>
+                            <div class="ring-center">
+                                <span class="ring-value">80%</span>
+                            </div>
+                        </div>
+                        <h3 class="progress-title">运动健身</h3>
+                        <p class="progress-desc">本周 5/7 天</p>
+                    </div>
+                    <div class="progress-card">
+                        <div class="progress-ring">
+                            <svg viewBox="0 0 100 100" class="ring-svg">
+                                <circle cx="50" cy="50" r="40" fill="none" stroke="#DBEAFE" stroke-width="8"/>
+                                <circle cx="50" cy="50" r="40" fill="none" stroke="#3B82F6" stroke-width="8" stroke-dasharray="151 251" stroke-dashoffset="0"/>
+                            </svg>
+                            <div class="ring-center">
+                                <span class="ring-value">60%</span>
+                            </div>
+                        </div>
+                        <h3 class="progress-title">阅读学习</h3>
+                        <p class="progress-desc">本月 12/20 小时</p>
+                    </div>
+                    <div class="progress-card">
+                        <div class="progress-ring">
+                            <svg viewBox="0 0 100 100" class="ring-svg">
+                                <circle cx="50" cy="50" r="40" fill="none" stroke="#FEF3C7" stroke-width="8"/>
+                                <circle cx="50" cy="50" r="40" fill="none" stroke="#F59E0B" stroke-width="8" stroke-dasharray="226 251" stroke-dashoffset="0"/>
+                            </svg>
+                            <div class="ring-center">
+                                <span class="ring-value">90%</span>
+                            </div>
+                        </div>
+                        <h3 class="progress-title">早起打卡</h3>
+                        <p class="progress-desc">本月 27/31 天</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <a href="index.html" class="nav-item active">
+                <img src="icon/home.svg" class="nav-icon-bottom" />
+                <span class="nav-text">首页</span>
+            </a>
+            <a href="smoking.html" class="nav-item">
+                <img src="icon/smoking.svg" class="nav-icon-bottom" />
+                <span class="nav-text">戒烟</span>
+            </a>
+            <a href="daily.html" class="nav-item">
+                <img src="icon/calendar.svg" class="nav-icon-bottom" />
+                <span class="nav-text">日常</span>
+            </a>
+            <a href="spending.html" class="nav-item">
+                <img src="icon/wallet.svg" class="nav-icon-bottom" />
+                <span class="nav-text">消费</span>
+            </a>
+            <a href="profile.html" class="nav-item">
+                <img src="icon/user.svg" class="nav-icon-bottom" />
+                <span class="nav-text">我的</span>
+            </a>
+        </nav>
+    </div>
+</body>
+</html>

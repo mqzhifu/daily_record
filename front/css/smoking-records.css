@@ -1,0 +1,214 @@
+/* Smoking Records Page Styles - Serene Habits */
+
+/* Global Variables */
+:root {
+    --primary: #0058BE;
+    --secondary: #EFF6FF;
+    --bg-page: #F7F9FB;
+    --bg-card: #FFFFFF;
+    --text-primary: #0F172A;
+    --text-secondary: #64748B;
+    --text-muted: #94A3B8;
+    --danger: #EF4444;
+    --danger-bg: #FFF1F1;
+    --radius-card: 24px;
+    --radius-btn: 16px;
+    --shadow-card: 0 10px 40px rgba(0, 88, 190, 0.05);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Manrope', system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-page);
+    min-height: 100vh;
+}
+
+.page-container {
+    max-width: 440px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Top Navigation Bar */
+.top-nav {
+    height: 64px;
+    background-color: var(--bg-card);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+}
+
+.back-btn {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: #F1F3F5;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.back-btn:hover {
+    background-color: #E2E8F0;
+}
+
+.back-icon {
+    width: 18px;
+    height: 18px;
+    color: var(--text-primary);
+}
+
+.nav-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-primary);
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.nav-placeholder {
+    width: 40px;
+    height: 40px;
+}
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    padding: 24px;
+    padding-top: 80px;
+}
+
+/* Stats Grid */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.stat-card {
+    border-radius: var(--radius-card);
+    padding: 12px 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: none;
+}
+
+.stat-card:nth-child(1) {
+    background-color: #E0F2FE;
+    color: #0369A1;
+}
+
+.stat-card:nth-child(2) {
+    background-color: #DCFCE7;
+    color: #166534;
+}
+
+.stat-card:nth-child(3) {
+    background-color: #FEF9C3;
+    color: #854D0E;
+}
+
+.stat-label {
+    font-size: 12px;
+    font-weight: 500;
+    opacity: 0.9;
+    margin-bottom: 8px;
+}
+
+.stat-value {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.stat-unit {
+    font-size: 12px;
+    font-weight: 500;
+    opacity: 0.9;
+}
+
+/* Date Group */
+.date-group {
+    margin-bottom: 32px;
+}
+
+.date-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.date-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.date-line {
+    width: 4px;
+    height: 24px;
+    background-color: var(--primary);
+    border-radius: 2px;
+}
+
+.date-text {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.date-count {
+    background-color: var(--secondary);
+    color: var(--primary);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 9999px;
+}
+
+/* Timeline List */
+.timeline-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+.timeline-item {
+    background-color: white;
+    border-radius: var(--radius-card);
+    padding: 12px 8px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.timeline-item .time {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+}
+
+.timeline-item .tag {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+
