@@ -138,13 +138,13 @@
 
 .col-category {
     width: 30%;
-    text-align: right;
+    text-align: center;
 }
 
 /* Record Row */
 .record-row {
     display: flex;
-    height: 92px;
+    height: 60px;
     padding: 0 16px;
     align-items: center;
     border-bottom: 1px solid #eeeeee;
@@ -171,7 +171,7 @@
 
 .record-row .cell-category {
     width: 30%;
-    text-align: right;
+    text-align: center;
 }
 
 /* Category Tags */
@@ -216,12 +216,12 @@
     right: 0;
     top: 0;
     bottom: 0;
-    width: 150px;
+    width: 100px;
     background-color: #c91014;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 6px;
 }
 
 .delete-icon {

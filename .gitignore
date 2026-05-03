@@ -1,0 +1,9 @@
+.idea/
+config/config.toml
+node_modules
+package.json
+package-lock.json
+vendor
+.DS_Store
+desktop.ini
+docs

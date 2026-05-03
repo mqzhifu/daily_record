@@ -413,6 +413,55 @@ body {
     border-color: var(--primary);
 }
 
+.category-select {
+    flex: 1;
+    position: relative;
+}
+
+.category-select .select-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 14px;
+    height: 14px;
+    color: var(--text-secondary);
+    pointer-events: none;
+}
+
+.select-input {
+    width: 100%;
+    height: 44px;
+    background-color: #F1F3F5;
+    border-radius: var(--radius-btn);
+    border: none;
+    padding: 0 12px 0 36px;
+    font-size: 14px;
+    outline: none;
+    cursor: pointer;
+    appearance: none;
+    color: var(--text-primary);
+    position: relative;
+}
+
+.select-input:focus {
+    box-shadow: 0 0 0 2px rgba(0, 88, 190, 0.2);
+}
+
+.category-select::after {
+    content: '';
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid var(--text-secondary);
+    pointer-events: none;
+}
+
 .select-icon {
     width: 16px;
     height: 16px;

@@ -37,12 +37,13 @@
                 <div class="input-row">
                     <div class="time-select" id="timePickerBtn">
                         <img src="icon/clock.svg" class="select-icon" />
-                        <span class="select-value">09:00</span>
+                        <span class="select-value" id="timeValue">2025-06-07 09:00</span>
                         <img src="icon/chevron-down.svg" class="select-arrow" />
                     </div>
                     <div class="category-select">
                         <img src="icon/tag.svg" class="select-icon" />
                         <select class="select-input">
+                            <option selected>任意</option>
                             <option>打游戏</option>
                             <option>玩手机</option>
                             <option>睡觉</option>
@@ -299,6 +300,32 @@
             const modalConfirm = document.getElementById('modalConfirm');
             const selectValue = document.querySelector('.select-value');
 
+            // Initialize with current date and time
+            const initCurrentDateTime = function() {
+                const now = new Date();
+                const year = now.getFullYear();
+                const month = String(now.getMonth() + 1).padStart(2, '0');
+                const day = String(now.getDate()).padStart(2, '0');
+                const hour = String(now.getHours()).padStart(2, '0');
+                
+                selectValue.textContent = year + '-' + month + '-' + day + ' ' + hour + ':00';
+                
+                document.querySelector('#yearScroll .picker-item.active')?.classList.remove('active');
+                document.querySelector('#yearScroll .picker-item:nth-child(' + (year - 2023) + ')')?.classList.add('active');
+                
+                document.querySelector('#monthScroll .picker-item.active')?.classList.remove('active');
+                document.querySelector('#monthScroll .picker-item:nth-child(' + (now.getMonth() + 1) + ')')?.classList.add('active');
+                
+                document.querySelector('#dayScroll .picker-item.active')?.classList.remove('active');
+                document.querySelector('#dayScroll .picker-item:nth-child(' + now.getDate() + ')')?.classList.add('active');
+                
+                document.querySelector('#hourScroll .picker-item.active')?.classList.remove('active');
+                document.querySelector('#hourScroll .picker-item:nth-child(' + (now.getHours() + 1) + ')')?.classList.add('active');
+            };
+
+            // Run initialization
+            initCurrentDateTime();
+
             timePickerBtn.addEventListener('click', function() {
                 timePickerOverlay.style.display = 'block';
                 document.body.style.overflow = 'hidden';
@@ -323,7 +350,7 @@
                 document.querySelector('#hourScroll .picker-item.active').classList.remove('active');
                 document.querySelector('#hourScroll .picker-item:nth-child(' + (hour + 1) + ')')?.classList.add('active');
                 
-                selectValue.textContent = String(hour).padStart(2, '0') + ':00';
+                selectValue.textContent = year + '-' + String(month).padStart(2, '0') + '-' + String(day).padStart(2, '0') + ' ' + String(hour).padStart(2, '0') + ':00';
                 timePickerOverlay.style.display = 'none';
                 document.body.style.overflow = '';
             });
@@ -335,7 +362,7 @@
                 const day = String(Number(activeItems[2].textContent)).padStart(2, '0');
                 const hour = String(Number(activeItems[3].textContent)).padStart(2, '0');
                 
-                selectValue.textContent = hour + ':00';
+                selectValue.textContent = year + '-' + month + '-' + day + ' ' + hour + ':00';
                 timePickerOverlay.style.display = 'none';
                 document.body.style.overflow = '';
             });
@@ -354,6 +381,31 @@
                     parentScroll.querySelectorAll('.picker-item').forEach(i => i.classList.remove('active'));
                     this.classList.add('active');
                 });
+            });
+
+            // Add button click handler with validation
+            const addBtn = document.querySelector('.add-btn');
+            const dailyInput = document.querySelector('.daily-input');
+            
+            addBtn.addEventListener('click', function() {
+                const recordText = dailyInput.value.trim();
+                const timeValue = selectValue.textContent.trim();
+                
+                if (!recordText) {
+                    alert('请输入记录内容');
+                    dailyInput.focus();
+                    return;
+                }
+                
+                if (!timeValue) {
+                    alert('请选择时间');
+                    return;
+                }
+                
+                // If validation passes, you can proceed with adding the record
+                alert('记录成功！\n内容: ' + recordText + '\n时间: ' + timeValue);
+                // Clear input after successful submission
+                dailyInput.value = '';
             });
         </script>
     </div>
