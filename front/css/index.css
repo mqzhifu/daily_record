@@ -29,11 +29,14 @@ body {
 }
 
 .page-container {
+    width: 100%;
+    min-width: 320px;
     max-width: 440px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    overflow-x: hidden;
 }
 
 
@@ -49,23 +52,31 @@ body {
 .welcome-card {
     background-color: var(--bg-card);
     border-radius: var(--radius-card);
-    padding: 32px;
-    margin-bottom: 32px;
+    padding: 16px;
+    margin-bottom: 16px;
     box-shadow: var(--shadow-card);
 }
 
 .welcome-title {
-    font-size: 32px;
+    font-size: 24px;
     font-weight: 700;
     color: var(--text-primary);
     margin-bottom: 8px;
 }
 
 .welcome-desc {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
     color: var(--text-secondary);
-    margin-bottom: 24px;
+    margin-bottom: 0;
+}
+
+.quick-stats-card {
+    background-color: var(--bg-card);
+    border-radius: var(--radius-card);
+    padding: 14px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow-card);
 }
 
 .quick-stats {
@@ -122,13 +133,13 @@ body {
 .activity-list {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 8px;
 }
 
 .activity-card {
     background-color: var(--bg-card);
     border-radius: var(--radius-btn);
-    padding: 20px;
+    padding: 14px;
     display: flex;
     align-items: center;
     gap: 16px;
@@ -287,6 +298,7 @@ body {
 
 /* Progress Section */
 .progress-section {
+    margin-top: 16px;
     margin-bottom: 32px;
 }
 

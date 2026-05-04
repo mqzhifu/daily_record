@@ -12,10 +12,7 @@
     
     <div class="container">
         <div class="card">
-            <div class="header">
-                <h1 class="title">登录</h1>
-                <p class="subtitle">欢迎回来，请登录您的账号</p>
-            </div>
+            <h1 class="title" style="display: none;">登陆</h1>
 
             <form class="form">
                 <div class="form-group">
@@ -30,8 +27,8 @@
                     <label>密码</label>
                     <div class="input-wrapper">
                         <img src="icon/lock.svg" class="input-icon-left" />
-                        <input type="password" placeholder="请输入密码" />
-                        <img src="icon/visibility.svg" class="input-icon-right" />
+                        <input type="password" id="password-input" placeholder="请输入密码" />
+                        <img src="icon/visibility.svg" id="toggle-password" class="input-icon-right" />
                     </div>
                 </div>
 
@@ -50,20 +47,35 @@
             </div>
 
             <div class="social-login">
-                <button class="btn-secondary">
-                    <img src="icon/message.svg" class="social-icon" />
-                    <span>微信</span>
-                </button>
-                <button class="btn-secondary">
-                    <img src="icon/video_library.svg" class="social-icon" />
-                    <span>抖音</span>
-                </button>
+                <button class="btn-wechat">
+                <img src="icon/wechat.svg" class="social-icon" />
+                <span>微信</span>
+            </button>
+            <button class="btn-douyin">
+                <img src="icon/douyin.svg" class="social-icon" />
+                <span>抖音</span>
+            </button>
             </div>
 
             <p class="link-text-center">
-                还没有账号？ <a href="register.html" class="link">立即注册</a>
+                已有账号？ <a href="register.html" class="link">立即注册</a>
             </p>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const passwordInput = document.getElementById('password-input');
+            const togglePassword = document.getElementById('toggle-password');
+            
+            togglePassword.addEventListener('click', function() {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                
+                const iconSrc = type === 'password' ? 'icon/visibility.svg' : 'icon/visibility_off.svg';
+                togglePassword.setAttribute('src', iconSrc);
+            });
+        });
+    </script>
 </body>
 </html>

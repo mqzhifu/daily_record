@@ -37,8 +37,7 @@
                 <div class="input-row">
                     <div class="time-select" id="timePickerBtn">
                         <img src="icon/clock.svg" class="select-icon" />
-                        <span class="select-value" id="timeValue">2025-06-07 09:00</span>
-                        <img src="icon/chevron-down.svg" class="select-arrow" />
+                        <span class="select-value" id="timeValue">06-07 09:00</span>
                     </div>
                     <div class="category-select">
                         <img src="icon/tag.svg" class="select-icon" />
@@ -63,6 +62,7 @@
             <section class="timeline-card">
                 <div class="card-header">
                     <h2 class="card-title">日行程</h2>
+                    <span class="current-date">2026-04-05</span>
                     <button class="date-btn">选择日</button>
                 </div>
                 <div class="timeline-list">
@@ -119,7 +119,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="daily-record.html" class="view-history-btn">查看历史记录</a>
+                <a href="daily-record.html" class="more-link">更多</a>
             </section>
 
             <!-- Analytics Card -->
@@ -160,6 +160,9 @@
             </section>
         </main>
 
+        <!-- Toast Notification -->
+        <div class="toast-container" id="toastContainer"></div>
+
         <!-- Bottom Navigation -->
         <nav class="bottom-nav">
             <a href="index.html" class="nav-item">
@@ -167,7 +170,7 @@
                 <span class="nav-text">首页</span>
             </a>
             <a href="smoking.html" class="nav-item">
-                <img src="icon/smoking.svg" class="nav-icon-bottom" />
+                <img src="icon/cigarette.svg" class="nav-icon-bottom" />
                 <span class="nav-text">戒烟</span>
             </a>
             <a href="daily.html" class="nav-item active">
@@ -175,7 +178,7 @@
                 <span class="nav-text">日常</span>
             </a>
             <a href="spending.html" class="nav-item">
-                <img src="icon/wallet.svg" class="nav-icon-bottom" />
+                <img src="icon/shopping-bag.svg" class="nav-icon-bottom" />
                 <span class="nav-text">消费</span>
             </a>
             <a href="profile.html" class="nav-item">
@@ -183,6 +186,84 @@
                 <span class="nav-text">我的</span>
             </a>
         </nav>
+        </div>
+
+        <!-- Date Picker Overlay -->
+        <div class="time-picker-overlay" id="datePickerOverlay" style="display: none;">
+            <div class="time-picker-modal">
+                <div class="modal-header">
+                    <span class="modal-title">选择日期</span>
+                    <button class="modal-now" id="dateModalNow">今天</button>
+                </div>
+                <div class="modal-content">
+                    <div class="picker-row">
+                        <div class="picker-column">
+                            <span class="picker-label">年</span>
+                            <div class="picker-scroll" id="dateYearScroll">
+                                <span class="picker-item">2024</span>
+                                <span class="picker-item active">2025</span>
+                                <span class="picker-item">2026</span>
+                            </div>
+                        </div>
+                        <div class="picker-column">
+                            <span class="picker-label">月</span>
+                            <div class="picker-scroll" id="dateMonthScroll">
+                                <span class="picker-item">1</span>
+                                <span class="picker-item">2</span>
+                                <span class="picker-item">3</span>
+                                <span class="picker-item">4</span>
+                                <span class="picker-item">5</span>
+                                <span class="picker-item">6</span>
+                                <span class="picker-item">7</span>
+                                <span class="picker-item">8</span>
+                                <span class="picker-item">9</span>
+                                <span class="picker-item">10</span>
+                                <span class="picker-item">11</span>
+                                <span class="picker-item">12</span>
+                            </div>
+                        </div>
+                        <div class="picker-column">
+                            <span class="picker-label">日</span>
+                            <div class="picker-scroll" id="dateDayScroll">
+                                <span class="picker-item">1</span>
+                                <span class="picker-item">2</span>
+                                <span class="picker-item">3</span>
+                                <span class="picker-item">4</span>
+                                <span class="picker-item">5</span>
+                                <span class="picker-item">6</span>
+                                <span class="picker-item">7</span>
+                                <span class="picker-item">8</span>
+                                <span class="picker-item">9</span>
+                                <span class="picker-item">10</span>
+                                <span class="picker-item">11</span>
+                                <span class="picker-item">12</span>
+                                <span class="picker-item">13</span>
+                                <span class="picker-item">14</span>
+                                <span class="picker-item">15</span>
+                                <span class="picker-item">16</span>
+                                <span class="picker-item">17</span>
+                                <span class="picker-item">18</span>
+                                <span class="picker-item">19</span>
+                                <span class="picker-item">20</span>
+                                <span class="picker-item">21</span>
+                                <span class="picker-item">22</span>
+                                <span class="picker-item">23</span>
+                                <span class="picker-item">24</span>
+                                <span class="picker-item">25</span>
+                                <span class="picker-item">26</span>
+                                <span class="picker-item">27</span>
+                                <span class="picker-item">28</span>
+                                <span class="picker-item">29</span>
+                                <span class="picker-item">30</span>
+                                <span class="picker-item">31</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="modal-confirm" id="dateModalConfirm">确定</button>
+                </div>
+            </div>
         </div>
 
         <!-- Time Picker Overlay -->
@@ -308,7 +389,7 @@
                 const day = String(now.getDate()).padStart(2, '0');
                 const hour = String(now.getHours()).padStart(2, '0');
                 
-                selectValue.textContent = year + '-' + month + '-' + day + ' ' + hour + ':00';
+                selectValue.textContent = month + '-' + day + ' ' + hour + ':00';
                 
                 document.querySelector('#yearScroll .picker-item.active')?.classList.remove('active');
                 document.querySelector('#yearScroll .picker-item:nth-child(' + (year - 2023) + ')')?.classList.add('active');
@@ -325,6 +406,81 @@
 
             // Run initialization
             initCurrentDateTime();
+
+            // Date Picker Functions
+            const dateBtn = document.querySelector('.date-btn');
+            const datePickerOverlay = document.getElementById('datePickerOverlay');
+            const dateModalNow = document.getElementById('dateModalNow');
+            const dateModalConfirm = document.getElementById('dateModalConfirm');
+            const currentDate = document.querySelector('.current-date');
+
+            // Initialize date picker with current date
+            const initCurrentDate = function() {
+                const now = new Date();
+                const year = now.getFullYear();
+                const month = String(now.getMonth() + 1).padStart(2, '0');
+                const day = String(now.getDate()).padStart(2, '0');
+                
+                currentDate.textContent = year + '-' + month + '-' + day;
+                
+                document.querySelector('#dateYearScroll .picker-item.active')?.classList.remove('active');
+                document.querySelector('#dateYearScroll .picker-item:nth-child(' + (year - 2023) + ')')?.classList.add('active');
+                
+                document.querySelector('#dateMonthScroll .picker-item.active')?.classList.remove('active');
+                document.querySelector('#dateMonthScroll .picker-item:nth-child(' + (now.getMonth() + 1) + ')')?.classList.add('active');
+                
+                document.querySelector('#dateDayScroll .picker-item.active')?.classList.remove('active');
+                document.querySelector('#dateDayScroll .picker-item:nth-child(' + now.getDate() + ')')?.classList.add('active');
+            };
+
+            // Run date initialization
+            initCurrentDate();
+
+            dateBtn.addEventListener('click', function() {
+                datePickerOverlay.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            });
+
+            dateModalNow.addEventListener('click', function() {
+                const now = new Date();
+                const year = now.getFullYear();
+                const month = now.getMonth() + 1;
+                const day = now.getDate();
+                
+                document.querySelector('#dateYearScroll .picker-item.active')?.classList.remove('active');
+                document.querySelector('#dateYearScroll .picker-item:nth-child(' + (year - 2023) + ')')?.classList.add('active');
+                
+                document.querySelector('#dateMonthScroll .picker-item.active')?.classList.remove('active');
+                document.querySelector('#dateMonthScroll .picker-item:nth-child(' + month + ')')?.classList.add('active');
+                
+                document.querySelector('#dateDayScroll .picker-item.active')?.classList.remove('active');
+                document.querySelector('#dateDayScroll .picker-item:nth-child(' + day + ')')?.classList.add('active');
+                
+                currentDate.textContent = year + '-' + String(month).padStart(2, '0') + '-' + String(day).padStart(2, '0');
+                datePickerOverlay.style.display = 'none';
+                document.body.style.overflow = '';
+            });
+
+            dateModalConfirm.addEventListener('click', function() {
+                const yearScroll = document.querySelector('#dateYearScroll');
+                const monthScroll = document.querySelector('#dateMonthScroll');
+                const dayScroll = document.querySelector('#dateDayScroll');
+                
+                const year = yearScroll.querySelector('.picker-item.active').textContent;
+                const month = String(Number(monthScroll.querySelector('.picker-item.active').textContent)).padStart(2, '0');
+                const day = String(Number(dayScroll.querySelector('.picker-item.active').textContent)).padStart(2, '0');
+                
+                currentDate.textContent = year + '-' + month + '-' + day;
+                datePickerOverlay.style.display = 'none';
+                document.body.style.overflow = '';
+            });
+
+            datePickerOverlay.addEventListener('click', function(e) {
+                if (e.target === datePickerOverlay) {
+                    datePickerOverlay.style.display = 'none';
+                    document.body.style.overflow = '';
+                }
+            });
 
             timePickerBtn.addEventListener('click', function() {
                 timePickerOverlay.style.display = 'block';
@@ -350,19 +506,18 @@
                 document.querySelector('#hourScroll .picker-item.active').classList.remove('active');
                 document.querySelector('#hourScroll .picker-item:nth-child(' + (hour + 1) + ')')?.classList.add('active');
                 
-                selectValue.textContent = year + '-' + String(month).padStart(2, '0') + '-' + String(day).padStart(2, '0') + ' ' + String(hour).padStart(2, '0') + ':00';
+                selectValue.textContent = String(month).padStart(2, '0') + '-' + String(day).padStart(2, '0') + ' ' + String(hour).padStart(2, '0') + ':00';
                 timePickerOverlay.style.display = 'none';
                 document.body.style.overflow = '';
             });
 
             modalConfirm.addEventListener('click', function() {
                 const activeItems = document.querySelectorAll('.picker-item.active');
-                const year = activeItems[0].textContent;
                 const month = String(Number(activeItems[1].textContent)).padStart(2, '0');
                 const day = String(Number(activeItems[2].textContent)).padStart(2, '0');
                 const hour = String(Number(activeItems[3].textContent)).padStart(2, '0');
                 
-                selectValue.textContent = year + '-' + month + '-' + day + ' ' + hour + ':00';
+                selectValue.textContent = month + '-' + day + ' ' + hour + ':00';
                 timePickerOverlay.style.display = 'none';
                 document.body.style.overflow = '';
             });
@@ -383,6 +538,26 @@
                 });
             });
 
+            // Toast notification function
+            const showToast = function(message, type = 'info') {
+                const toastContainer = document.getElementById('toastContainer');
+                const toast = document.createElement('div');
+                toast.className = `toast ${type}`;
+                toast.textContent = message;
+                toastContainer.appendChild(toast);
+                
+                setTimeout(() => {
+                    toast.classList.add('show');
+                }, 10);
+                
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                    setTimeout(() => {
+                        toast.remove();
+                    }, 300);
+                }, 2000);
+            };
+
             // Add button click handler with validation
             const addBtn = document.querySelector('.add-btn');
             const dailyInput = document.querySelector('.daily-input');
@@ -392,18 +567,18 @@
                 const timeValue = selectValue.textContent.trim();
                 
                 if (!recordText) {
-                    alert('请输入记录内容');
+                    showToast('请输入记录内容', 'error');
                     dailyInput.focus();
                     return;
                 }
                 
                 if (!timeValue) {
-                    alert('请选择时间');
+                    showToast('请选择时间', 'error');
                     return;
                 }
                 
                 // If validation passes, you can proceed with adding the record
-                alert('记录成功！\n内容: ' + recordText + '\n时间: ' + timeValue);
+                showToast('记录成功！', 'success');
                 // Clear input after successful submission
                 dailyInput.value = '';
             });

@@ -145,7 +145,7 @@
                     </div>
                 </div>
                 <div class="chart-summary">
-                    <span class="summary-label">总抽烟根数</span>
+                    <span class="summary-label">总根数</span>
                     <span class="summary-value">23 根</span>
                 </div>
                 <a href="smoking-records.html" class="view-detail">查看详情</a>
@@ -203,6 +203,9 @@
             </section>
         </main>
 
+        <!-- Toast Notification -->
+        <div class="toast-container" id="toastContainer"></div>
+
         <!-- Bottom Navigation -->
         <nav class="bottom-nav">
             <a href="index.html" class="nav-item">
@@ -210,7 +213,7 @@
                 <span class="nav-text">首页</span>
             </a>
             <a href="smoking.html" class="nav-item active">
-                <img src="icon/smoking.svg" class="nav-icon-bottom" />
+                <img src="icon/cigarette.svg" class="nav-icon-bottom" />
                 <span class="nav-text">戒烟</span>
             </a>
             <a href="daily.html" class="nav-item">
@@ -218,7 +221,7 @@
                 <span class="nav-text">日常</span>
             </a>
             <a href="spending.html" class="nav-item">
-                <img src="icon/wallet.svg" class="nav-icon-bottom" />
+                <img src="icon/shopping-bag.svg" class="nav-icon-bottom" />
                 <span class="nav-text">消费</span>
             </a>
             <a href="profile.html" class="nav-item">
@@ -227,5 +230,61 @@
             </a>
         </nav>
     </div>
+
+    <script>
+        // Toast notification function
+        const showToast = function(message, type = 'info') {
+            const toastContainer = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            toastContainer.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 10);
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    toast.remove();
+                }, 300);
+            }, 2000);
+        };
+
+        // Add purchase button click handler with validation
+        const addPurchaseBtn = document.querySelector('.add-purchase-btn');
+        const purchaseInputs = document.querySelectorAll('.purchase-input');
+        
+        addPurchaseBtn.addEventListener('click', function() {
+            const brand = purchaseInputs[0].value.trim();
+            const amount = purchaseInputs[1].value.trim();
+            
+            if (!brand) {
+                showToast('请输入品牌', 'error');
+                purchaseInputs[0].focus();
+                return;
+            }
+            
+            if (!amount) {
+                showToast('请输入金额', 'error');
+                purchaseInputs[1].focus();
+                return;
+            }
+            
+            // Validate amount is a number
+            if (isNaN(parseFloat(amount))) {
+                showToast('请输入有效的金额', 'error');
+                purchaseInputs[1].focus();
+                return;
+            }
+            
+            // If validation passes, you can proceed with adding the record
+            showToast('记录成功！', 'success');
+            // Clear inputs after successful submission
+            purchaseInputs[0].value = '';
+            purchaseInputs[1].value = '';
+        });
+    </script>
 </body>
 </html>

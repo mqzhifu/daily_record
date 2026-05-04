@@ -38,8 +38,8 @@
                     <label>密码</label>
                     <div class="input-wrapper">
                         <img src="icon/lock.svg" class="input-icon-left" />
-                        <input type="password" placeholder="请输入密码" />
-                        <img src="icon/visibility.svg" class="input-icon-right" />
+                        <input type="password" id="password-input" placeholder="请输入密码" />
+                        <img src="icon/visibility.svg" id="toggle-password" class="input-icon-right" />
                     </div>
                 </div>
 
@@ -47,8 +47,8 @@
                     <label>确认密码</label>
                     <div class="input-wrapper">
                         <img src="icon/lock.svg" class="input-icon-left" />
-                        <input type="password" placeholder="请再次输入密码" />
-                        <img src="icon/visibility.svg" class="input-icon-right" />
+                        <input type="password" id="confirm-password-input" placeholder="请再次输入密码" />
+                        <img src="icon/visibility.svg" id="toggle-confirm-password" class="input-icon-right" />
                     </div>
                 </div>
 
@@ -70,5 +70,31 @@
             </p>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 密码输入框切换
+            const passwordInput = document.getElementById('password-input');
+            const togglePassword = document.getElementById('toggle-password');
+            
+            togglePassword.addEventListener('click', function() {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                const iconSrc = type === 'password' ? 'icon/visibility.svg' : 'icon/visibility_off.svg';
+                togglePassword.setAttribute('src', iconSrc);
+            });
+
+            // 确认密码输入框切换
+            const confirmPasswordInput = document.getElementById('confirm-password-input');
+            const toggleConfirmPassword = document.getElementById('toggle-confirm-password');
+            
+            toggleConfirmPassword.addEventListener('click', function() {
+                const type = confirmPasswordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                confirmPasswordInput.setAttribute('type', type);
+                const iconSrc = type === 'password' ? 'icon/visibility.svg' : 'icon/visibility_off.svg';
+                toggleConfirmPassword.setAttribute('src', iconSrc);
+            });
+        });
+    </script>
 </body>
 </html>

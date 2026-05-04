@@ -177,6 +177,8 @@ body {
     margin-bottom: 20px;
     padding: 24px;
     box-shadow: var(--shadow-card);
+    display: flex;
+    flex-direction: column;
 }
 
 .card-header {
@@ -190,6 +192,15 @@ body {
     font-size: 18px;
     font-weight: 700;
     color: var(--text-primary);
+}
+
+.current-date {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--primary);
+    background-color: rgba(13, 91, 215, 0.1);
+    padding: 6px 12px;
+    border-radius: 8px;
 }
 
 .date-btn {
@@ -328,21 +339,47 @@ body {
 }
 
 .view-history-btn {
-    width: 100%;
+    display: block;
+    width: calc(100% - 32px);
+    max-width: 200px;
     height: 44px;
-    background-color: var(--secondary);
-    color: var(--primary);
+    background-color: var(--primary);
+    color: white;
     border: none;
     border-radius: var(--radius-btn);
     font-size: 14px;
     font-weight: 600;
-    margin-top: 20px;
+    margin-top: auto;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 0;
     cursor: pointer;
     transition: all 0.2s ease;
 }
 
 .view-history-btn:hover {
-    background-color: rgba(0, 88, 190, 0.1);
+    background-color: #004494;
+    opacity: 0.9;
+}
+
+.more-link {
+    display: block;
+    text-align: center;
+    padding: 12px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--primary);
+    text-decoration: none;
+    margin-top: auto;
+    margin-bottom: -24px;
+    margin-left: -24px;
+    margin-right: -24px;
+    background-color: #F8FAFC;
+    border-radius: 0 0 var(--radius-card) var(--radius-card);
+}
+
+.more-link:hover {
+    text-decoration: underline;
 }
 
 /* Analytics Card */
@@ -569,5 +606,42 @@ body {
 
 .modal-confirm:hover {
     opacity: 0.9;
+}
+
+/* Toast Notification Styles */
+.toast-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    pointer-events: none;
+}
+
+.toast {
+    background-color: rgba(15, 23, 42, 0.85);
+    color: white;
+    padding: 16px 24px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transform: translateY(20px) scale(0.9);
+    transition: all 0.3s ease;
+    pointer-events: auto;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.toast.error {
+    background-color: rgba(239, 68, 68, 0.9);
+}
+
+.toast.success {
+    background-color: rgba(16, 185, 129, 0.9);
 }
 

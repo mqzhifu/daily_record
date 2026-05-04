@@ -35,8 +35,7 @@
                 <div class="input-row">
                     <button class="select-btn" id="datePickerBtn">
                         <img src="icon/calendar.svg" class="select-icon" />
-                        <span class="select-value" id="dateValue">2025-06-07 09:00</span>
-                        <img src="icon/arrow-down.svg" class="select-arrow" />
+                        <span class="select-value" id="dateValue">06-07 09:00</span>
                     </button>
                     <div class="category-select">
                         <img src="icon/tag.svg" class="select-icon" />
@@ -165,6 +164,7 @@
                             <span class="item-name">午餐</span>
                             <span class="item-time">12:30</span>
                         </div>
+                        <span class="item-desc">公司楼下餐厅</span>
                         <span class="item-amount">-¥35</span>
                     </div>
                     <div class="list-item">
@@ -175,6 +175,7 @@
                             <span class="item-name">日用品</span>
                             <span class="item-time">14:20</span>
                         </div>
+                        <span class="item-desc">纸巾、牙膏等</span>
                         <span class="item-amount">-¥58</span>
                     </div>
                     <div class="list-item">
@@ -185,6 +186,7 @@
                             <span class="item-name">打车</span>
                             <span class="item-time">18:45</span>
                         </div>
+                        <span class="item-desc">地铁口到家</span>
                         <span class="item-amount">-¥22</span>
                     </div>
                     <div class="list-item">
@@ -195,6 +197,7 @@
                             <span class="item-name">咖啡</span>
                             <span class="item-time">10:15</span>
                         </div>
+                        <span class="item-desc">星巴克拿铁</span>
                         <span class="item-amount">-¥28</span>
                     </div>
                 </div>
@@ -211,6 +214,9 @@
             </section>
         </main>
 
+        <!-- Toast Notification -->
+        <div class="toast-container" id="toastContainer"></div>
+
         <!-- Bottom Navigation -->
         <nav class="bottom-nav">
             <a href="index.html" class="nav-item">
@@ -218,7 +224,7 @@
                 <span class="nav-text">首页</span>
             </a>
             <a href="smoking.html" class="nav-item">
-                <img src="icon/smoking.svg" class="nav-icon-bottom" />
+                <img src="icon/cigarette.svg" class="nav-icon-bottom" />
                 <span class="nav-text">戒烟</span>
             </a>
             <a href="daily.html" class="nav-item">
@@ -226,7 +232,7 @@
                 <span class="nav-text">日常</span>
             </a>
             <a href="spending.html" class="nav-item active">
-                <img src="icon/wallet.svg" class="nav-icon-bottom" />
+                <img src="icon/shopping-bag.svg" class="nav-icon-bottom" />
                 <span class="nav-text">消费</span>
             </a>
             <a href="profile.html" class="nav-item">
@@ -358,7 +364,7 @@
                         const day = String(now.getDate()).padStart(2, '0');
                         const hour = String(now.getHours()).padStart(2, '0');
                         
-                        dateSelectValue.textContent = year + '-' + month + '-' + day + ' ' + hour + ':00';
+                        dateSelectValue.textContent = month + '-' + day + ' ' + hour + ':00';
                         
                         document.querySelector('#yearScroll .picker-item.active')?.classList.remove('active');
                         document.querySelector('#yearScroll .picker-item:nth-child(' + (year - 2023) + ')')?.classList.add('active');
@@ -419,19 +425,18 @@
                         document.querySelector('#hourScroll .picker-item.active')?.classList.remove('active');
                         document.querySelector('#hourScroll .picker-item:nth-child(' + (hour + 1) + ')')?.classList.add('active');
                         
-                        dateSelectValue.textContent = year + '-' + String(month).padStart(2, '0') + '-' + String(day).padStart(2, '0') + ' ' + String(hour).padStart(2, '0') + ':00';
+                        dateSelectValue.textContent = String(month).padStart(2, '0') + '-' + String(day).padStart(2, '0') + ' ' + String(hour).padStart(2, '0') + ':00';
                         datePickerOverlay.style.display = 'none';
                         document.body.style.overflow = '';
                     });
 
                     modalConfirm.addEventListener('click', function() {
                         const activeItems = document.querySelectorAll('.picker-item.active');
-                        const year = activeItems[0].textContent;
                         const month = String(Number(activeItems[1].textContent)).padStart(2, '0');
                         const day = String(Number(activeItems[2].textContent)).padStart(2, '0');
                         const hour = String(Number(activeItems[3].textContent)).padStart(2, '0');
                         
-                        dateSelectValue.textContent = year + '-' + month + '-' + day + ' ' + hour + ':00';
+                        dateSelectValue.textContent = month + '-' + day + ' ' + hour + ':00';
                         datePickerOverlay.style.display = 'none';
                         document.body.style.overflow = '';
                     });
@@ -451,6 +456,26 @@
                         });
                     });
 
+                    // Toast notification function
+                    const showToast = function(message, type = 'info') {
+                        const toastContainer = document.getElementById('toastContainer');
+                        const toast = document.createElement('div');
+                        toast.className = `toast ${type}`;
+                        toast.textContent = message;
+                        toastContainer.appendChild(toast);
+                        
+                        setTimeout(() => {
+                            toast.classList.add('show');
+                        }, 10);
+                        
+                        setTimeout(() => {
+                            toast.classList.remove('show');
+                            setTimeout(() => {
+                                toast.remove();
+                            }, 300);
+                        }, 2000);
+                    };
+
                     // Add record button click handler with validation
                     const addBtn = document.querySelector('.add-btn');
                     const inputItems = document.querySelectorAll('.input-item');
@@ -461,31 +486,31 @@
                         const date = dateSelectValue.textContent.trim();
                         
                         if (!name) {
-                            alert('请输入消费名称');
+                            showToast('请输入消费名称', 'error');
                             inputItems[0].focus();
                             return;
                         }
                         
                         if (!amount) {
-                            alert('请输入金额');
+                            showToast('请输入金额', 'error');
                             inputItems[1].focus();
                             return;
                         }
                         
                         // Optional: Validate amount is a number
                         if (isNaN(parseFloat(amount))) {
-                            alert('请输入有效的金额');
+                            showToast('请输入有效的金额', 'error');
                             inputItems[1].focus();
                             return;
                         }
                         
                         if (!date) {
-                            alert('请选择日期');
+                            showToast('请选择日期', 'error');
                             return;
                         }
                         
                         // If validation passes, you can proceed with adding the record
-                        alert('记录成功！\n名称: ' + name + '\n金额: ¥' + amount + '\n日期: ' + date);
+                        showToast('记录成功！', 'success');
                         // Clear inputs after successful submission
                         inputItems[0].value = '';
                         inputItems[1].value = '';
