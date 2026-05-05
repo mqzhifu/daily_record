@@ -511,6 +511,9 @@ body {
 .avatar img.avatar-icon {
     width: 2.5rem;
     height: 2.5rem;
+}
+
+.avatar img.avatar-icon {
     filter: brightness(0) invert(1);
 }
 

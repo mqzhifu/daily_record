@@ -151,6 +151,7 @@
                     // 添加时间戳避免缓存
                     fullAvatarUrl += (fullAvatarUrl.indexOf('?') >= 0 ? '&' : '?') + 't=' + new Date().getTime();
                     $('#topAvatarImg').attr('src', fullAvatarUrl);
+                    $('#topAvatarImg').removeClass('avatar-icon');
                 }
             }
             
