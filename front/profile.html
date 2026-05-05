@@ -4,6 +4,7 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>我的 - Serene Habits</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
     <link href="css/common.css" rel="stylesheet"/>
     <link href="css/styles.css" rel="stylesheet"/>
 </head>
@@ -132,5 +133,21 @@
             <span class="nav-text">我的</span>
         </a>
     </nav>
+    <script src="js/jquery.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        $(document).ready(function() {
+            // 退出登录按钮点击事件
+            $('.logout-btn').on('click', function() {
+                // 清除登录状态
+                localStorage.removeItem('user');
+                localStorage.removeItem('logged_in');
+                localStorage.removeItem('login_time');
+                
+                // 跳转到登录页面
+                window.location.href = 'login.html';
+            });
+        });
+    </script>
 </body>
 </html>

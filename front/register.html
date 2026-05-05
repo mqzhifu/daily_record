@@ -4,9 +4,10 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>注册 - Serene Habits</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
     <link href="css/styles.css" rel="stylesheet"/>
 </head>
-<body>
+<body class="page-register">
     <div class="decor-bg"></div>
     <div class="decor-bg-bottom"></div>
     
@@ -14,7 +15,7 @@
         <div class="card">
             <div class="header">
                 <h1 class="title">注册</h1>
-                <p class="subtitle">创建新账号，开启您的习惯养成之旅</p>
+                <p class="subtitle">创建账号，开启您的健康之旅</p>
             </div>
 
             <form class="form">
@@ -22,7 +23,7 @@
                     <label>用户名</label>
                     <div class="input-wrapper">
                         <img src="icon/person.svg" class="input-icon-left" />
-                        <input type="text" placeholder="请输入用户名" />
+                        <input type="text" id="username" placeholder="请输入用户名" />
                     </div>
                 </div>
 
@@ -30,7 +31,7 @@
                     <label>邮箱</label>
                     <div class="input-wrapper">
                         <img src="icon/mail.svg" class="input-icon-left" />
-                        <input type="email" placeholder="请输入邮箱地址" />
+                        <input type="email" id="email" placeholder="请输入邮箱地址" />
                     </div>
                 </div>
 
@@ -38,7 +39,7 @@
                     <label>密码</label>
                     <div class="input-wrapper">
                         <img src="icon/lock.svg" class="input-icon-left" />
-                        <input type="password" id="password-input" placeholder="请输入密码" />
+                        <input type="password" id="password" placeholder="请输入密码" />
                         <img src="icon/visibility.svg" id="toggle-password" class="input-icon-right" />
                     </div>
                 </div>
@@ -47,7 +48,7 @@
                     <label>确认密码</label>
                     <div class="input-wrapper">
                         <img src="icon/lock.svg" class="input-icon-left" />
-                        <input type="password" id="confirm-password-input" placeholder="请再次输入密码" />
+                        <input type="password" id="confirm-password" placeholder="请再次输入密码" />
                         <img src="icon/visibility.svg" id="toggle-confirm-password" class="input-icon-right" />
                     </div>
                 </div>
@@ -71,30 +72,8 @@
         </div>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // 密码输入框切换
-            const passwordInput = document.getElementById('password-input');
-            const togglePassword = document.getElementById('toggle-password');
-            
-            togglePassword.addEventListener('click', function() {
-                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-                passwordInput.setAttribute('type', type);
-                const iconSrc = type === 'password' ? 'icon/visibility.svg' : 'icon/visibility_off.svg';
-                togglePassword.setAttribute('src', iconSrc);
-            });
-
-            // 确认密码输入框切换
-            const confirmPasswordInput = document.getElementById('confirm-password-input');
-            const toggleConfirmPassword = document.getElementById('toggle-confirm-password');
-            
-            toggleConfirmPassword.addEventListener('click', function() {
-                const type = confirmPasswordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-                confirmPasswordInput.setAttribute('type', type);
-                const iconSrc = type === 'password' ? 'icon/visibility.svg' : 'icon/visibility_off.svg';
-                toggleConfirmPassword.setAttribute('src', iconSrc);
-            });
-        });
-    </script>
+    <script src="js/jquery.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/register.js"></script>
 </body>
 </html>

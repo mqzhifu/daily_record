@@ -1,0 +1,16 @@
+/**
+ * 全局配置文件
+ * 定义应用的全局常量和配置参数
+ */
+var AppConfig = {
+    // 后端API基础地址
+    API_BASE_URL: 'http://localhost:5000/api',
+    
+    // 路由路径
+    ROUTES: {
+        LOGIN: '/login',
+        REGISTER: '/register',
+        INDEX: '/index.html',
+        LOGIN_PAGE: 'login.html'
+    }
+};

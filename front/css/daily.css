@@ -36,12 +36,11 @@ body {
 }
 
 
-
 /* Main Content */
 .main-content {
     flex: 1;
     padding: 16px;
-    padding-top: 80px;
+    padding-top: calc(72px + env(safe-area-inset-top));
 }
 
 /* Input Card */

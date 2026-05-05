@@ -4,8 +4,11 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>戒烟 - Serene Habits</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
     <link href="css/common.css" rel="stylesheet"/>
     <link href="css/smoking.css" rel="stylesheet"/>
+    <script src="js/jquery.js"></script>
+    <script src="js/common.js"></script>
 </head>
 <body>
     <div class="page-container">
@@ -284,6 +287,39 @@
             // Clear inputs after successful submission
             purchaseInputs[0].value = '';
             purchaseInputs[1].value = '';
+        });
+        
+        // 抽一根按钮点击事件
+        $('.smoke-btn').on('click', function() {
+            var user = localStorage.getItem('user');
+            if (!user) {
+                showToast('请先登录', 'error');
+                return;
+            }
+            
+            var userData = JSON.parse(user);
+            var apiUrl = typeof AppConfig !== 'undefined' 
+                ? AppConfig.API_BASE_URL + '/add_smoke_record' 
+                : 'http://localhost:5000/api/add_smoke_record';
+            
+            $.ajax({
+                url: apiUrl,
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    user_id: userData.id
+                }),
+                success: function(response) {
+                    if (response.success) {
+                        showToast('记录成功！', 'success');
+                    } else {
+                        showToast(response.message, 'error');
+                    }
+                },
+                error: function() {
+                    showToast('网络连接失败', 'error');
+                }
+            });
         });
     </script>
 </body>

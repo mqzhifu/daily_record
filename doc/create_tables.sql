@@ -31,3 +31,16 @@ CREATE TABLE `daily` (
   `add_time` datetime NOT NULL COMMENT '添加时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='日常';
+
+CREATE TABLE `user` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT COMMENT '自增ID',
+  `username` VARCHAR(255) NOT NULL COMMENT '用户名',
+  `gender` VARCHAR(255) NOT NULL COMMENT '性别',
+  `avatar` VARCHAR(255) NOT NULL COMMENT '头像',
+  `birthday` VARCHAR(255) NOT NULL COMMENT '生日',
+  `age` VARCHAR(255) NOT NULL COMMENT '年龄',
+  `email` VARCHAR(255) NOT NULL COMMENT '邮箱',
+  `password` VARCHAR(255) NOT NULL COMMENT '密码',
+  `add_time` datetime NOT NULL COMMENT '添加时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='用户';

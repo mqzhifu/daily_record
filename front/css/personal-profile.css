@@ -34,7 +34,7 @@ body {
 
 /* Top Navigation Bar */
 .top-nav {
-    height: 64px;
+    height: 56px;
     background-color: var(--bg-card);
     display: flex;
     align-items: center;
@@ -178,7 +178,7 @@ body {
 
 /* Bottom Navigation */
 .bottom-nav {
-    height: 80px;
+    height: 70px;
     display: flex;
     align-items: center;
     justify-content: space-around;

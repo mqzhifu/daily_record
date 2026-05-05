@@ -4,9 +4,10 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>登录 - Serene Habits</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
     <link href="css/styles.css" rel="stylesheet"/>
 </head>
-<body>
+<body class="page-login">
     <div class="decor-bg"></div>
     <div class="decor-bg-bottom"></div>
     
@@ -16,10 +17,10 @@
 
             <form class="form">
                 <div class="form-group">
-                    <label>邮箱</label>
+                    <label>用户名</label>
                     <div class="input-wrapper">
-                        <img src="icon/mail.svg" class="input-icon-left" />
-                        <input type="email" placeholder="请输入邮箱地址" />
+                        <img src="icon/user.svg" class="input-icon-left" />
+                        <input type="text" id="username" placeholder="请输入用户名" />
                     </div>
                 </div>
 
@@ -27,12 +28,12 @@
                     <label>密码</label>
                     <div class="input-wrapper">
                         <img src="icon/lock.svg" class="input-icon-left" />
-                        <input type="password" id="password-input" placeholder="请输入密码" />
+                        <input type="password" id="password" placeholder="请输入密码" />
                         <img src="icon/visibility.svg" id="toggle-password" class="input-icon-right" />
                     </div>
                 </div>
 
-                <a href="forgot_password.html" class="link" style="text-align: right;">忘记密码？</a>
+                <a href="forgot_password.html" class="link link-inline" style="text-align: right;">忘记密码？</a>
 
                 <button type="submit" class="btn-primary">
                     <span>登录</span>
@@ -58,24 +59,13 @@
             </div>
 
             <p class="link-text-center">
-                已有账号？ <a href="register.html" class="link">立即注册</a>
+                还没有账号？ <a href="register.html" class="link">立即注册</a>
             </p>
         </div>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const passwordInput = document.getElementById('password-input');
-            const togglePassword = document.getElementById('toggle-password');
-            
-            togglePassword.addEventListener('click', function() {
-                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-                passwordInput.setAttribute('type', type);
-                
-                const iconSrc = type === 'password' ? 'icon/visibility.svg' : 'icon/visibility_off.svg';
-                togglePassword.setAttribute('src', iconSrc);
-            });
-        });
-    </script>
+    <script src="js/jquery.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/login.js"></script>
 </body>
 </html>
