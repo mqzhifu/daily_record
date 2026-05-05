@@ -54,9 +54,7 @@
             }
             
             var userData = JSON.parse(user);
-            var apiUrl = typeof AppConfig !== 'undefined' 
-                ? AppConfig.API_BASE_URL + '/get_smoke_records_list?user_id=' + userData.id 
-                : 'http://localhost:5000/api/get_smoke_records_list?user_id=' + userData.id;
+            var apiUrl = AppConfig.API_BASE_URL + '/get_smoke_records_list?user_id=' + userData.id;
             
             $.ajax({
                 url: apiUrl,

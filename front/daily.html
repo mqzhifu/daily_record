@@ -84,7 +84,7 @@
             </a>
             <a href="smoking.html" class="nav-item">
                 <img src="icon/cigarette.svg" class="nav-icon-bottom" />
-                <span class="nav-text">戒烟</span>
+                <span class="nav-text">抽烟</span>
             </a>
             <a href="daily.html" class="nav-item active">
                 <img src="icon/calendar.svg" class="nav-icon-bottom" />
@@ -618,9 +618,7 @@
                 console.log('发送数据:', requestData);
                 
                 // 调用后端API
-                var apiUrl = typeof AppConfig !== 'undefined' 
-                    ? AppConfig.API_BASE_URL + '/add_daily' 
-                    : 'http://localhost:5000/api/add_daily';
+                var apiUrl = AppConfig.API_BASE_URL + '/add_daily';
                 
                 $.ajax({
                     url: apiUrl,
@@ -645,9 +643,7 @@
             
             // 加载分类列表
             function loadCategories() {
-                var apiUrl = typeof AppConfig !== 'undefined' 
-                    ? AppConfig.API_BASE_URL + '/get_categories?type=2' 
-                    : 'http://localhost:5000/api/get_categories?type=2';
+                var apiUrl = AppConfig.API_BASE_URL + '/get_categories?type=2';
                 
                 $.ajax({
                     url: apiUrl,
@@ -675,9 +671,7 @@
                 }
                 
                 var userData = JSON.parse(user);
-                var apiUrl = typeof AppConfig !== 'undefined' 
-                    ? AppConfig.API_BASE_URL + '/get_daily_records?user_id=' + userData.id + (date ? '&date=' + date : '') 
-                    : 'http://localhost:5000/api/get_daily_records?user_id=' + userData.id + (date ? '&date=' + date : '');
+                var apiUrl = AppConfig.API_BASE_URL + '/get_daily_records?user_id=' + userData.id + (date ? '&date=' + date : '');
                 
                 $.ajax({
                     url: apiUrl,
@@ -741,9 +735,7 @@
                 }
                 
                 var userData = JSON.parse(user);
-                var apiUrl = typeof AppConfig !== 'undefined' 
-                    ? AppConfig.API_BASE_URL + '/get_daily_analytics?user_id=' + userData.id + (date ? '&date=' + date : '') 
-                    : 'http://localhost:5000/api/get_daily_analytics?user_id=' + userData.id + (date ? '&date=' + date : '');
+                var apiUrl = AppConfig.API_BASE_URL + '/get_daily_analytics?user_id=' + userData.id + (date ? '&date=' + date : '');
                 
                 $.ajax({
                     url: apiUrl,

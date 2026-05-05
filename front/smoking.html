@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>戒烟 - Serene Habits</title>
+    <title>抽烟 - Serene Habits</title>
     <link rel="icon" type="image/svg+xml" href="icon/favicon.svg"/>
     <link href="css/common.css" rel="stylesheet"/>
     <link href="css/smoking.css" rel="stylesheet"/>
@@ -132,7 +132,7 @@
             </a>
             <a href="smoking.html" class="nav-item active">
                 <img src="icon/cigarette.svg" class="nav-icon-bottom" />
-                <span class="nav-text">戒烟</span>
+                <span class="nav-text">抽烟</span>
             </a>
             <a href="daily.html" class="nav-item">
                 <img src="icon/calendar.svg" class="nav-icon-bottom" />
@@ -200,9 +200,7 @@
             }
             
             var userData = JSON.parse(user);
-            var apiUrl = typeof AppConfig !== 'undefined' 
-                ? AppConfig.API_BASE_URL + '/add_purchase_record' 
-                : 'http://localhost:5000/api/add_purchase_record';
+            var apiUrl = AppConfig.API_BASE_URL + '/add_purchase_record';
             
             $.ajax({
                 url: apiUrl,
@@ -239,9 +237,7 @@
             }
             
             var userData = JSON.parse(user);
-            var apiUrl = typeof AppConfig !== 'undefined' 
-                ? AppConfig.API_BASE_URL + '/add_smoke_record' 
-                : 'http://localhost:5000/api/add_smoke_record';
+            var apiUrl = AppConfig.API_BASE_URL + '/add_smoke_record';
             
             $.ajax({
                 url: apiUrl,
@@ -274,9 +270,7 @@
             }
             
             var userData = JSON.parse(user);
-            var apiUrl = typeof AppConfig !== 'undefined' 
-                ? AppConfig.API_BASE_URL + '/get_today_smoke_records?user_id=' + userData.id 
-                : 'http://localhost:5000/api/get_today_smoke_records?user_id=' + userData.id;
+            var apiUrl = AppConfig.API_BASE_URL + '/get_today_smoke_records?user_id=' + userData.id;
             
             $.ajax({
                 url: apiUrl,
@@ -315,9 +309,7 @@
             }
             
             var userData = JSON.parse(user);
-            var apiUrl = typeof AppConfig !== 'undefined' 
-                ? AppConfig.API_BASE_URL + '/get_smoke_statistics?user_id=' + userData.id 
-                : 'http://localhost:5000/api/get_smoke_statistics?user_id=' + userData.id;
+            var apiUrl = AppConfig.API_BASE_URL + '/get_smoke_statistics?user_id=' + userData.id;
             
             $.ajax({
                 url: apiUrl,
@@ -350,9 +342,7 @@
             }
             
             var userData = JSON.parse(user);
-            var apiUrl = typeof AppConfig !== 'undefined' 
-                ? AppConfig.API_BASE_URL + '/get_smoke_chart_data?user_id=' + userData.id + '&type=' + type 
-                : 'http://localhost:5000/api/get_smoke_chart_data?user_id=' + userData.id + '&type=' + type;
+            var apiUrl = AppConfig.API_BASE_URL + '/get_smoke_chart_data?user_id=' + userData.id + '&type=' + type;
             
             $.ajax({
                 url: apiUrl,
@@ -411,9 +401,7 @@
             }
             
             var userData = JSON.parse(user);
-            var apiUrl = typeof AppConfig !== 'undefined' 
-                ? AppConfig.API_BASE_URL + '/get_purchase_records?user_id=' + userData.id 
-                : 'http://localhost:5000/api/get_purchase_records?user_id=' + userData.id;
+            var apiUrl = AppConfig.API_BASE_URL + '/get_purchase_records?user_id=' + userData.id;
             
             $.ajax({
                 url: apiUrl,

@@ -58,7 +58,7 @@
         </a>
         <a href="smoking.html" class="nav-item">
             <img src="icon/cigarette.svg" class="nav-icon-bottom" />
-            <span class="nav-text">戒烟</span>
+            <span class="nav-text">抽烟</span>
         </a>
         <a href="daily.html" class="nav-item">
             <img src="icon/calendar.svg" class="nav-icon-bottom" />
@@ -74,6 +74,7 @@
         </a>
     </nav>
     <script src="js/jquery.js"></script>
+    <script src="js/common.js"></script>
     <script src="js/auth.js"></script>
     <script>
         $(document).ready(function() {
@@ -106,9 +107,7 @@
                 }
                 
                 var userData = JSON.parse(user);
-                var apiUrl = typeof AppConfig !== 'undefined' 
-                    ? AppConfig.API_BASE_URL + '/generate_test_data' 
-                    : 'http://localhost:5000/api/generate_test_data';
+                var apiUrl = AppConfig.API_BASE_URL + '/generate_test_data';
                 
                 showToast('正在生成数据...', 'info');
                 
@@ -145,9 +144,7 @@
                 }
                 
                 var userData = JSON.parse(user);
-                var apiUrl = typeof AppConfig !== 'undefined' 
-                    ? AppConfig.API_BASE_URL + '/clear_smoke_records' 
-                    : 'http://localhost:5000/api/clear_smoke_records';
+                var apiUrl = AppConfig.API_BASE_URL + '/clear_smoke_records';
                 
                 showToast('正在清空记录...', 'info');
                 

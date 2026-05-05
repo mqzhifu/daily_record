@@ -6,6 +6,9 @@ var AppConfig = {
     // 后端API基础地址
     API_BASE_URL: 'http://192.168.3.205:5000/api',
     
+    // 静态资源基础地址
+    STATIC_BASE_URL: 'http://192.168.3.205:90',
+    
     // 路由路径
     ROUTES: {
         LOGIN: '/login',

@@ -3,6 +3,7 @@ import os
 import sys
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 from datetime import datetime
+import socket
 
 class LoggingHTTPRequestHandler(SimpleHTTPRequestHandler):
     def log_message(self, format, *args):
@@ -21,7 +22,13 @@ class LoggingHTTPRequestHandler(SimpleHTTPRequestHandler):
         now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         client_ip = self.client_address[0]
         print(f"[{now}] [GET] {client_ip} 请求: {self.path}")
-        super().do_GET()
+        try:
+            super().do_GET()
+        except (ConnectionAbortedError, BrokenPipeError, socket.error):
+            # 客户端断开连接，记录并忽略
+            print(f"[{now}] [GET] 客户端断开连接: {self.path}")
+        except Exception as e:
+            print(f"[{now}] [GET] 错误: {e}")
     
     def do_POST(self):
         """处理POST请求，输出请求信息"""
@@ -36,14 +43,22 @@ class LoggingHTTPRequestHandler(SimpleHTTPRequestHandler):
                 print(f"[{now}] [POST] Body: {body.decode('utf-8')}")
             except:
                 print(f"[{now}] [POST] Body: (binary data)")
-        super().do_POST()
+        try:
+            super().do_POST()
+        except (ConnectionAbortedError, BrokenPipeError, socket.error):
+            print(f"[{now}] [POST] 客户端断开连接: {self.path}")
+        except Exception as e:
+            print(f"[{now}] [POST] 错误: {e}")
     
     def do_OPTIONS(self):
         """处理OPTIONS请求，输出请求信息"""
         now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         client_ip = self.client_address[0]
         print(f"[{now}] [OPTIONS] {client_ip} 请求: {self.path}")
-        super().do_OPTIONS()
+        try:
+            super().do_OPTIONS()
+        except Exception as e:
+            print(f"[{now}] [OPTIONS] 错误: {e}")
 
 def main():
     # 设置前端目录路径

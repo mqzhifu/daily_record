@@ -113,7 +113,7 @@
             </a>
             <a href="smoking.html" class="nav-item">
                 <img src="icon/cigarette.svg" class="nav-icon-bottom" />
-                <span class="nav-text">戒烟</span>
+                <span class="nav-text">抽烟</span>
             </a>
             <a href="daily.html" class="nav-item">
                 <img src="icon/calendar.svg" class="nav-icon-bottom" />
@@ -239,9 +239,7 @@
                 <script>
                     // 加载分类列表
                     function loadCategories() {
-                        var apiUrl = typeof AppConfig !== 'undefined' 
-                            ? AppConfig.API_BASE_URL + '/get_categories?type=1' 
-                            : 'http://localhost:5000/api/get_categories?type=1';
+                        var apiUrl = AppConfig.API_BASE_URL + '/get_categories?type=1';
                         
                         $.ajax({
                             url: apiUrl,
@@ -517,9 +515,7 @@
                         }
                         
                         // 调用后端API
-                        var apiUrl = typeof AppConfig !== 'undefined' 
-                            ? AppConfig.API_BASE_URL + '/add_expense' 
-                            : 'http://localhost:5000/api/add_expense';
+                var apiUrl = AppConfig.API_BASE_URL + '/add_expense';
                         
                         $.ajax({
                             url: apiUrl,
@@ -558,9 +554,7 @@
                         }
                         
                         var userData = JSON.parse(user);
-                        var apiUrl = typeof AppConfig !== 'undefined' 
-                            ? AppConfig.API_BASE_URL + '/get_expense_breakdown?user_id=' + userData.id 
-                            : 'http://localhost:5000/api/get_expense_breakdown?user_id=' + userData.id;
+                var apiUrl = AppConfig.API_BASE_URL + '/get_expense_breakdown?user_id=' + userData.id;
                         
                         console.log('请求支出构成API:', apiUrl);
                         
@@ -649,9 +643,7 @@
                         }
                         
                         var userData = JSON.parse(user);
-                        var apiUrl = typeof AppConfig !== 'undefined' 
-                            ? AppConfig.API_BASE_URL + '/get_today_expenses?user_id=' + userData.id 
-                            : 'http://localhost:5000/api/get_today_expenses?user_id=' + userData.id;
+                var apiUrl = AppConfig.API_BASE_URL + '/get_today_expenses?user_id=' + userData.id;
                         
                         $.ajax({
                             url: apiUrl,
@@ -697,9 +689,7 @@
                         }
                         
                         var userData = JSON.parse(user);
-                        var apiUrl = typeof AppConfig !== 'undefined' 
-                            ? AppConfig.API_BASE_URL + '/get_expense_chart_data?user_id=' + userData.id + '&type=' + type 
-                            : 'http://localhost:5000/api/get_expense_chart_data?user_id=' + userData.id + '&type=' + type;
+                var apiUrl = AppConfig.API_BASE_URL + '/get_expense_chart_data?user_id=' + userData.id + '&type=' + type;
                         
                         $.ajax({
                             url: apiUrl,

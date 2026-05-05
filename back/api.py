@@ -5,6 +5,7 @@ import json
 import hashlib
 import logging
 from datetime import datetime, timedelta
+from werkzeug.utils import secure_filename
 
 try:
     from flask import Flask, request, jsonify
@@ -25,7 +26,13 @@ logging.basicConfig(
 )
 
 app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": "*"}})
+CORS(app, resources={
+    r"/api/*": {"origins": "*"},
+    r"/upload/*": {"origins": "*"}
+})
+
+# 上传文件目录
+UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'front', 'upload')
 
 # MySQL配置
 DB_CONFIG = {
@@ -72,6 +79,13 @@ def execute_sql(cursor, query, params=None):
 def hash_password(password):
     """密码哈希"""
     return hashlib.sha256(password.encode()).hexdigest()
+
+@app.route('/upload/avatar/<filename>')
+def serve_avatar(filename):
+    """提供头像文件访问"""
+    from flask import send_from_directory
+    avatar_dir = os.path.join(UPLOAD_FOLDER, 'avatar')
+    return send_from_directory(avatar_dir, filename)
 
 @app.route('/api/register', methods=['POST'])
 def register():
@@ -160,7 +174,7 @@ def login():
         # 查询用户
         hashed_pwd = hash_password(password)
         logging.info(f"用户名: {username}, 密码哈希: {hashed_pwd[:20]}...")
-        execute_sql(cursor, "SELECT id, username, email FROM user WHERE username = %s AND password = %s", (username, hashed_pwd))
+        execute_sql(cursor, "SELECT id, username, email, avatar FROM user WHERE username = %s AND password = %s", (username, hashed_pwd))
         user = cursor.fetchone()
         logging.info(f"查询结果: {user}")
         
@@ -174,7 +188,8 @@ def login():
                 'user': {
                     'id': user['id'],
                     'username': user['username'],
-                    'email': user['email']
+                    'email': user['email'],
+                    'avatar': user['avatar']
                 }
             })
         else:
@@ -191,6 +206,39 @@ def login():
 def check_login():
     """检查登录状态"""
     return jsonify({'success': True, 'message': '未登录', 'logged_in': False})
+
+@app.route('/api/get_user_info', methods=['GET'])
+def get_user_info():
+    """获取用户信息"""
+    try:
+        user_id = request.args.get('user_id')
+        
+        if not user_id:
+            return jsonify({'success': False, 'message': '用户ID不能为空'})
+        
+        conn = get_db_connection()
+        if not conn:
+            return jsonify({'success': False, 'message': '数据库连接失败'})
+        
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+        
+        execute_sql(cursor, "SELECT id, username, email, avatar FROM user WHERE id = %s", (user_id,))
+        user = cursor.fetchone()
+        conn.close()
+        
+        if user:
+            return jsonify({
+                'success': True,
+                'user': user
+            })
+        else:
+            return jsonify({'success': False, 'message': '用户不存在'})
+    
+    except Exception as e:
+        import traceback
+        logging.error(f"获取用户信息错误: {e}")
+        logging.error(f"堆栈:\n{traceback.format_exc()}")
+        return jsonify({'success': False, 'message': f'获取失败: {str(e)}'})
 
 @app.route('/api/describe_table/<table_name>', methods=['GET'])
 def describe_table(table_name):
@@ -1434,12 +1482,11 @@ def get_daily_analytics():
         logging.error(f"堆栈:\n{traceback.format_exc()}")
         return jsonify({'success': False, 'message': f'获取失败: {str(e)}'})
 
-@app.route('/api/get_daily_records', methods=['GET'])
-def get_daily_records():
-    """获取日常记录"""
+@app.route('/api/get_smoking_stats', methods=['GET'])
+def get_smoking_stats():
+    """获取抽烟统计信息"""
     try:
         user_id = request.args.get('user_id')
-        date = request.args.get('date')  # 格式：YYYY-MM-DD
         
         if not user_id:
             return jsonify({'success': False, 'message': '用户ID不能为空'})
@@ -1450,145 +1497,107 @@ def get_daily_records():
         
         cursor = conn.cursor(pymysql.cursors.DictCursor)
         
-        # 获取表结构
-        execute_sql(cursor, "DESCRIBE daily")
-        columns = cursor.fetchall()
-        column_names = [col['Field'] for col in columns]
+        # 获取抽烟天数（不同日期的数量）
+        execute_sql(cursor,
+            "SELECT COUNT(DISTINCT DATE(add_time)) as days FROM smoke_record WHERE uid = %s",
+            (user_id,)
+        )
+        days_result = cursor.fetchone()
+        smoking_days = days_result['days'] if days_result['days'] else 0
         
-        uid_field = 'uid' if 'uid' in column_names else 'user_id'
-        
-        if date:
-            # 查询指定日期的记录
-            execute_sql(cursor,
-                f"SELECT * FROM daily WHERE {uid_field} = %s AND DATE(real_time) = %s ORDER BY real_time ASC",
-                (user_id, date)
-            )
-        else:
-            # 查询今天的记录
-            today = datetime.now().strftime('%Y-%m-%d')
-            execute_sql(cursor,
-                f"SELECT * FROM daily WHERE {uid_field} = %s AND DATE(real_time) = %s ORDER BY real_time ASC",
-                (user_id, today)
-            )
-        
-        records = cursor.fetchall()
-        
-        # 获取分类信息
-        execute_sql(cursor, "SELECT * FROM category WHERE type = 2")
-        categories = cursor.fetchall()
-        category_map = {cat['id']: cat for cat in categories}
+        # 获取总支出金额（从expenses表，category=10）
+        execute_sql(cursor,
+            "SELECT SUM(price) as total FROM expenses WHERE uid = %s AND category = 10",
+            (user_id,)
+        )
+        total_result = cursor.fetchone()
+        total_spending = int(float(total_result['total'])) if total_result['total'] else 0
         
         conn.close()
         
-        # 格式化数据
-        formatted_records = []
-        for record in records:
-            real_time = record['real_time']
-            if isinstance(real_time, datetime):
-                time_str = real_time.strftime('%H:%M')
-            else:
-                time_str = str(real_time)[-5:] if len(str(real_time)) >= 5 else '00:00'
-            
-            category_id = record.get('category')
-            category_info = category_map.get(category_id, {})
-            
-            formatted_records.append({
-                'id': record['id'],
-                'title': record['title'],
-                'category': category_id,
-                'category_name': category_info.get('name', '其它'),
-                'category_type': category_info.get('icon_type', 'other'),
-                'real_time': time_str
-            })
-        
         return jsonify({
             'success': True,
-            'records': formatted_records,
-            'date': date or datetime.now().strftime('%Y-%m-%d')
+            'smoking_days': smoking_days,
+            'total_spending': total_spending
         })
     
     except Exception as e:
         import traceback
-        logging.error(f"获取日常记录错误: {e}")
+        logging.error(f"获取抽烟统计错误: {e}")
         logging.error(f"堆栈:\n{traceback.format_exc()}")
         return jsonify({'success': False, 'message': f'获取失败: {str(e)}'})
 
-@app.route('/api/get_daily_analytics', methods=['GET'])
-def get_daily_analytics():
-    """获取日常分类统计"""
+@app.route('/api/upload_avatar', methods=['POST'])
+def upload_avatar():
+    """上传头像"""
     try:
-        user_id = request.args.get('user_id')
-        date = request.args.get('date')  # 格式：YYYY-MM-DD
+        logging.info(f"收到上传请求: {request.form}, {request.files}")
+        
+        user_id = request.form.get('user_id')
         
         if not user_id:
             return jsonify({'success': False, 'message': '用户ID不能为空'})
         
+        if 'avatar' not in request.files:
+            return jsonify({'success': False, 'message': '没有上传文件'})
+        
+        file = request.files['avatar']
+        logging.info(f"上传文件: {file.filename}, 内容类型: {file.content_type}")
+        
+        if file.filename == '':
+            return jsonify({'success': False, 'message': '没有选择文件'})
+        
+        # 允许的文件类型
+        allowed_extensions = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
+        if '.' not in file.filename:
+            return jsonify({'success': False, 'message': '不支持的文件类型'})
+        
+        ext = file.filename.rsplit('.', 1)[1].lower()
+        if ext not in allowed_extensions:
+            return jsonify({'success': False, 'message': '不支持的文件类型'})
+        
+        # 创建上传目录
+        upload_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'front', 'upload', 'avatar')
+        os.makedirs(upload_dir, exist_ok=True)
+        logging.info(f"上传目录: {upload_dir}")
+        
+        # 生成唯一文件名
+        filename = f"avatar_{user_id}_{int(datetime.now().timestamp())}.{ext}"
+        filepath = os.path.join(upload_dir, filename)
+        logging.info(f"保存路径: {filepath}")
+        
+        # 保存文件
+        file.save(filepath)
+        
+        # 生成访问URL（只保存相对路径）
+        avatar_url = f"upload/avatar/{filename}"
+        
+        # 更新数据库
         conn = get_db_connection()
         if not conn:
             return jsonify({'success': False, 'message': '数据库连接失败'})
         
         cursor = conn.cursor(pymysql.cursors.DictCursor)
         
-        # 获取表结构
-        execute_sql(cursor, "DESCRIBE daily")
-        columns = cursor.fetchall()
-        column_names = [col['Field'] for col in columns]
-        
-        uid_field = 'uid' if 'uid' in column_names else 'user_id'
-        
-        if not date:
-            date = datetime.now().strftime('%Y-%m-%d')
-        
-        # 查询指定日期的记录
         execute_sql(cursor,
-            f"SELECT * FROM daily WHERE {uid_field} = %s AND DATE(real_time) = %s ORDER BY real_time ASC",
-            (user_id, date)
+            "UPDATE user SET avatar = %s WHERE id = %s",
+            (avatar_url, user_id)
         )
-        
-        records = cursor.fetchall()
-        
-        # 获取分类信息
-        execute_sql(cursor, "SELECT * FROM category WHERE type = 2")
-        categories = cursor.fetchall()
-        category_map = {cat['id']: cat for cat in categories}
-        
+        conn.commit()
         conn.close()
         
-        # 按分类统计
-        category_counts = {}
-        for record in records:
-            cat_id = record.get('category')
-            if cat_id not in category_counts:
-                category_counts[cat_id] = 0
-            category_counts[cat_id] += 1
-        
-        # 格式化数据
-        analytics = []
-        total = len(records)
-        for cat_id, count in category_counts.items():
-            category_info = category_map.get(cat_id, {})
-            analytics.append({
-                'category': cat_id,
-                'name': category_info.get('name', '其它'),
-                'count': count,
-                'percent': round((count / total * 100), 1) if total > 0 else 0
-            })
-        
-        # 按数量排序
-        analytics.sort(key=lambda x: x['count'], reverse=True)
-        
+        logging.info(f"上传成功: {avatar_url}")
         return jsonify({
             'success': True,
-            'analytics': analytics,
-            'total': total,
-            'date': date
+            'avatar_url': avatar_url,
+            'message': '上传成功'
         })
     
     except Exception as e:
         import traceback
-        logging.error(f"获取日常统计错误: {e}")
+        logging.error(f"上传头像错误: {e}")
         logging.error(f"堆栈:\n{traceback.format_exc()}")
-        return jsonify({'success': False, 'message': f'获取失败: {str(e)}'})
+        return jsonify({'success': False, 'message': f'上传失败: {str(e)}'})
 
 if __name__ == '__main__':
     logging.info("API服务启动，监听端口 5000")

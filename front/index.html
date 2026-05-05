@@ -35,7 +35,7 @@
         <main class="main-content">
             <!-- Welcome Card -->
             <section class="welcome-card">
-                <h1 class="welcome-title">早上好，Alex</h1>
+                <h1 class="welcome-title" id="greetingText">早上好</h1>
                 <p class="welcome-desc">少抽烟 多运动 保持学习 健康生活</p>
             </section>
 
@@ -44,7 +44,7 @@
                 <div class="quick-stats">
                     <div class="quick-stat">
                         <span class="stat-num">15</span>
-                        <span class="stat-label">戒烟打卡</span>
+                        <span class="stat-label">抽烟打卡</span>
                     </div>
                     <div class="quick-stat">
                         <span class="stat-num">22</span>
@@ -116,7 +116,7 @@
             </a>
             <a href="smoking.html" class="nav-item">
                 <img src="icon/cigarette.svg" class="nav-icon-bottom" />
-                <span class="nav-text">戒烟</span>
+                <span class="nav-text">抽烟</span>
             </a>
             <a href="daily.html" class="nav-item">
                 <img src="icon/calendar.svg" class="nav-icon-bottom" />
@@ -133,6 +133,33 @@
         </nav>
     </div>
     <script src="js/jquery.js"></script>
+    <script src="js/common.js"></script>
     <script src="js/auth.js"></script>
+    <script>
+        $(document).ready(function() {
+            var user = localStorage.getItem('user');
+            var username = '用户';
+            if (user) {
+                var userData = JSON.parse(user);
+                username = userData.username || userData.name || '用户';
+            }
+            
+            var hour = new Date().getHours();
+            var greeting = '';
+            if (hour >= 5 && hour < 12) {
+                greeting = '早上好';
+            } else if (hour >= 12 && hour < 14) {
+                greeting = '中午好';
+            } else if (hour >= 14 && hour < 18) {
+                greeting = '下午好';
+            } else if (hour >= 18 && hour < 22) {
+                greeting = '晚上好';
+            } else {
+                greeting = '夜深了';
+            }
+            
+            $('#greetingText').text(greeting + '，' + username);
+        });
+    </script>
 </body>
 </html>

@@ -23,29 +23,40 @@
     <!-- User Profile Section -->
     <section class="profile-section">
         <div class="avatar-container">
-            <div class="avatar">
-                <img src="icon/user.svg" class="avatar-icon" />
+            <div class="avatar" id="avatarDisplay">
+                <img src="icon/user.svg" class="avatar-icon" id="avatarImg" />
             </div>
-            <button class="edit-btn">
+            <button class="edit-btn" id="uploadAvatarBtn">
                 <img src="icon/edit.svg" class="edit-icon" />
             </button>
+            <input type="file" id="avatarFileInput" accept="image/*" style="display:none;" />
         </div>
         <div class="user-info">
-            <h2 class="username">Alex</h2>
-            <p class="signature">戒烟是一种生活态度</p>
+            <h2 class="username" id="profileUsername">Alex</h2>
+            <p class="signature">抽烟是一种生活态度</p>
         </div>
     </section>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Avatar Modal -->
+    <div class="avatar-modal" id="avatarModal">
+        <div class="avatar-modal-content" id="avatarModalContent">
+            <img src="icon/user.svg" class="avatar-modal-img" id="avatarModalImg" />
+        </div>
+    </div>
 
     <!-- Stats Grid -->
     <section class="stats-section">
         <div class="stats-grid">
             <div class="stat-card">
-                <p class="stat-value">128</p>
-                <p class="stat-label">已戒烟天数</p>
+                <p class="stat-value" id="smokingDays">128</p>
+                <p class="stat-label">抽烟天数</p>
             </div>
             <div class="stat-card">
-                <p class="stat-value">3840</p>
-                <p class="stat-label">总节省金额</p>
+                <p class="stat-value" id="totalSpending">3840</p>
+                <p class="stat-label">总支出金额</p>
             </div>
             <div class="stat-card">
                 <p class="stat-value">156</p>
@@ -78,20 +89,6 @@
                 <span class="menu-text">外观与主题</span>
                 <img src="icon/chevron_right.svg" class="menu-arrow" />
             </a>
-            <div class="menu-item">
-                <div class="menu-icon-wrapper">
-                    <img src="icon/message.svg" class="menu-icon" />
-                </div>
-                <span class="menu-text">意见反馈</span>
-                <img src="icon/chevron_right.svg" class="menu-arrow" />
-            </div>
-            <a href="login.html" class="menu-item">
-                <div class="menu-icon-wrapper">
-                    <img src="icon/video_library.svg" class="menu-icon" />
-                </div>
-                <span class="menu-text">关于我们</span>
-                <img src="icon/chevron_right.svg" class="menu-arrow" />
-            </a>
             <a href="test.html" class="menu-item">
                 <div class="menu-icon-wrapper">
                     <img src="icon/settings.svg" class="menu-icon" />
@@ -118,7 +115,7 @@
         </a>
         <a href="smoking.html" class="nav-item">
             <img src="icon/cigarette.svg" class="nav-icon-bottom" />
-            <span class="nav-text">戒烟</span>
+            <span class="nav-text">抽烟</span>
         </a>
         <a href="daily.html" class="nav-item">
             <img src="icon/calendar.svg" class="nav-icon-bottom" />
@@ -134,9 +131,32 @@
         </a>
     </nav>
     <script src="js/jquery.js"></script>
+    <script src="js/common.js"></script>
     <script src="js/auth.js"></script>
     <script>
+        const showToast = function(message, type = 'info') {
+            const toastContainer = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            toastContainer.appendChild(toast);
+            
+            requestAnimationFrame(() => {
+                toast.classList.add('show');
+            });
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    toast.remove();
+                }, 300);
+            }, 2000);
+        };
+        
         $(document).ready(function() {
+            // 确保头像弹窗初始状态为隐藏
+            $('#avatarModal').removeClass('open');
+            
             // 退出登录按钮点击事件
             $('.logout-btn').on('click', function() {
                 // 清除登录状态
@@ -147,6 +167,181 @@
                 // 跳转到登录页面
                 window.location.href = 'login.html';
             });
+            
+            // 获取API基础URL（不含/api）
+            function getApiBaseUrl() {
+                var baseUrl = typeof AppConfig !== 'undefined' 
+                    ? AppConfig.API_BASE_URL 
+                    : 'http://192.168.3.205:5000/api';
+                // 移除末尾的/api（如果有）
+                return baseUrl.replace(/\/api\/?$/, '');
+            }
+            
+            // 获取静态资源基础URL（确保没有尾斜杠）
+            function getStaticBaseUrl() {
+                var baseUrl = typeof AppConfig !== 'undefined' 
+                    ? AppConfig.STATIC_BASE_URL 
+                    : 'http://192.168.3.205:90';
+                // 去除尾斜杠
+                return baseUrl.replace(/\/+$/, '');
+            }
+            
+            // 加载用户信息
+            var user = localStorage.getItem('user');
+            if (user) {
+                var userData = JSON.parse(user);
+                var username = userData.username || userData.name || '用户';
+                $('#profileUsername').text(username);
+                
+                // 从后端获取最新的用户信息（包含头像）
+                if (userData.id) {
+                    $.ajax({
+                        url: getApiBaseUrl() + '/api/get_user_info',
+                        type: 'GET',
+                        data: { user_id: userData.id },
+                        success: function(response) {
+                            if (response.success && response.user) {
+                                // 更新localStorage中的用户信息
+                                userData.username = response.user.username || userData.username;
+                                userData.email = response.user.email || userData.email;
+                                userData.avatar = response.user.avatar || userData.avatar;
+                                localStorage.setItem('user', JSON.stringify(userData));
+                                
+                                // 显示用户名
+                                var username = userData.username || userData.name || '用户';
+                                $('#profileUsername').text(username);
+                                
+                                // 显示头像
+                                var avatarUrl = userData.avatar;
+                                if (avatarUrl) {
+                                    // 确保不会有双斜杠
+                                    var cleanAvatarUrl = avatarUrl.startsWith('/') ? avatarUrl.substring(1) : avatarUrl;
+                                    var fullAvatarUrl = avatarUrl.startsWith('http') ? avatarUrl : getStaticBaseUrl() + '/' + cleanAvatarUrl;
+                                    $('#avatarImg').attr('src', fullAvatarUrl);
+                                    $('#avatarModalImg').attr('src', fullAvatarUrl);
+                                }
+                            }
+                        },
+                        error: function() {
+                            // 如果请求失败，尝试使用localStorage中的数据
+                            var avatarUrl = userData.avatar;
+                            if (avatarUrl) {
+                                // 确保不会有双斜杠
+                                var cleanAvatarUrl = avatarUrl.startsWith('/') ? avatarUrl.substring(1) : avatarUrl;
+                                var fullAvatarUrl = avatarUrl.startsWith('http') ? avatarUrl : getStaticBaseUrl() + '/' + cleanAvatarUrl;
+                                $('#avatarImg').attr('src', fullAvatarUrl);
+                                $('#avatarModalImg').attr('src', fullAvatarUrl);
+                            }
+                        }
+                    });
+                }
+            }
+            
+            // 点击头像显示大图
+            $('#avatarDisplay').on('click', function() {
+                var currentSrc = $('#avatarImg').attr('src');
+                if (currentSrc) {
+                    $('#avatarModalImg').attr('src', currentSrc);
+                } else {
+                    $('#avatarModalImg').attr('src', 'icon/user.svg');
+                }
+                $('#avatarModal').addClass('open');
+            });
+            
+            // 点击任何位置关闭大图
+            $('#avatarModal').on('click', function() {
+                $('#avatarModal').removeClass('open');
+            });
+            
+            // 阻止图片区域点击事件冒泡
+            $('#avatarModalContent').on('click', function(e) {
+                e.stopPropagation();
+            });
+            
+            // 点击编辑按钮上传图片
+            $('#uploadAvatarBtn').on('click', function(e) {
+                e.stopPropagation();
+                $('#avatarFileInput').click();
+            });
+            
+            // 处理图片上传
+            $('#avatarFileInput').on('change', function(e) {
+                var file = e.target.files[0];
+                if (!file) return;
+                
+                var user = localStorage.getItem('user');
+                if (!user) {
+                    alert('请先登录');
+                    return;
+                }
+                
+                var userData = JSON.parse(user);
+                var formData = new FormData();
+                formData.append('user_id', userData.id);
+                formData.append('avatar', file);
+                
+                // 显示上传中状态
+                $('#avatarImg').css('opacity', '0.5');
+                
+                var apiUrl = getApiBaseUrl() + '/api/upload_avatar';
+                console.log('上传到:', apiUrl);
+                console.log('用户ID:', userData.id);
+                
+                $.ajax({
+                    url: apiUrl,
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        $('#avatarImg').css('opacity', '1');
+                        console.log('上传响应:', response);
+                        if (response.success) {
+                            // 确保不会有双斜杠
+                            var cleanAvatarUrl = response.avatar_url.startsWith('/') ? response.avatar_url.substring(1) : response.avatar_url;
+                            var fullAvatarUrl = getStaticBaseUrl() + '/' + cleanAvatarUrl;
+                            $('#avatarImg').attr('src', fullAvatarUrl);
+                            $('#avatarModalImg').attr('src', fullAvatarUrl);
+                            
+                            // 更新localStorage中的用户信息
+                            userData.avatar = cleanAvatarUrl;
+                            localStorage.setItem('user', JSON.stringify(userData));
+                            
+                            showToast('头像上传成功！', 'success');
+                        } else {
+                            showToast(response.message || '上传失败', 'error');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        $('#avatarImg').css('opacity', '1');
+                        console.error('上传错误:', xhr, status, error);
+                        showToast('上传失败，请重试', 'error');
+                    }
+                });
+                
+                // 重置input以便重复上传同一文件
+                $(this).val('');
+            });
+            
+            // 加载抽烟统计
+            if (user) {
+                var userData = JSON.parse(user);
+                var apiUrl = getApiBaseUrl() + '/api/get_smoking_stats?user_id=' + userData.id;
+                
+                $.ajax({
+                    url: apiUrl,
+                    type: 'GET',
+                    success: function(response) {
+                        if (response.success) {
+                            $('#smokingDays').text(response.smoking_days);
+                            $('#totalSpending').text(response.total_spending);
+                        }
+                    },
+                    error: function() {
+                        console.log('加载统计失败');
+                    }
+                });
+            }
         });
     </script>
 </body>
