@@ -15,7 +15,7 @@
         <!-- Top Navigation Bar -->
         <nav class="top-nav">
             <div class="avatar-mini">
-                <img src="icon/user.svg" class="avatar-img" />
+                <img src="icon/user.svg" class="avatar-img" id="topAvatarImg" />
             </div>
             <div class="search-bar">
                 <img src="icon/search.svg" class="search-icon" />
@@ -798,6 +798,20 @@
             
             // 页面加载时获取分类、日行程和统计
             $(document).ready(function() {
+                // 动态加载头像
+                var user = localStorage.getItem('user');
+                if (user) {
+                    var userData = JSON.parse(user);
+                    var avatarUrl = userData.avatar;
+                    if (avatarUrl) {
+                        var cleanAvatarUrl = avatarUrl.startsWith('/') ? avatarUrl.substring(1) : avatarUrl;
+                        var fullAvatarUrl = avatarUrl.startsWith('http') ? avatarUrl : getStaticBaseUrl() + '/' + cleanAvatarUrl;
+                        // 添加时间戳避免缓存
+                        fullAvatarUrl += (fullAvatarUrl.indexOf('?') >= 0 ? '&' : '?') + 't=' + new Date().getTime();
+                        $('#topAvatarImg').attr('src', fullAvatarUrl);
+                    }
+                }
+                
                 loadCategories();
                 loadDailyRecords();
                 loadDailyAnalytics();

@@ -217,6 +217,8 @@
                                     // 确保不会有双斜杠
                                     var cleanAvatarUrl = avatarUrl.startsWith('/') ? avatarUrl.substring(1) : avatarUrl;
                                     var fullAvatarUrl = avatarUrl.startsWith('http') ? avatarUrl : getStaticBaseUrl() + '/' + cleanAvatarUrl;
+                                    // 添加时间戳避免缓存
+                                    fullAvatarUrl += (fullAvatarUrl.indexOf('?') >= 0 ? '&' : '?') + 't=' + new Date().getTime();
                                     $('#avatarImg').attr('src', fullAvatarUrl);
                                     $('#avatarModalImg').attr('src', fullAvatarUrl);
                                 }
@@ -229,6 +231,8 @@
                                 // 确保不会有双斜杠
                                 var cleanAvatarUrl = avatarUrl.startsWith('/') ? avatarUrl.substring(1) : avatarUrl;
                                 var fullAvatarUrl = avatarUrl.startsWith('http') ? avatarUrl : getStaticBaseUrl() + '/' + cleanAvatarUrl;
+                                // 添加时间戳避免缓存
+                                fullAvatarUrl += (fullAvatarUrl.indexOf('?') >= 0 ? '&' : '?') + 't=' + new Date().getTime();
                                 $('#avatarImg').attr('src', fullAvatarUrl);
                                 $('#avatarModalImg').attr('src', fullAvatarUrl);
                             }
@@ -300,6 +304,8 @@
                             // 确保不会有双斜杠
                             var cleanAvatarUrl = response.avatar_url.startsWith('/') ? response.avatar_url.substring(1) : response.avatar_url;
                             var fullAvatarUrl = getStaticBaseUrl() + '/' + cleanAvatarUrl;
+                            // 添加时间戳避免缓存
+                            fullAvatarUrl += (fullAvatarUrl.indexOf('?') >= 0 ? '&' : '?') + 't=' + new Date().getTime();
                             $('#avatarImg').attr('src', fullAvatarUrl);
                             $('#avatarModalImg').attr('src', fullAvatarUrl);
                             

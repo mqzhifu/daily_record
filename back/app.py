@@ -24,11 +24,9 @@ class LoggingHTTPRequestHandler(SimpleHTTPRequestHandler):
         print(f"[{now}] [GET] {client_ip} 请求: {self.path}")
         try:
             super().do_GET()
-        except (ConnectionAbortedError, BrokenPipeError, socket.error):
-            # 客户端断开连接，记录并忽略
-            print(f"[{now}] [GET] 客户端断开连接: {self.path}")
-        except Exception as e:
-            print(f"[{now}] [GET] 错误: {e}")
+        except Exception:
+            # 捕获所有异常，静默处理
+            pass
     
     def do_POST(self):
         """处理POST请求，输出请求信息"""
@@ -45,10 +43,9 @@ class LoggingHTTPRequestHandler(SimpleHTTPRequestHandler):
                 print(f"[{now}] [POST] Body: (binary data)")
         try:
             super().do_POST()
-        except (ConnectionAbortedError, BrokenPipeError, socket.error):
-            print(f"[{now}] [POST] 客户端断开连接: {self.path}")
-        except Exception as e:
-            print(f"[{now}] [POST] 错误: {e}")
+        except Exception:
+            # 捕获所有异常，静默处理
+            pass
     
     def do_OPTIONS(self):
         """处理OPTIONS请求，输出请求信息"""
@@ -57,8 +54,9 @@ class LoggingHTTPRequestHandler(SimpleHTTPRequestHandler):
         print(f"[{now}] [OPTIONS] {client_ip} 请求: {self.path}")
         try:
             super().do_OPTIONS()
-        except Exception as e:
-            print(f"[{now}] [OPTIONS] 错误: {e}")
+        except Exception:
+            # 捕获所有异常，静默处理
+            pass
 
 def main():
     # 设置前端目录路径

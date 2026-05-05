@@ -17,3 +17,17 @@ var AppConfig = {
         LOGIN_PAGE: 'login.html'
     }
 };
+
+/**
+ * 获取API基础地址
+ */
+function getApiBaseUrl() {
+    return AppConfig.API_BASE_URL;
+}
+
+/**
+ * 获取静态资源基础地址
+ */
+function getStaticBaseUrl() {
+    return AppConfig.STATIC_BASE_URL;
+}
