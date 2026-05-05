@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>戒烟 - Serene Habits</title>
-    <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+    <link rel="icon" type="image/svg+xml" href="icon/favicon.svg"/>
     <link href="css/common.css" rel="stylesheet"/>
     <link href="css/smoking.css" rel="stylesheet"/>
     <script src="js/jquery.js"></script>
@@ -47,26 +47,11 @@
             <section class="overview-card">
                 <div class="card-header">
                     <h2 class="card-title">今日抽烟</h2>
-                    <span class="smoke-count">4 根</span>
+                    <span class="smoke-count" id="todayCount">0 根</span>
                 </div>
                 <div class="timeline-scroll">
-                    <div class="timeline-list">
-                        <div class="timeline-item">
-                            <span class="time">08:30</span>
-                            <span class="tag">早餐后</span>
-                        </div>
-                        <div class="timeline-item">
-                            <span class="time">10:00</span>
-                            <span class="tag">工作中</span>
-                        </div>
-                        <div class="timeline-item">
-                            <span class="time">12:30</span>
-                            <span class="tag">午饭后</span>
-                        </div>
-                        <div class="timeline-item">
-                            <span class="time">15:00</span>
-                            <span class="tag">休息时</span>
-                        </div>
+                    <div class="timeline-list" id="todayTimeline">
+                        <!-- 动态加载 -->
                     </div>
                 </div>
             </section>
@@ -76,19 +61,19 @@
                 <div class="stat-card blue compact">
                     <div class="stat-content">
                         <p class="stat-label">上周日均</p>
-                        <p class="stat-value">5 根</p>
+                        <p class="stat-value" id="lastWeekAvg">0</p>
                     </div>
                 </div>
                 <div class="stat-card green compact">
                     <div class="stat-content">
                         <p class="stat-label">单日最低</p>
-                        <p class="stat-value">2 根</p>
+                        <p class="stat-value" id="singleDayMin">0</p>
                     </div>
                 </div>
                 <div class="stat-card orange compact">
                     <div class="stat-content">
                         <p class="stat-label">昨天</p>
-                        <p class="stat-value">8 根</p>
+                        <p class="stat-value" id="yesterdayCount">0</p>
                     </div>
                 </div>
             </section>
@@ -98,58 +83,17 @@
                 <div class="card-header">
                     <h2 class="card-title">抽烟次数</h2>
                     <div class="chart-tabs">
-                        <button class="tab active">日</button>
-                        <button class="tab">周</button>
-                        <button class="tab">月</button>
+                        <button class="tab active" data-type="day">日</button>
+                        <button class="tab" data-type="week">周</button>
+                        <button class="tab" data-type="month">月</button>
                     </div>
                 </div>
-                <div class="chart-container">
-                    <div class="bar-wrapper">
-                        <div class="bar" style="height: 60%">
-                            <span class="bar-value">3</span>
-                        </div>
-                        <span class="bar-label">周一</span>
-                    </div>
-                    <div class="bar-wrapper">
-                        <div class="bar" style="height: 80%">
-                            <span class="bar-value">4</span>
-                        </div>
-                        <span class="bar-label">周二</span>
-                    </div>
-                    <div class="bar-wrapper">
-                        <div class="bar" style="height: 40%">
-                            <span class="bar-value">2</span>
-                        </div>
-                        <span class="bar-label">周三</span>
-                    </div>
-                    <div class="bar-wrapper">
-                        <div class="bar" style="height: 100%">
-                            <span class="bar-value">5</span>
-                        </div>
-                        <span class="bar-label">周四</span>
-                    </div>
-                    <div class="bar-wrapper">
-                        <div class="bar" style="height: 70%">
-                            <span class="bar-value">4</span>
-                        </div>
-                        <span class="bar-label">周五</span>
-                    </div>
-                    <div class="bar-wrapper">
-                        <div class="bar" style="height: 50%">
-                            <span class="bar-value">3</span>
-                        </div>
-                        <span class="bar-label">周六</span>
-                    </div>
-                    <div class="bar-wrapper">
-                        <div class="bar" style="height: 30%">
-                            <span class="bar-value">2</span>
-                        </div>
-                        <span class="bar-label">周日</span>
-                    </div>
+                <div class="chart-container" id="chartContainer">
+                    <!-- 动态加载 -->
                 </div>
                 <div class="chart-summary">
                     <span class="summary-label">总根数</span>
-                    <span class="summary-value">23 根</span>
+                    <span class="summary-value" id="chartTotal">0</span>
                 </div>
                 <a href="smoking-records.html" class="view-detail">查看详情</a>
             </section>
@@ -161,47 +105,18 @@
                     <a href="purchase-history.html" class="view-detail simple">更多</a>
                 </div>
                 <div class="purchase-form">
-                    <input type="text" placeholder="品牌" class="purchase-input" />
-                    <input type="text" placeholder="金额" class="purchase-input" />
-                    <button class="add-purchase-btn">
+                    <input type="text" placeholder="品牌" class="purchase-input" id="purchaseBrand" />
+                    <input type="text" placeholder="金额" class="purchase-input" id="purchaseAmount" />
+                    <button class="add-purchase-btn" id="addPurchaseBtn">
                         <img src="icon/plus.svg" class="add-icon" />
                     </button>
                 </div>
-                <div class="purchase-list">
-                    <div class="purchase-item">
-                        <div class="purchase-icon">
-                            <img src="icon/cigarette.svg" class="item-icon" />
-                        </div>
-                        <div class="purchase-info">
-                            <span class="purchase-brand">中华</span>
-                            <span class="purchase-time">2024-01-15</span>
-                        </div>
-                        <span class="purchase-amount">¥65</span>
-                    </div>
-                    <div class="purchase-item">
-                        <div class="purchase-icon">
-                            <img src="icon/cigarette.svg" class="item-icon" />
-                        </div>
-                        <div class="purchase-info">
-                            <span class="purchase-brand">黄鹤楼</span>
-                            <span class="purchase-time">2024-01-12</span>
-                        </div>
-                        <span class="purchase-amount">¥45</span>
-                    </div>
-                    <div class="purchase-item">
-                        <div class="purchase-icon">
-                            <img src="icon/cigarette.svg" class="item-icon" />
-                        </div>
-                        <div class="purchase-info">
-                            <span class="purchase-brand">红塔山</span>
-                            <span class="purchase-time">2024-01-10</span>
-                        </div>
-                        <span class="purchase-amount">¥20</span>
-                    </div>
+                <div class="purchase-list" id="purchaseList">
+                    <!-- 动态加载 -->
                 </div>
                 <div class="purchase-summary">
                     <span class="summary-label">总花费</span>
-                    <span class="summary-value">¥130</span>
+                    <span class="summary-value" id="purchaseTotal">¥0</span>
                 </div>
             </section>
         </main>
@@ -255,38 +170,64 @@
             }, 2000);
         };
 
-        // Add purchase button click handler with validation
-        const addPurchaseBtn = document.querySelector('.add-purchase-btn');
-        const purchaseInputs = document.querySelectorAll('.purchase-input');
-        
-        addPurchaseBtn.addEventListener('click', function() {
-            const brand = purchaseInputs[0].value.trim();
-            const amount = purchaseInputs[1].value.trim();
+        // 添加购烟记录按钮点击事件
+        $('#addPurchaseBtn').on('click', function() {
+            var brand = $('#purchaseBrand').val().trim();
+            var amount = $('#purchaseAmount').val().trim();
             
             if (!brand) {
                 showToast('请输入品牌', 'error');
-                purchaseInputs[0].focus();
+                $('#purchaseBrand').focus();
                 return;
             }
             
             if (!amount) {
                 showToast('请输入金额', 'error');
-                purchaseInputs[1].focus();
+                $('#purchaseAmount').focus();
                 return;
             }
             
-            // Validate amount is a number
             if (isNaN(parseFloat(amount))) {
                 showToast('请输入有效的金额', 'error');
-                purchaseInputs[1].focus();
+                $('#purchaseAmount').focus();
                 return;
             }
             
-            // If validation passes, you can proceed with adding the record
-            showToast('记录成功！', 'success');
-            // Clear inputs after successful submission
-            purchaseInputs[0].value = '';
-            purchaseInputs[1].value = '';
+            var user = localStorage.getItem('user');
+            if (!user) {
+                showToast('请先登录', 'error');
+                return;
+            }
+            
+            var userData = JSON.parse(user);
+            var apiUrl = typeof AppConfig !== 'undefined' 
+                ? AppConfig.API_BASE_URL + '/add_purchase_record' 
+                : 'http://localhost:5000/api/add_purchase_record';
+            
+            $.ajax({
+                url: apiUrl,
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    user_id: userData.id,
+                    title: brand,
+                    price: parseFloat(amount)
+                }),
+                success: function(response) {
+                    if (response.success) {
+                        showToast('记录成功！', 'success');
+                        $('#purchaseBrand').val('');
+                        $('#purchaseAmount').val('');
+                        // 刷新购烟明细
+                        loadPurchaseRecords();
+                    } else {
+                        showToast(response.message || '添加失败', 'error');
+                    }
+                },
+                error: function() {
+                    showToast('网络错误，请重试', 'error');
+                }
+            });
         });
         
         // 抽一根按钮点击事件
@@ -312,6 +253,9 @@
                 success: function(response) {
                     if (response.success) {
                         showToast('记录成功！', 'success');
+                        // 刷新数据
+                        loadTodayRecords();
+                        loadStatistics();
                     } else {
                         showToast(response.message, 'error');
                     }
@@ -320,6 +264,197 @@
                     showToast('网络连接失败', 'error');
                 }
             });
+        });
+        
+        // 加载今日记录
+        function loadTodayRecords() {
+            var user = localStorage.getItem('user');
+            if (!user) {
+                return;
+            }
+            
+            var userData = JSON.parse(user);
+            var apiUrl = typeof AppConfig !== 'undefined' 
+                ? AppConfig.API_BASE_URL + '/get_today_smoke_records?user_id=' + userData.id 
+                : 'http://localhost:5000/api/get_today_smoke_records?user_id=' + userData.id;
+            
+            $.ajax({
+                url: apiUrl,
+                type: 'GET',
+                success: function(response) {
+                    if (response.success) {
+                        // 更新数量
+                        $('#todayCount').text(response.count + ' 根');
+                        
+                        // 更新时间线
+                        var timelineHtml = '';
+                        if (response.records.length > 0) {
+                            response.records.forEach(function(record) {
+                                var timeStr = record.time_str || '';
+                                timelineHtml += '<div class="timeline-item">';
+                                timelineHtml += '<span class="time">' + timeStr + '</span>';
+                                timelineHtml += '</div>';
+                            });
+                        } else {
+                            timelineHtml = '<div style="text-align: center; color: #999; padding: 20px;">暂无记录</div>';
+                        }
+                        $('#todayTimeline').html(timelineHtml);
+                    }
+                },
+                error: function() {
+                    console.error('加载今日记录失败');
+                }
+            });
+        }
+        
+        // 加载统计数据
+        function loadStatistics() {
+            var user = localStorage.getItem('user');
+            if (!user) {
+                return;
+            }
+            
+            var userData = JSON.parse(user);
+            var apiUrl = typeof AppConfig !== 'undefined' 
+                ? AppConfig.API_BASE_URL + '/get_smoke_statistics?user_id=' + userData.id 
+                : 'http://localhost:5000/api/get_smoke_statistics?user_id=' + userData.id;
+            
+            $.ajax({
+                url: apiUrl,
+                type: 'GET',
+                success: function(response) {
+                    if (response.success) {
+                        $('#lastWeekAvg').text(response.last_week_avg);
+                        $('#singleDayMin').text(response.single_day_min);
+                        $('#yesterdayCount').text(response.yesterday_count);
+                    }
+                },
+                error: function() {
+                    console.error('加载统计数据失败');
+                }
+            });
+        }
+        
+        // 页面加载时获取数据
+        $(document).ready(function() {
+            loadTodayRecords();
+            loadStatistics();
+            loadChartData('day');
+        });
+        
+        // 加载图表数据
+        function loadChartData(type) {
+            var user = localStorage.getItem('user');
+            if (!user) {
+                return;
+            }
+            
+            var userData = JSON.parse(user);
+            var apiUrl = typeof AppConfig !== 'undefined' 
+                ? AppConfig.API_BASE_URL + '/get_smoke_chart_data?user_id=' + userData.id + '&type=' + type 
+                : 'http://localhost:5000/api/get_smoke_chart_data?user_id=' + userData.id + '&type=' + type;
+            
+            $.ajax({
+                url: apiUrl,
+                type: 'GET',
+                success: function(response) {
+                    if (response.success) {
+                        // 更新总根数
+                        $('#chartTotal').text(response.total);
+                        
+                        // 渲染图表
+                        var html = '';
+                        var maxData = Math.max.apply(null, response.data);
+                        if (maxData === 0) maxData = 1;
+                        
+                        var chartHeight = 100; // 图表最大高度（像素）
+                        
+                        response.labels.forEach(function(label, index) {
+                            var value = response.data[index];
+                            var height = Math.round((value / maxData) * chartHeight);
+                            if (height < 4 && value > 0) height = 4; // 最小高度
+                            
+                            html += '<div class="bar-wrapper">';
+                            html += '<div class="bar" style="height: ' + height + 'px">';
+                            html += '<span class="bar-value">' + value + '</span>';
+                            html += '</div>';
+                            html += '<span class="bar-label">' + label + '</span>';
+                            html += '</div>';
+                        });
+                        
+                        if (response.data.length === 0 || response.data.every(v => v === 0)) {
+                            html = '<div style="text-align: center; color: #999; padding: 40px; width: 100%;">暂无数据</div>';
+                        }
+                        
+                        $('#chartContainer').html(html);
+                    }
+                },
+                error: function() {
+                    console.error('加载图表数据失败');
+                }
+            });
+        }
+        
+        // Tab切换事件
+        $('.chart-tabs .tab').on('click', function() {
+            $('.chart-tabs .tab').removeClass('active');
+            $(this).addClass('active');
+            var type = $(this).data('type');
+            loadChartData(type);
+        });
+        
+        // 加载购烟明细
+        function loadPurchaseRecords() {
+            var user = localStorage.getItem('user');
+            if (!user) {
+                return;
+            }
+            
+            var userData = JSON.parse(user);
+            var apiUrl = typeof AppConfig !== 'undefined' 
+                ? AppConfig.API_BASE_URL + '/get_purchase_records?user_id=' + userData.id 
+                : 'http://localhost:5000/api/get_purchase_records?user_id=' + userData.id;
+            
+            $.ajax({
+                url: apiUrl,
+                type: 'GET',
+                success: function(response) {
+                    if (response.success) {
+                        var html = '';
+                        
+                        if (response.records.length === 0) {
+                            html = '<div style="text-align: center; color: #999; padding: 30px;">暂无购烟记录</div>';
+                        } else {
+                            response.records.forEach(function(record) {
+                                html += '<div class="purchase-item">';
+                                html += '<div class="purchase-icon">';
+                                html += '<img src="icon/cigarette.svg" class="item-icon" />';
+                                html += '</div>';
+                                html += '<div class="purchase-info">';
+                                html += '<span class="purchase-brand">' + record.title + '</span>';
+                                html += '<span class="purchase-time">' + record.real_time + '</span>';
+                                html += '</div>';
+                                html += '<span class="purchase-amount">¥' + record.price + '</span>';
+                                html += '</div>';
+                            });
+                        }
+                        
+                        $('#purchaseList').html(html);
+                        $('#purchaseTotal').text('¥' + response.total);
+                    }
+                },
+                error: function() {
+                    console.error('加载购烟明细失败');
+                }
+            });
+        }
+        
+        // 页面加载时获取数据
+        $(document).ready(function() {
+            loadTodayRecords();
+            loadStatistics();
+            loadChartData('day');
+            loadPurchaseRecords();
         });
     </script>
 </body>

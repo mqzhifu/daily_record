@@ -4,9 +4,11 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>消费 - Serene Habits</title>
-    <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+    <link rel="icon" type="image/svg+xml" href="icon/favicon.svg"/>
     <link href="css/common.css" rel="stylesheet"/>
     <link href="css/spending.css" rel="stylesheet"/>
+    <script src="js/jquery.js"></script>
+    <script src="js/common.js"></script>
 </head>
 <body>
     <div class="page-container">
@@ -40,15 +42,8 @@
                     </button>
                     <div class="category-select">
                         <img src="icon/tag.svg" class="select-icon" />
-                        <select class="select-input">
-                            <option value="任意">任意</option>
-                            <option value="饮食">饮食</option>
-                            <option value="交通">交通</option>
-                            <option value="烟">烟</option>
-                            <option value="数码">数码</option>
-                            <option value="买菜">买菜</option>
-                            <option value="服装">服装</option>
-                            <option value="玩具">玩具</option>
+                        <select class="select-input" id="categorySelect">
+                            <option value="">加载中...</option>
                         </select>
                     </div>
                 </div>
@@ -62,54 +57,17 @@
                 <div class="card-header">
                     <h2 class="card-title">支出趋势</h2>
                     <div class="chart-tabs">
-                        <button class="tab active">日</button>
-                        <button class="tab">周</button>
-                        <button class="tab">月</button>
+                        <button class="tab active" data-type="day">日</button>
+                        <button class="tab" data-type="week">周</button>
+                        <button class="tab" data-type="month">月</button>
                     </div>
                 </div>
-                <div class="chart-container">
-                    <div class="bar-wrapper">
-                        <div class="bar" style="height: 60%">
-                            <span class="bar-value">60</span>
-                        </div>
-                        <span class="bar-label">周一</span>
-                    </div>
-                    <div class="bar-wrapper">
-                        <div class="bar" style="height: 80%">
-                            <span class="bar-value">80</span>
-                        </div>
-                        <span class="bar-label">周二</span>
-                    </div>
-                    <div class="bar-wrapper">
-                        <div class="bar" style="height: 45%">
-                            <span class="bar-value">45</span>
-                        </div>
-                        <span class="bar-label">周三</span>
-                    </div>
-                    <div class="bar-wrapper">
-                        <div class="bar" style="height: 90%">
-                            <span class="bar-value">90</span>
-                        </div>
-                        <span class="bar-label">周四</span>
-                    </div>
-                    <div class="bar-wrapper">
-                        <div class="bar" style="height: 70%">
-                            <span class="bar-value">70</span>
-                        </div>
-                        <span class="bar-label">周五</span>
-                    </div>
-                    <div class="bar-wrapper">
-                        <div class="bar" style="height: 85%">
-                            <span class="bar-value">85</span>
-                        </div>
-                        <span class="bar-label">周六</span>
-                    </div>
-                    <div class="bar-wrapper">
-                        <div class="bar" style="height: 55%">
-                            <span class="bar-value">55</span>
-                        </div>
-                        <span class="bar-label">周日</span>
-                    </div>
+                <div class="chart-container" id="expenseChartContainer">
+                    <!-- 动态加载 -->
+                </div>
+                <div class="chart-summary">
+                    <span class="summary-label">总金额</span>
+                    <span class="summary-value" id="expenseChartTotal">¥0</span>
                 </div>
             </section>
 
@@ -118,36 +76,8 @@
                 <div class="card-header">
                     <h2 class="card-title">支出构成</h2>
                 </div>
-                <div class="breakdown-content">
-                    <div class="donut-chart">
-                        <svg viewBox="0 0 100 100" class="donut-svg">
-                            <circle cx="50" cy="50" r="40" fill="none" stroke="#EFF6FF" stroke-width="12"/>
-                            <circle cx="50" cy="50" r="40" fill="none" stroke="#0058BE" stroke-width="12" stroke-dasharray="201 251" stroke-dashoffset="0"/>
-                            <circle cx="50" cy="50" r="40" fill="none" stroke="#3B82F6" stroke-width="12" stroke-dasharray="126 251" stroke-dashoffset="-201"/>
-                            <circle cx="50" cy="50" r="40" fill="none" stroke="#BFDBFE" stroke-width="12" stroke-dasharray="24 251" stroke-dashoffset="-327"/>
-                        </svg>
-                        <div class="donut-center">
-                            <span class="donut-total">100%</span>
-                            <span class="donut-label">总计</span>
-                        </div>
-                    </div>
-                    <div class="breakdown-list">
-                        <div class="breakdown-item">
-                            <span class="category-color" style="background-color: #0058BE"></span>
-                            <span class="category-name">餐饮美食</span>
-                            <span class="category-percent">40%</span>
-                        </div>
-                        <div class="breakdown-item">
-                            <span class="category-color" style="background-color: #3B82F6"></span>
-                            <span class="category-name">购物消费</span>
-                            <span class="category-percent">30%</span>
-                        </div>
-                        <div class="breakdown-item">
-                            <span class="category-color" style="background-color: #BFDBFE"></span>
-                            <span class="category-name">交通出行</span>
-                            <span class="category-percent">30%</span>
-                        </div>
-                    </div>
+                <div class="breakdown-content" id="breakdownContent">
+                    <!-- 动态加载内容 -->
                 </div>
             </section>
 
@@ -156,60 +86,17 @@
                 <div class="card-header">
                     <h2 class="card-title">今日消费明细</h2>
                 </div>
-                <div class="list-content">
-                    <div class="list-item">
-                        <div class="category-icon food">
-                            <img src="icon/utensils.svg" class="icon-img" />
-                        </div>
-                        <div class="item-info">
-                            <span class="item-name">午餐</span>
-                            <span class="item-time">12:30</span>
-                        </div>
-                        <span class="item-desc">公司楼下餐厅</span>
-                        <span class="item-amount">-¥35</span>
-                    </div>
-                    <div class="list-item">
-                        <div class="category-icon shopping">
-                            <img src="icon/tag.svg" class="icon-img" />
-                        </div>
-                        <div class="item-info">
-                            <span class="item-name">日用品</span>
-                            <span class="item-time">14:20</span>
-                        </div>
-                        <span class="item-desc">纸巾、牙膏等</span>
-                        <span class="item-amount">-¥58</span>
-                    </div>
-                    <div class="list-item">
-                        <div class="category-icon transport">
-                            <img src="icon/car.svg" class="icon-img" />
-                        </div>
-                        <div class="item-info">
-                            <span class="item-name">打车</span>
-                            <span class="item-time">18:45</span>
-                        </div>
-                        <span class="item-desc">地铁口到家</span>
-                        <span class="item-amount">-¥22</span>
-                    </div>
-                    <div class="list-item">
-                        <div class="category-icon food">
-                            <img src="icon/coffee.svg" class="icon-img" />
-                        </div>
-                        <div class="item-info">
-                            <span class="item-name">咖啡</span>
-                            <span class="item-time">10:15</span>
-                        </div>
-                        <span class="item-desc">星巴克拿铁</span>
-                        <span class="item-amount">-¥28</span>
-                    </div>
+                <div class="list-content" id="todayExpensesList">
+                    <!-- 动态加载内容 -->
                 </div>
-                <div class="list-summary">
+                <div class="list-summary" id="todayExpensesSummary">
                     <span class="summary-item">
                         <span class="summary-label">总笔数</span>
-                        <span class="summary-value">4 笔</span>
+                        <span class="summary-value" id="totalCount">0 笔</span>
                     </span>
                     <span class="summary-item">
                         <span class="summary-label">总金额</span>
-                        <span class="summary-value">-¥143</span>
+                        <span class="summary-value" id="totalAmount">-¥0</span>
                     </span>
                 </div>
             </section>
@@ -350,6 +237,30 @@
                 </div>
 
                 <script>
+                    // 加载分类列表
+                    function loadCategories() {
+                        var apiUrl = typeof AppConfig !== 'undefined' 
+                            ? AppConfig.API_BASE_URL + '/get_categories?type=1' 
+                            : 'http://localhost:5000/api/get_categories?type=1';
+                        
+                        $.ajax({
+                            url: apiUrl,
+                            type: 'GET',
+                            success: function(response) {
+                                if (response.success) {
+                                    var html = '';
+                                    response.categories.forEach(function(cat) {
+                                        html += '<option value="' + cat.id + '">' + cat.name + '</option>';
+                                    });
+                                    $('#categorySelect').html(html);
+                                }
+                            },
+                            error: function() {
+                                $('#categorySelect').html('<option value="">加载失败</option>');
+                            }
+                        });
+                    }
+                    
                     // Date Picker Functions
                     const datePickerBtn = document.getElementById('datePickerBtn');
                     const datePickerOverlay = document.getElementById('datePickerOverlay');
@@ -367,17 +278,41 @@
                         
                         dateSelectValue.textContent = month + '-' + day + ' ' + hour + ':00';
                         
-                        document.querySelector('#yearScroll .picker-item.active')?.classList.remove('active');
-                        document.querySelector('#yearScroll .picker-item:nth-child(' + (year - 2023) + ')')?.classList.add('active');
+                        // 设置年份选中项
+                        const yearScroll = document.querySelector('#yearScroll');
+                        const yearIndex = year - 2024;
+                        yearScroll.querySelectorAll('.picker-item').forEach((item, idx) => {
+                            item.classList.toggle('active', idx === yearIndex);
+                        });
                         
-                        document.querySelector('#monthScroll .picker-item.active')?.classList.remove('active');
-                        document.querySelector('#monthScroll .picker-item:nth-child(' + (now.getMonth() + 1) + ')')?.classList.add('active');
+                        // 设置月份选中项
+                        const monthScroll = document.querySelector('#monthScroll');
+                        const monthIndex = now.getMonth();
+                        monthScroll.querySelectorAll('.picker-item').forEach((item, idx) => {
+                            item.classList.toggle('active', idx === monthIndex);
+                        });
                         
-                        document.querySelector('#dayScroll .picker-item.active')?.classList.remove('active');
-                        document.querySelector('#dayScroll .picker-item:nth-child(' + day + ')')?.classList.add('active');
+                        // 设置日期选中项
+                        const dayScroll = document.querySelector('#dayScroll');
+                        const dayIndex = now.getDate() - 1;
+                        dayScroll.querySelectorAll('.picker-item').forEach((item, idx) => {
+                            item.classList.toggle('active', idx === dayIndex);
+                        });
                         
-                        document.querySelector('#hourScroll .picker-item.active')?.classList.remove('active');
-                        document.querySelector('#hourScroll .picker-item:nth-child(' + (now.getHours() + 1) + ')')?.classList.add('active');
+                        // 设置小时选中项
+                        const hourScroll = document.querySelector('#hourScroll');
+                        const hourIndex = now.getHours();
+                        hourScroll.querySelectorAll('.picker-item').forEach((item, idx) => {
+                            item.classList.toggle('active', idx === hourIndex);
+                        });
+                        
+                        // 滚动到选中项
+                        setTimeout(() => {
+                            yearScroll.querySelector('.picker-item.active')?.scrollIntoView({ block: 'center', behavior: 'instant' });
+                            monthScroll.querySelector('.picker-item.active')?.scrollIntoView({ block: 'center', behavior: 'instant' });
+                            dayScroll.querySelector('.picker-item.active')?.scrollIntoView({ block: 'center', behavior: 'instant' });
+                            hourScroll.querySelector('.picker-item.active')?.scrollIntoView({ block: 'center', behavior: 'instant' });
+                        }, 50);
                     };
 
                     // Run initialization
@@ -403,8 +338,52 @@
                     });
 
                     datePickerBtn.addEventListener('click', function() {
+                        // 每次打开弹窗时都重新初始化当前时间
+                        const now = new Date();
+                        const year = now.getFullYear();
+                        const month = now.getMonth();
+                        const day = now.getDate();
+                        const hour = now.getHours();
+                        
+                        dateSelectValue.textContent = String(month + 1).padStart(2, '0') + '-' + String(day).padStart(2, '0') + ' ' + String(hour).padStart(2, '0') + ':00';
+                        
+                        // 设置年份选中项
+                        const yearScroll = document.querySelector('#yearScroll');
+                        const yearIndex = year - 2024;
+                        yearScroll.querySelectorAll('.picker-item').forEach((item, idx) => {
+                            item.classList.toggle('active', idx === yearIndex);
+                        });
+                        
+                        // 设置月份选中项
+                        const monthScroll = document.querySelector('#monthScroll');
+                        monthScroll.querySelectorAll('.picker-item').forEach((item, idx) => {
+                            item.classList.toggle('active', idx === month);
+                        });
+                        
+                        // 设置日期选中项
+                        const dayScroll = document.querySelector('#dayScroll');
+                        const dayIndex = day - 1;
+                        dayScroll.querySelectorAll('.picker-item').forEach((item, idx) => {
+                            item.classList.toggle('active', idx === dayIndex);
+                        });
+                        
+                        // 设置小时选中项
+                        const hourScroll = document.querySelector('#hourScroll');
+                        const hourIndex = hour;
+                        hourScroll.querySelectorAll('.picker-item').forEach((item, idx) => {
+                            item.classList.toggle('active', idx === hourIndex);
+                        });
+                        
                         datePickerOverlay.style.display = 'block';
                         document.body.style.overflow = 'hidden';
+                        
+                        // 滚动到选中项
+                        setTimeout(() => {
+                            yearScroll.querySelector('.picker-item.active')?.scrollIntoView({ block: 'center', behavior: 'instant' });
+                            monthScroll.querySelector('.picker-item.active')?.scrollIntoView({ block: 'center', behavior: 'instant' });
+                            dayScroll.querySelector('.picker-item.active')?.scrollIntoView({ block: 'center', behavior: 'instant' });
+                            hourScroll.querySelector('.picker-item.active')?.scrollIntoView({ block: 'center', behavior: 'instant' });
+                        }, 50);
                     });
 
                     modalNow.addEventListener('click', function() {
@@ -485,6 +464,7 @@
                         const name = inputItems[0].value.trim();
                         const amount = inputItems[1].value.trim();
                         const date = dateSelectValue.textContent.trim();
+                        const category = document.getElementById('categorySelect').value;
                         
                         if (!name) {
                             showToast('请输入消费名称', 'error');
@@ -505,16 +485,277 @@
                             return;
                         }
                         
+                        if (!category) {
+                            showToast('请选择分类', 'error');
+                            return;
+                        }
+                        
                         if (!date) {
                             showToast('请选择日期', 'error');
                             return;
                         }
                         
-                        // If validation passes, you can proceed with adding the record
-                        showToast('记录成功！', 'success');
-                        // Clear inputs after successful submission
-                        inputItems[0].value = '';
-                        inputItems[1].value = '';
+                        // 获取用户信息
+                        var user = localStorage.getItem('user');
+                        if (!user) {
+                            showToast('请先登录', 'error');
+                            return;
+                        }
+                        
+                        var userData = JSON.parse(user);
+                        
+                        // 构建real_time格式
+                        var realTime = date;
+                        // 如果date格式是 "MM-DD HH:00"，需要转换成年份
+                        var now = new Date();
+                        var year = now.getFullYear();
+                        if (date.includes('-') && date.includes(':')) {
+                            var parts = date.split(' ');
+                            var datePart = parts[0];
+                            var timePart = parts[1] || '00:00';
+                            realTime = year + '-' + datePart.replace('-', '-') + ' ' + timePart;
+                        }
+                        
+                        // 调用后端API
+                        var apiUrl = typeof AppConfig !== 'undefined' 
+                            ? AppConfig.API_BASE_URL + '/add_expense' 
+                            : 'http://localhost:5000/api/add_expense';
+                        
+                        $.ajax({
+                            url: apiUrl,
+                            type: 'POST',
+                            contentType: 'application/json',
+                            data: JSON.stringify({
+                                user_id: userData.id,
+                                title: name,
+                                price: parseFloat(amount),
+                                category: parseInt(category),
+                                real_time: realTime
+                            }),
+                            success: function(response) {
+                                if (response.success) {
+                                    showToast('记录成功！', 'success');
+                                    inputItems[0].value = '';
+                                    inputItems[1].value = '';
+                                    // 刷新今日消费明细
+                                    loadTodayExpenses();
+                                } else {
+                                    showToast(response.message || '添加失败', 'error');
+                                }
+                            },
+                            error: function() {
+                                showToast('网络错误，请重试', 'error');
+                            }
+                        });
+                    });
+                    
+                    // 加载支出构成
+                    function loadExpenseBreakdown() {
+                        var user = localStorage.getItem('user');
+                        if (!user) {
+                            console.log('未登录，不加载支出构成');
+                            return;
+                        }
+                        
+                        var userData = JSON.parse(user);
+                        var apiUrl = typeof AppConfig !== 'undefined' 
+                            ? AppConfig.API_BASE_URL + '/get_expense_breakdown?user_id=' + userData.id 
+                            : 'http://localhost:5000/api/get_expense_breakdown?user_id=' + userData.id;
+                        
+                        console.log('请求支出构成API:', apiUrl);
+                        
+                        $.ajax({
+                            url: apiUrl,
+                            type: 'GET',
+                            success: function(response) {
+                                console.log('支出构成API响应:', response);
+                                if (response.success) {
+                                    var breakdown = response.breakdown;
+                                    var colors = ['#0058BE', '#3B82F6', '#BFDBFE', '#60A5FA', '#93C5FD'];
+                                    var html = '';
+                                    
+                                    if (breakdown.length === 0) {
+                                        // 没有数据时显示提示
+                                        html = '<div style="display: flex; align-items: center; gap: 24px;">';
+                                        html += '<div class="donut-chart">';
+                                        html += '<svg viewBox="0 0 100 100" class="donut-svg">';
+                                        html += '<circle cx="50" cy="50" r="40" fill="none" stroke="#EFF6FF" stroke-width="12"/>';
+                                        html += '</svg>';
+                                        html += '<div class="donut-center">';
+                                        html += '<span class="donut-total">¥0</span>';
+                                        html += '<span class="donut-label">总计</span>';
+                                        html += '</div>';
+                                        html += '</div>';
+                                        html += '<div class="breakdown-list">';
+                                        html += '<div style="color: #999; padding: 20px 0;">暂无消费记录</div>';
+                                        html += '</div>';
+                                        html += '</div>';
+                                    } else {
+                                        // 饼图
+                                        html += '<div style="display: flex; align-items: center; gap: 24px;">';
+                                        html += '<div class="donut-chart">';
+                                        html += '<svg viewBox="0 0 100 100" class="donut-svg">';
+                                        
+                                        var circumference = 2 * Math.PI * 40;
+                                        var offset = 0;
+                                        
+                                        breakdown.forEach(function(item, index) {
+                                            var dashLength = (item.percent / 100) * circumference;
+                                            var color = colors[index % colors.length];
+                                            html += '<circle cx="50" cy="50" r="40" fill="none" stroke="' + color + '" stroke-width="12" ';
+                                            html += 'stroke-dasharray="' + dashLength + ' ' + (circumference - dashLength) + '" ';
+                                            html += 'stroke-dashoffset="' + (-offset) + '"/>';
+                                            offset += dashLength;
+                                        });
+                                        
+                                        html += '</svg>';
+                                        html += '<div class="donut-center">';
+                                        html += '<span class="donut-total">¥' + response.total + '</span>';
+                                        html += '<span class="donut-label">总计</span>';
+                                        html += '</div>';
+                                        html += '</div>';
+                                        
+                                        // 分类列表
+                                        html += '<div class="breakdown-list">';
+                                        breakdown.forEach(function(item, index) {
+                                            var color = colors[index % colors.length];
+                                            html += '<div class="breakdown-item">';
+                                            html += '<span class="category-color" style="background-color: ' + color + '"></span>';
+                                            html += '<span class="category-name">' + item.name + '</span>';
+                                            html += '<span class="category-percent">' + item.percent + '%</span>';
+                                            html += '</div>';
+                                        });
+                                        html += '</div>';
+                                        html += '</div>';
+                                    }
+                                    
+                                    $('#breakdownContent').html(html);
+                                } else {
+                                    console.error('API返回错误:', response.message);
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                console.error('加载支出构成失败:', status, error);
+                                console.error('响应:', xhr.responseText);
+                            }
+                        });
+                    }
+                    
+                    // 加载今日消费明细
+                    function loadTodayExpenses() {
+                        var user = localStorage.getItem('user');
+                        if (!user) {
+                            return;
+                        }
+                        
+                        var userData = JSON.parse(user);
+                        var apiUrl = typeof AppConfig !== 'undefined' 
+                            ? AppConfig.API_BASE_URL + '/get_today_expenses?user_id=' + userData.id 
+                            : 'http://localhost:5000/api/get_today_expenses?user_id=' + userData.id;
+                        
+                        $.ajax({
+                            url: apiUrl,
+                            type: 'GET',
+                            success: function(response) {
+                                if (response.success) {
+                                    var html = '';
+                                    
+                                    if (response.expenses.length === 0) {
+                                        html = '<div style="text-align: center; color: #999; padding: 40px; width: 100%;">暂无消费记录</div>';
+                                    } else {
+                                        response.expenses.forEach(function(expense) {
+                                            html += '<div class="list-item">';
+                                            html += '<div class="category-icon food">';
+                                            html += '<img src="icon/tag.svg" class="icon-img" />';
+                                            html += '</div>';
+                                            html += '<div class="item-info">';
+                                            html += '<span class="item-name">' + expense.title + '</span>';
+                                            html += '<span class="item-time">' + expense.real_time + '</span>';
+                                            html += '</div>';
+                                            html += '<span class="item-desc">' + expense.category_name + '</span>';
+                                            html += '<span class="item-amount">-¥' + expense.price + '</span>';
+                                            html += '</div>';
+                                        });
+                                    }
+                                    
+                                    $('#todayExpensesList').html(html);
+                                    $('#totalCount').text(response.count + ' 笔');
+                                    $('#totalAmount').text('-¥' + response.total);
+                                }
+                            },
+                            error: function() {
+                                console.error('加载今日消费记录失败');
+                            }
+                        });
+                    }
+                    
+                    // 加载支出趋势图表数据
+                    function loadExpenseChartData(type) {
+                        var user = localStorage.getItem('user');
+                        if (!user) {
+                            return;
+                        }
+                        
+                        var userData = JSON.parse(user);
+                        var apiUrl = typeof AppConfig !== 'undefined' 
+                            ? AppConfig.API_BASE_URL + '/get_expense_chart_data?user_id=' + userData.id + '&type=' + type 
+                            : 'http://localhost:5000/api/get_expense_chart_data?user_id=' + userData.id + '&type=' + type;
+                        
+                        $.ajax({
+                            url: apiUrl,
+                            type: 'GET',
+                            success: function(response) {
+                                if (response.success) {
+                                    // 更新总金额
+                                    $('#expenseChartTotal').text('¥' + response.total);
+                                    
+                                    // 渲染图表
+                                    var html = '';
+                                    var maxData = Math.max.apply(null, response.data);
+                                    if (maxData === 0) maxData = 1;
+                                    
+                                    var chartHeight = 100; // 图表最大高度（像素）
+                                    
+                                    response.labels.forEach(function(label, index) {
+                                        var value = response.data[index];
+                                        var height = Math.round((value / maxData) * chartHeight);
+                                        if (height < 4 && value > 0) height = 4; // 最小高度
+                                        
+                                        html += '<div class="bar-wrapper">';
+                                        html += '<div class="bar" style="height: ' + height + 'px">';
+                                        html += '<span class="bar-value">' + value + '</span>';
+                                        html += '</div>';
+                                        html += '<span class="bar-label">' + label + '</span>';
+                                        html += '</div>';
+                                    });
+                                    
+                                    if (response.labels.length === 0) {
+                                        html = '<div style="text-align: center; color: #999; padding: 40px; width: 100%;">暂无数据</div>';
+                                    }
+                                    
+                                    $('#expenseChartContainer').html(html);
+                                }
+                            },
+                            error: function() {
+                                console.error('加载支出趋势数据失败');
+                            }
+                        });
+                    }
+                    
+                    // 页面加载时获取分类、支出构成和今日消费
+                    $(document).ready(function() {
+                        loadCategories();
+                        loadExpenseBreakdown();
+                        loadTodayExpenses();
+                        loadExpenseChartData('day');
+                        
+                        // Tab切换事件
+                        $('.chart-tabs .tab').on('click', function() {
+                            $('.chart-tabs .tab').removeClass('active');
+                            $(this).addClass('active');
+                            var type = $(this).data('type');
+                            loadExpenseChartData(type);
+                        });
                     });
                 </script>
             </div>

@@ -202,6 +202,24 @@ body {
     color: var(--text-secondary);
 }
 
+.chart-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 0;
+}
+
+.chart-summary .summary-label {
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.chart-summary .summary-value {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--primary);
+}
+
 /* Breakdown Card */
 .breakdown-card {
     background-color: var(--bg-card);

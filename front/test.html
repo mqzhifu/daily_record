@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>测试 - Serene Habits</title>
+    <link rel="icon" type="image/svg+xml" href="icon/favicon.svg"/>
+    <link href="css/common.css" rel="stylesheet"/>
+    <link href="css/styles.css" rel="stylesheet"/>
+</head>
+<body class="page-profile">
+    <!-- Top Navigation Bar -->
+    <nav class="top-nav">
+        <a href="profile.html" class="nav-left">
+            <img src="icon/arrow-back.svg" class="nav-icon" />
+        </a>
+        <h1 class="nav-title">测试</h1>
+        <a href="#" class="nav-right">
+            <img src="icon/settings.svg" class="nav-icon" />
+        </a>
+    </nav>
+
+    <!-- Settings Menu -->
+    <section class="menu-section" style="margin-top: 20px;">
+        <div class="menu-container">
+            <a href="login.html" class="menu-item">
+                <div class="menu-icon-wrapper">
+                    <img src="icon/user.svg" class="menu-icon" />
+                </div>
+                <span class="menu-text">登陆</span>
+                <img src="icon/chevron_right.svg" class="menu-arrow" />
+            </a>
+            <div class="menu-item generate-data-item">
+                <div class="menu-icon-wrapper">
+                    <img src="icon/plus.svg" class="menu-icon" />
+                </div>
+                <span class="menu-text">生成抽烟记录</span>
+                <img src="icon/chevron_right.svg" class="menu-arrow" />
+            </div>
+            <div class="menu-item clear-data-item">
+                <div class="menu-icon-wrapper">
+                    <img src="icon/trash-2.svg" class="menu-icon" />
+                </div>
+                <span class="menu-text">清空抽烟记录</span>
+                <img src="icon/chevron_right.svg" class="menu-arrow" />
+            </div>
+        </div>
+    </section>
+
+    <!-- Toast Notification -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <a href="index.html" class="nav-item">
+            <img src="icon/home.svg" class="nav-icon-bottom" />
+            <span class="nav-text">首页</span>
+        </a>
+        <a href="smoking.html" class="nav-item">
+            <img src="icon/cigarette.svg" class="nav-icon-bottom" />
+            <span class="nav-text">戒烟</span>
+        </a>
+        <a href="daily.html" class="nav-item">
+            <img src="icon/calendar.svg" class="nav-icon-bottom" />
+            <span class="nav-text">日常</span>
+        </a>
+        <a href="spending.html" class="nav-item">
+            <img src="icon/shopping-bag.svg" class="nav-icon-bottom" />
+            <span class="nav-text">消费</span>
+        </a>
+        <a href="profile.html" class="nav-item active">
+            <img src="icon/user.svg" class="nav-icon-bottom" />
+            <span class="nav-text">我的</span>
+        </a>
+    </nav>
+    <script src="js/jquery.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Toast notification function
+            const showToast = function(message, type = 'info') {
+                const toastContainer = document.getElementById('toastContainer');
+                const toast = document.createElement('div');
+                toast.className = `toast ${type}`;
+                toast.textContent = message;
+                toastContainer.appendChild(toast);
+                
+                setTimeout(() => {
+                    toast.classList.add('show');
+                }, 10);
+                
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                    setTimeout(() => {
+                        toast.remove();
+                    }, 300);
+                }, 2000);
+            };
+            
+            // 生成数据按钮点击事件
+            $('.generate-data-item').on('click', function() {
+                var user = localStorage.getItem('user');
+                if (!user) {
+                    showToast('请先登录', 'error');
+                    return;
+                }
+                
+                var userData = JSON.parse(user);
+                var apiUrl = typeof AppConfig !== 'undefined' 
+                    ? AppConfig.API_BASE_URL + '/generate_test_data' 
+                    : 'http://localhost:5000/api/generate_test_data';
+                
+                showToast('正在生成数据...', 'info');
+                
+                $.ajax({
+                    url: apiUrl,
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        user_id: userData.id
+                    }),
+                    success: function(response) {
+                        if (response.success) {
+                            showToast(response.message, 'success');
+                        } else {
+                            showToast(response.message, 'error');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        showToast('网络连接失败: ' + error, 'error');
+                    }
+                });
+            });
+            
+            // 清空记录按钮点击事件
+            $('.clear-data-item').on('click', function() {
+                var user = localStorage.getItem('user');
+                if (!user) {
+                    showToast('请先登录', 'error');
+                    return;
+                }
+                
+                if (!confirm('确定要清空所有抽烟记录吗？此操作不可恢复！')) {
+                    return;
+                }
+                
+                var userData = JSON.parse(user);
+                var apiUrl = typeof AppConfig !== 'undefined' 
+                    ? AppConfig.API_BASE_URL + '/clear_smoke_records' 
+                    : 'http://localhost:5000/api/clear_smoke_records';
+                
+                showToast('正在清空记录...', 'info');
+                
+                $.ajax({
+                    url: apiUrl,
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        user_id: userData.id
+                    }),
+                    success: function(response) {
+                        if (response.success) {
+                            showToast(response.message, 'success');
+                        } else {
+                            showToast(response.message, 'error');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        showToast('网络连接失败: ' + error, 'error');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

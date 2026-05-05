@@ -4,9 +4,11 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>日常 - Serene Habits</title>
-    <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+    <link rel="icon" type="image/svg+xml" href="icon/favicon.svg"/>
     <link href="css/common.css" rel="stylesheet"/>
     <link href="css/daily.css" rel="stylesheet"/>
+    <script src="js/jquery.js"></script>
+    <script src="js/common.js"></script>
 </head>
 <body>
     <div class="page-container">
@@ -42,18 +44,8 @@
                     </div>
                     <div class="category-select">
                         <img src="icon/tag.svg" class="select-icon" />
-                        <select class="select-input">
-                            <option selected>任意</option>
-                            <option>打游戏</option>
-                            <option>玩手机</option>
-                            <option>睡觉</option>
-                            <option>面试</option>
-                            <option>学习</option>
-                            <option>逛街</option>
-                            <option>工作</option>
-                            <option>文档</option>
-                            <option>吃饭</option>
-                            <option>陪孩子</option>
+                        <select class="select-input" id="categorySelect">
+                            <option value="">加载中...</option>
                         </select>
                     </div>
                 </div>
@@ -63,62 +55,11 @@
             <section class="timeline-card">
                 <div class="card-header">
                     <h2 class="card-title">日行程</h2>
-                    <span class="current-date">2026-04-05</span>
-                    <button class="date-btn">选择日</button>
+                    <span class="current-date" id="currentDateDisplay">2026-04-05</span>
+                    <button class="date-btn" id="datePickerBtn">选择日</button>
                 </div>
-                <div class="timeline-list">
-                    <div class="timeline-item">
-                        <div class="timeline-dot work"></div>
-                        <div class="timeline-line"></div>
-                        <div class="timeline-content">
-                            <div class="timeline-icon work">
-                                <img src="icon/book-open.svg" class="icon-img" />
-                            </div>
-                            <div class="timeline-info">
-                                <span class="timeline-time">09:00</span>
-                                <span class="timeline-text">完成项目文档</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-dot break"></div>
-                        <div class="timeline-line"></div>
-                        <div class="timeline-content">
-                            <div class="timeline-icon break">
-                                <img src="icon/coffee.svg" class="icon-img" />
-                            </div>
-                            <div class="timeline-info">
-                                <span class="timeline-time">10:30</span>
-                                <span class="timeline-text">休息时间</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-dot work"></div>
-                        <div class="timeline-line"></div>
-                        <div class="timeline-content">
-                            <div class="timeline-icon work">
-                                <img src="icon/book-open.svg" class="icon-img" />
-                            </div>
-                            <div class="timeline-info">
-                                <span class="timeline-time">11:00</span>
-                                <span class="timeline-text">团队会议</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="timeline-item last">
-                        <div class="timeline-dot entertainment"></div>
-                        <div class="timeline-line"></div>
-                        <div class="timeline-content">
-                            <div class="timeline-icon entertainment">
-                                <img src="icon/gamepad-2.svg" class="icon-img" />
-                            </div>
-                            <div class="timeline-info">
-                                <span class="timeline-time">14:00</span>
-                                <span class="timeline-text">休闲娱乐</span>
-                            </div>
-                        </div>
-                    </div>
+                <div class="timeline-list" id="timelineList">
+                    <!-- 动态加载 -->
                 </div>
                 <a href="daily-record.html" class="more-link">更多</a>
             </section>
@@ -126,37 +67,8 @@
             <!-- Analytics Card -->
             <section class="analytics-card">
                 <h2 class="card-title">分类统计</h2>
-                <div class="chart-container">
-                    <div class="donut-chart">
-                        <svg viewBox="0 0 100 100" class="donut-svg">
-                            <circle cx="50" cy="50" r="40" fill="none" stroke="#EFF6FF" stroke-width="12"/>
-                            <circle cx="50" cy="50" r="40" fill="none" stroke="#0058BE" stroke-width="12" stroke-dasharray="188.5 251.3" stroke-dashoffset="0"/>
-                            <circle cx="50" cy="50" r="40" fill="none" stroke="#10B981" stroke-width="12" stroke-dasharray="62.8 251.3" stroke-dashoffset="-188.5"/>
-                            <circle cx="50" cy="50" r="40" fill="none" stroke="#BFDBFE" stroke-width="12" stroke-dasharray="31.4 251.3" stroke-dashoffset="-251.3"/>
-                        </svg>
-                        <div class="chart-center">
-                            <span class="chart-value">75%</span>
-                            <span class="chart-label">生产力</span>
-                        </div>
-                    </div>
-                    <div class="stats-list">
-                        <div class="stat-row">
-                            <span class="stat-name">学习/工作</span>
-                            <span class="stat-value">6小时</span>
-                        </div>
-                        <div class="stat-row">
-                            <span class="stat-name">休息/娱乐</span>
-                            <span class="stat-value">2小时</span>
-                        </div>
-                        <div class="stat-row">
-                            <span class="stat-name">饮食</span>
-                            <span class="stat-value">1小时</span>
-                        </div>
-                        <div class="stat-row">
-                            <span class="stat-name">其它</span>
-                            <span class="stat-value">1小时</span>
-                        </div>
-                    </div>
+                <div class="chart-container" id="analyticsChart">
+                    <!-- 动态加载 -->
                 </div>
             </section>
         </main>
@@ -392,17 +304,41 @@
                 
                 selectValue.textContent = month + '-' + day + ' ' + hour + ':00';
                 
-                document.querySelector('#yearScroll .picker-item.active')?.classList.remove('active');
-                document.querySelector('#yearScroll .picker-item:nth-child(' + (year - 2023) + ')')?.classList.add('active');
+                // 设置年份选中项
+                const yearScroll = document.querySelector('#yearScroll');
+                const yearIndex = year - 2024;
+                yearScroll.querySelectorAll('.picker-item').forEach((item, idx) => {
+                    item.classList.toggle('active', idx === yearIndex);
+                });
                 
-                document.querySelector('#monthScroll .picker-item.active')?.classList.remove('active');
-                document.querySelector('#monthScroll .picker-item:nth-child(' + (now.getMonth() + 1) + ')')?.classList.add('active');
+                // 设置月份选中项
+                const monthScroll = document.querySelector('#monthScroll');
+                const monthIndex = now.getMonth();
+                monthScroll.querySelectorAll('.picker-item').forEach((item, idx) => {
+                    item.classList.toggle('active', idx === monthIndex);
+                });
                 
-                document.querySelector('#dayScroll .picker-item.active')?.classList.remove('active');
-                document.querySelector('#dayScroll .picker-item:nth-child(' + now.getDate() + ')')?.classList.add('active');
+                // 设置日期选中项
+                const dayScroll = document.querySelector('#dayScroll');
+                const dayIndex = now.getDate() - 1;
+                dayScroll.querySelectorAll('.picker-item').forEach((item, idx) => {
+                    item.classList.toggle('active', idx === dayIndex);
+                });
                 
-                document.querySelector('#hourScroll .picker-item.active')?.classList.remove('active');
-                document.querySelector('#hourScroll .picker-item:nth-child(' + (now.getHours() + 1) + ')')?.classList.add('active');
+                // 设置小时选中项
+                const hourScroll = document.querySelector('#hourScroll');
+                const hourIndex = now.getHours();
+                hourScroll.querySelectorAll('.picker-item').forEach((item, idx) => {
+                    item.classList.toggle('active', idx === hourIndex);
+                });
+                
+                // 滚动到选中项
+                setTimeout(() => {
+                    yearScroll.querySelector('.picker-item.active')?.scrollIntoView({ block: 'center', behavior: 'instant' });
+                    monthScroll.querySelector('.picker-item.active')?.scrollIntoView({ block: 'center', behavior: 'instant' });
+                    dayScroll.querySelector('.picker-item.active')?.scrollIntoView({ block: 'center', behavior: 'instant' });
+                    hourScroll.querySelector('.picker-item.active')?.scrollIntoView({ block: 'center', behavior: 'instant' });
+                }, 50);
             };
 
             // Run initialization
@@ -471,9 +407,14 @@
                 const month = String(Number(monthScroll.querySelector('.picker-item.active').textContent)).padStart(2, '0');
                 const day = String(Number(dayScroll.querySelector('.picker-item.active').textContent)).padStart(2, '0');
                 
-                currentDate.textContent = year + '-' + month + '-' + day;
+                const selectedDate = year + '-' + month + '-' + day;
+                currentDate.textContent = selectedDate;
                 datePickerOverlay.style.display = 'none';
                 document.body.style.overflow = '';
+                
+                // 重新加载选中日期的数据
+                loadDailyRecords(selectedDate);
+                loadDailyAnalytics(selectedDate);
             });
 
             datePickerOverlay.addEventListener('click', function(e) {
@@ -484,8 +425,52 @@
             });
 
             timePickerBtn.addEventListener('click', function() {
+                // 每次打开弹窗时都重新初始化当前时间
+                const now = new Date();
+                const year = now.getFullYear();
+                const month = now.getMonth();
+                const day = now.getDate();
+                const hour = now.getHours();
+                
+                selectValue.textContent = String(month + 1).padStart(2, '0') + '-' + String(day).padStart(2, '0') + ' ' + String(hour).padStart(2, '0') + ':00';
+                
+                // 设置年份选中项
+                const yearScroll = document.querySelector('#yearScroll');
+                const yearIndex = year - 2024;
+                yearScroll.querySelectorAll('.picker-item').forEach((item, idx) => {
+                    item.classList.toggle('active', idx === yearIndex);
+                });
+                
+                // 设置月份选中项
+                const monthScroll = document.querySelector('#monthScroll');
+                monthScroll.querySelectorAll('.picker-item').forEach((item, idx) => {
+                    item.classList.toggle('active', idx === month);
+                });
+                
+                // 设置日期选中项
+                const dayScroll = document.querySelector('#dayScroll');
+                const dayIndex = day - 1;
+                dayScroll.querySelectorAll('.picker-item').forEach((item, idx) => {
+                    item.classList.toggle('active', idx === dayIndex);
+                });
+                
+                // 设置小时选中项
+                const hourScroll = document.querySelector('#hourScroll');
+                const hourIndex = hour;
+                hourScroll.querySelectorAll('.picker-item').forEach((item, idx) => {
+                    item.classList.toggle('active', idx === hourIndex);
+                });
+                
                 timePickerOverlay.style.display = 'block';
                 document.body.style.overflow = 'hidden';
+                
+                // 滚动到选中项
+                setTimeout(() => {
+                    yearScroll.querySelector('.picker-item.active')?.scrollIntoView({ block: 'center', behavior: 'instant' });
+                    monthScroll.querySelector('.picker-item.active')?.scrollIntoView({ block: 'center', behavior: 'instant' });
+                    dayScroll.querySelector('.picker-item.active')?.scrollIntoView({ block: 'center', behavior: 'instant' });
+                    hourScroll.querySelector('.picker-item.active')?.scrollIntoView({ block: 'center', behavior: 'instant' });
+                }, 50);
             });
 
             modalNow.addEventListener('click', function() {
@@ -507,17 +492,24 @@
                 document.querySelector('#hourScroll .picker-item.active').classList.remove('active');
                 document.querySelector('#hourScroll .picker-item:nth-child(' + (hour + 1) + ')')?.classList.add('active');
                 
+                // 显示时不包含年份，只显示月-日 时:分
                 selectValue.textContent = String(month).padStart(2, '0') + '-' + String(day).padStart(2, '0') + ' ' + String(hour).padStart(2, '0') + ':00';
                 timePickerOverlay.style.display = 'none';
                 document.body.style.overflow = '';
             });
 
             modalConfirm.addEventListener('click', function() {
-                const activeItems = document.querySelectorAll('.picker-item.active');
-                const month = String(Number(activeItems[1].textContent)).padStart(2, '0');
-                const day = String(Number(activeItems[2].textContent)).padStart(2, '0');
-                const hour = String(Number(activeItems[3].textContent)).padStart(2, '0');
+                const yearScroll = document.querySelector('#yearScroll');
+                const monthScroll = document.querySelector('#monthScroll');
+                const dayScroll = document.querySelector('#dayScroll');
+                const hourScroll = document.querySelector('#hourScroll');
                 
+                const year = yearScroll.querySelector('.picker-item.active').textContent;
+                const month = String(Number(monthScroll.querySelector('.picker-item.active').textContent)).padStart(2, '0');
+                const day = String(Number(dayScroll.querySelector('.picker-item.active').textContent)).padStart(2, '0');
+                const hour = String(Number(hourScroll.querySelector('.picker-item.active').textContent)).padStart(2, '0');
+                
+                // 显示时不包含年份，只显示月-日 时:分
                 selectValue.textContent = month + '-' + day + ' ' + hour + ':00';
                 timePickerOverlay.style.display = 'none';
                 document.body.style.overflow = '';
@@ -566,6 +558,8 @@
             addBtn.addEventListener('click', function() {
                 const recordText = dailyInput.value.trim();
                 const timeValue = selectValue.textContent.trim();
+                const categorySelect = document.getElementById('categorySelect');
+                const category = categorySelect ? categorySelect.value : '';
                 
                 if (!recordText) {
                     showToast('请输入记录内容', 'error');
@@ -578,10 +572,243 @@
                     return;
                 }
                 
-                // If validation passes, you can proceed with adding the record
-                showToast('记录成功！', 'success');
-                // Clear input after successful submission
-                dailyInput.value = '';
+                if (!category || category === '') {
+                    showToast('请选择分类', 'error');
+                    return;
+                }
+                
+                // 获取用户信息
+                var user = localStorage.getItem('user');
+                if (!user) {
+                    showToast('请先登录', 'error');
+                    return;
+                }
+                
+                var userData = JSON.parse(user);
+                
+                // 构建real_time格式
+                var realTime = timeValue;
+                // 检查timeValue是否已经包含年份（格式：YYYY-MM-DD HH:00）
+                // 如果不包含年份（格式：MM-DD HH:00），则从选择器读取年份
+                if (timeValue.includes('-') && timeValue.includes(':')) {
+                    var parts = timeValue.split(' ');
+                    var datePart = parts[0];
+                    var timePart = parts[1] || '00:00';
+                    var dateParts = datePart.split('-');
+                    
+                    // 如果第一部分是4位数字，说明已经包含年份
+                    if (dateParts[0].length === 4) {
+                        realTime = timeValue; // 已经是完整格式
+                    } else {
+                        // 需要从选择器读取年份
+                        var yearScroll = document.querySelector('#yearScroll');
+                        var selectedYear = yearScroll ? yearScroll.querySelector('.picker-item.active').textContent : new Date().getFullYear();
+                        realTime = selectedYear + '-' + datePart + ' ' + timePart;
+                    }
+                }
+                
+                // 构建请求数据
+                var requestData = {
+                    user_id: userData.id,
+                    title: recordText,
+                    category: parseInt(category),
+                    real_time: realTime
+                };
+                
+                console.log('发送数据:', requestData);
+                
+                // 调用后端API
+                var apiUrl = typeof AppConfig !== 'undefined' 
+                    ? AppConfig.API_BASE_URL + '/add_daily' 
+                    : 'http://localhost:5000/api/add_daily';
+                
+                $.ajax({
+                    url: apiUrl,
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(requestData),
+                    success: function(response) {
+                        console.log('响应:', response);
+                        if (response.success) {
+                            showToast('记录成功！', 'success');
+                            dailyInput.value = '';
+                        } else {
+                            showToast(response.message || '添加失败', 'error');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.log('错误:', xhr.responseText);
+                        showToast('网络错误，请重试', 'error');
+                    }
+                });
+            });
+            
+            // 加载分类列表
+            function loadCategories() {
+                var apiUrl = typeof AppConfig !== 'undefined' 
+                    ? AppConfig.API_BASE_URL + '/get_categories?type=2' 
+                    : 'http://localhost:5000/api/get_categories?type=2';
+                
+                $.ajax({
+                    url: apiUrl,
+                    type: 'GET',
+                    success: function(response) {
+                        if (response.success) {
+                            var html = '';
+                            response.categories.forEach(function(cat) {
+                                html += '<option value="' + cat.id + '">' + cat.name + '</option>';
+                            });
+                            $('#categorySelect').html(html);
+                        }
+                    },
+                    error: function() {
+                        $('#categorySelect').html('<option value="">加载失败</option>');
+                    }
+                });
+            }
+            
+            // 加载日行程
+            function loadDailyRecords(date) {
+                var user = localStorage.getItem('user');
+                if (!user) {
+                    return;
+                }
+                
+                var userData = JSON.parse(user);
+                var apiUrl = typeof AppConfig !== 'undefined' 
+                    ? AppConfig.API_BASE_URL + '/get_daily_records?user_id=' + userData.id + (date ? '&date=' + date : '') 
+                    : 'http://localhost:5000/api/get_daily_records?user_id=' + userData.id + (date ? '&date=' + date : '');
+                
+                $.ajax({
+                    url: apiUrl,
+                    type: 'GET',
+                    success: function(response) {
+                        if (response.success) {
+                            // 更新日期显示
+                            $('#currentDateDisplay').text(response.date);
+                            
+                            var html = '';
+                            
+                            if (response.records.length === 0) {
+                                html = '<div style="text-align: center; color: #999; padding: 40px;">暂无记录</div>';
+                            } else {
+                                response.records.forEach(function(record, index) {
+                                    var isLast = index === response.records.length - 1;
+                                    var iconType = record.category_type || 'other';
+                                    var iconMap = {
+                                        'work': 'book-open.svg',
+                                        'break': 'coffee.svg',
+                                        'entertainment': 'gamepad-2.svg',
+                                        'food': 'utensils.svg',
+                                        'study': 'graduation-cap.svg',
+                                        'exercise': 'dumbbell.svg',
+                                        'other': 'circle.svg'
+                                    };
+                                    var iconFile = iconMap[iconType] || 'circle.svg';
+                                    
+                                    html += '<div class="timeline-item' + (isLast ? ' last' : '') + '">';
+                                    html += '<div class="timeline-dot ' + iconType + '"></div>';
+                                    if (!isLast) {
+                                        html += '<div class="timeline-line"></div>';
+                                    }
+                                    html += '<div class="timeline-content">';
+                                    html += '<div class="timeline-icon ' + iconType + '">';
+                                    html += '<img src="icon/' + iconFile + '" class="icon-img" />';
+                                    html += '</div>';
+                                    html += '<div class="timeline-info">';
+                                    html += '<span class="timeline-time">' + record.real_time + '</span>';
+                                    html += '<span class="timeline-text">' + record.title + '</span>';
+                                    html += '</div>';
+                                    html += '</div>';
+                                    html += '</div>';
+                                });
+                            }
+                            
+                            $('#timelineList').html(html);
+                        }
+                    },
+                    error: function() {
+                        console.error('加载日行程失败');
+                    }
+                });
+            }
+            
+            // 加载分类统计
+            function loadDailyAnalytics(date) {
+                var user = localStorage.getItem('user');
+                if (!user) {
+                    return;
+                }
+                
+                var userData = JSON.parse(user);
+                var apiUrl = typeof AppConfig !== 'undefined' 
+                    ? AppConfig.API_BASE_URL + '/get_daily_analytics?user_id=' + userData.id + (date ? '&date=' + date : '') 
+                    : 'http://localhost:5000/api/get_daily_analytics?user_id=' + userData.id + (date ? '&date=' + date : '');
+                
+                $.ajax({
+                    url: apiUrl,
+                    type: 'GET',
+                    success: function(response) {
+                        if (response.success) {
+                            var analytics = response.analytics;
+                            var colors = ['#0058BE', '#10B981', '#BFDBFE', '#F59E0B', '#EF4444'];
+                            var html = '';
+                            
+                            if (analytics.length === 0) {
+                                html = '<div style="text-align: center; color: #999; padding: 40px;">暂无数据</div>';
+                            } else {
+                                // 饼图
+                                html += '<div class="donut-chart">';
+                                html += '<svg viewBox="0 0 100 100" class="donut-svg">';
+                                
+                                var circumference = 2 * Math.PI * 40;
+                                var offset = 0;
+                                
+                                analytics.forEach(function(item, index) {
+                                    var dashLength = (item.percent / 100) * circumference;
+                                    var color = colors[index % colors.length];
+                                    html += '<circle cx="50" cy="50" r="40" fill="none" stroke="' + color + '" stroke-width="12" ';
+                                    html += 'stroke-dasharray="' + dashLength + ' ' + (circumference - dashLength) + '" ';
+                                    html += 'stroke-dashoffset="' + (-offset) + '"/>';
+                                    offset += dashLength;
+                                });
+                                
+                                html += '</svg>';
+                                html += '<div class="chart-center">';
+                                html += '<span class="chart-value">' + response.total + '</span>';
+                                html += '<span class="chart-label">记录</span>';
+                                html += '</div>';
+                                html += '</div>';
+                                
+                                // 统计列表
+                                html += '<div class="stats-list">';
+                                analytics.forEach(function(item, index) {
+                                    var color = colors[index % colors.length];
+                                    html += '<div class="stat-row">';
+                                    html += '<span class="stat-name" style="display: flex; align-items: center; gap: 8px;">';
+                                    html += '<span style="width: 12px; height: 12px; background-color: ' + color + '; border-radius: 4px; display: inline-block;"></span>';
+                                    html += item.name;
+                                    html += '</span>';
+                                    html += '<span class="stat-value">' + item.count + '次 (' + item.percent + '%)</span>';
+                                    html += '</div>';
+                                });
+                                html += '</div>';
+                            }
+                            
+                            $('#analyticsChart').html(html);
+                        }
+                    },
+                    error: function() {
+                        console.error('加载分类统计失败');
+                    }
+                });
+            }
+            
+            // 页面加载时获取分类、日行程和统计
+            $(document).ready(function() {
+                loadCategories();
+                loadDailyRecords();
+                loadDailyAnalytics();
             });
         </script>
     </div>
